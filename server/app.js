@@ -18,6 +18,8 @@ app.use(
 
 // use json
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // root route
 app.use("/", require("./routes"));

@@ -6,21 +6,27 @@ export default function App() {
 const [location, setLocation]= useState({lat:"",long:""})
 
 let socket;
- const success=(pos)=>{
- const positions={
-  lat:pos.coords.latitude,
-  long: pos.coords.longitude
- }
-  socket.emit("location", positions)
- }
+
+ 
 
  const error =(err)=>{
   console.log(err)
  }
   useEffect(()=>{
-    navigator.geolocation.watchPosition(success,error,{enableHighAccuracy:true,maximumAge:0})
-     socket = io("http://localhost:5000")
+
+    socket = io("http://localhost:5000")
+
+    const setIntervall=setInterval(()=>{
+      navigator.geolocation.getCurrentPosition((position)=>{
+      socket.emit("location",{  latitude:position.coords.latitude,
+        longitude: position.coords.longitude})
+      },error,{enableHighAccuracy:true,maximumAge:0})
+    },8000)
+
+    return ()=>{
+      clearInterval(setIntervall)
+    }
    
   },[])
-  return <h1 className="text-3xl font-bold underline">{location.lat} {location.long}</h1>;
+  return <h1 className="text-3xl font-bold underline">jii</h1>;
 }

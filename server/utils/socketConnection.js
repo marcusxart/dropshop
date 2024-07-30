@@ -1,5 +1,5 @@
 const {Server} = require("socket.io")
-
+const {haversineDistance}= require("../utils/haversine")
 let io
 const initSocket =(instant)=>{
     if (!io) {
@@ -12,10 +12,12 @@ const initSocket =(instant)=>{
         credentials:true
     },
  })
+ const pickup = {latitude:9.0819688, longitude: 7.3920866}
    io.on("connection", (socket)=>{
     console.log("connected")
      socket.on("location",(data)=>{
-        console.log(data)
+      const distanceCovered = haversineDistance(pickup, data)
+        console.log(distanceCovered)
      })
 
        socket.on("disconnect",()=>{
