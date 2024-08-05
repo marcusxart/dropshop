@@ -1,11 +1,23 @@
 module.exports=(sequelize, DataTypes)=>{
 
-    const Users=sequelize.define("Users",{
-      name:{
+    const Riders=sequelize.define("Riders",{
+      firstName:{
+        type:DataTypes.STRING,
+        allowNull:false
+      },
+      lastName:{
         type:DataTypes.STRING,
         allowNull:false
       },
       email:{
+       type: DataTypes.STRING,
+       allowNull : false
+      },
+      guarantor:{
+        type: DataTypes.STRING,
+        allowNull : false
+      },
+      guarantorNumber:{
        type: DataTypes.STRING,
        allowNull : false
       },
@@ -19,19 +31,11 @@ module.exports=(sequelize, DataTypes)=>{
       },
       role:{
         type: DataTypes.STRING,
-        defaultValue:"customer"
-      },
-      token:{
-        type: DataTypes.STRING,
-        allowNull:true
-      },
-      expiry:{
-        type: DataTypes.DATE,
-        allowNull:true
+        defaultValue:"rider"
       }
     })
      
    
-    return Users
+    return Riders
    }
    

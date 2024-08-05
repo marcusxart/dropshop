@@ -1,6 +1,6 @@
-const {Users} = require("../database/models");
-const jwt = require("jsonwebtoken")
-
+const {Users} = require("../database");
+const bcrypt = require("bcryptjs")
+const {generateToken} = require("../utils/jwt")
 
 const signup = async(req,res,next)=>{
 
@@ -10,7 +10,6 @@ if (!name || !email || !password)  {
     const err = new Error("fill in required fields")
     err.status = 400
     next(err)
-    return
 }
   
 const userExist = await Users.findOne({
@@ -18,7 +17,6 @@ const userExist = await Users.findOne({
       email: email,
     }
   });
-  console.log("hoo")
 
   if (userExist) {
     const err = new Error("Email already in use")
@@ -29,10 +27,8 @@ const userExist = await Users.findOne({
   console.log("worked")
   //hashing password
   try {
-    console.log("almost")
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
-    console.log("here")
     const saved = await Users.create({ email: email, password: hashPassword, name});
     res.status(201).json(saved);
   } catch (error) {
@@ -69,13 +65,15 @@ const login = async (req, res,next) => {
       req.body.password,
       existingUser.password,
     );
-    const { email, id, isAdmin, ...others } = existingUser;
+    const { email, id, isAdmin, role,...others } = existingUser;
 
     const userInfo = {
       isAdmin: existingUser.isAdmin,
       email: existingUser.email,
+      role: existingUser.role,
+      id: existingUser.id
     };
-    correct ? res.status(200).json({ email, id, isAdmin, token: generateTRoken(userInfo) })
+    correct ? res.status(200).json({ email, id, isAdmin, token: generateToken(userInfo) })
       : res.status(400).json("incorrect password");
 
   } catch (error) {
@@ -83,13 +81,7 @@ const login = async (req, res,next) => {
     return next(err)
   }
 };
-const generateTRoken = (uservalue) => {
-  return jwt.sign(
-    { email: uservalue.email, isAdmin: uservalue.isAdmin },
-    process.env.JWT_KEY,
-    { expiresIn: "3d" },
-  );
-};
+;
  
 
  module.exports ={signup,login} 
