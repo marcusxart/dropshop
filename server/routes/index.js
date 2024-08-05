@@ -6,7 +6,7 @@ api.get("/", (req, res) => {
   res.send("Server running");
 });
 
-//  add routes here
+//  add routes here!
 
 api.post("/signup", signup)
 api.post("/login", login)

@@ -10,7 +10,7 @@ module.exports=(sequelize, DataTypes)=>{
         type: DataTypes.DATE,
         allowNull:false
       },
-      userid:{
+      userid:{ 
        type: DataTypes.INTEGER,
        allowNull: false 
       }

@@ -14,7 +14,7 @@ module.exports=(sequelize, DataTypes)=>{
        allowNull : false
       },
       guarantor:{
-        type: DataTypes.STRING,
+        type: DataTypes.STRING, 
         allowNull : false
       },
       guarantorNumber:{

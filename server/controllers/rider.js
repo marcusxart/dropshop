@@ -9,7 +9,7 @@ const {
     guarantor,
     guarantorNumber,
     password,
-    }= req.body
+    }= req.body 
 
    try {
 

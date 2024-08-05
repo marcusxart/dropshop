@@ -45,7 +45,7 @@ const newPassword = async(req,res,next) =>{
 
   if (!findToken) {
     const err = new Error("token has expired")
-    err.status=401
+    err.status=401 
     return next(err)
   }
   const {userid} = findToken

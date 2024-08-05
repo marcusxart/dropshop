@@ -26,7 +26,7 @@ module.exports=(sequelize, DataTypes)=>{
        allowNull : false
       },
       number:{
-        type: DataTypes.STRING,
+        type: DataTypes.STRING, 
          allowNull: false
       },
       details:{

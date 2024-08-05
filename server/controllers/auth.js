@@ -39,7 +39,7 @@ const userExist = await Users.findOne({
 
 
 const login = async (req, res,next) => {
-  const { password, email } = req.body;
+  const { password, email } = req.body
 
   if (!email || !password) {
     const err = new Error("please fill in all fields")
