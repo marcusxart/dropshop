@@ -16,18 +16,6 @@ module.exports=(sequelize, DataTypes)=>{
       isAdmin:{
         type: DataTypes.BOOLEAN,
          defaultValue: false
-      },
-      role:{
-        type: DataTypes.STRING,
-        defaultValue:"customer"
-      },
-      token:{
-        type: DataTypes.STRING,
-        allowNull:true
-      },
-      expiry:{
-        type: DataTypes.DATE,
-        allowNull:true
       }
     })
      
