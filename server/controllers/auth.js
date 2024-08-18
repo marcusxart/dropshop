@@ -64,23 +64,23 @@ const login = async (req, res,next) => {
       req.body.password,
       existingUser.password,
     );
-    const { email, id, isAdmin, role,...others } = existingUser;
+    const { email, id, isAdmin, role,name,...others } = existingUser;
 
     const userInfo = {
       isAdmin: existingUser.isAdmin,
       email: existingUser.email,
       role: existingUser.role,
-      id: existingUser.id
+      name: existingUser.name
     };
-    correct ? res.status(200).json({ email, id, isAdmin, token: generateToken(userInfo) })
-      : res.status(400).json("incorrect password");
+    correct ? res.status(200).json({ email, id, isAdmin,role, name, token: generateToken(userInfo) })
+      : res.status(400).json("incorrect credentials");
 
   } catch (error) {
     const err = new Error(error.message)
     return next(err)
   }
 };
-;
+
  
 
  module.exports ={signup,login} 

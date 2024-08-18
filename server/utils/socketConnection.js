@@ -1,15 +1,19 @@
 const {Server} = require("socket.io")
-const {haversineDistance}= require("../utils/haversine")
-let io
+const {orderUpdate} = require("../controllers/order")
 
+
+let io
 
 const onlineCustomers=[]
 
 const addUser=(email,socketId)=>{
    !onlineCustomers.some((user)=>user.email===email) && onlineCustomers.push({email,socketId})
 }
-const getCustomer =(name)=>{
-  return onlineCustomers.find((customer)=>customer.name===name)
+const getCustomer =(name,customers)=>{
+  return customers.find((customer)=>customer.name===name)
+}
+const disconnect =(id)=>{
+  onlineCustomers =  customers.filter((customer)=>customer.id !==id)
 }
 const initSocket =(instant)=>{
 
@@ -23,28 +27,16 @@ const initSocket =(instant)=>{
         credentials:true
     }, 
  })
- const pickup = {latitude:9.0819688, longitude: 7.3920866}
    io.on("connection", (socket)=>{
     console.log("connected")
+    
     socket.on("userLogin",({email})=>{
-     addUser(email,socket.id)
+     addUser(email,socket.id,onlineCustomers)
     })
-     //socket.on("rider-update",)
-     socket.on("location",(data)=>{
-      const {totalDistance, currentlocation,customerName,destination}= data
-      //get total distance from data
-      //calculate distance covered by rider using google distance api
-      //convert to percentage
-      //emit percentage to specific customer
-      const distanceCovered = haversineDistance(currentlocation,destination)
-      const percentage = distanceCovered/totalDistance * 100
-      //check if customer is online before emitting
-      //check of percentage is greater or equal to 100
-        console.log(percentage)
-     })
-
+  
        socket.on("disconnect",()=>{
         console.log(`${socket.id} disconnected`)
+        disconnect(socket.id)
      })
  })
 
@@ -53,4 +45,12 @@ const initSocket =(instant)=>{
  return io
 }
 
-module.exports={initSocket}
+
+const getIo=()=>{
+  if (!io) {
+    throw new Error("socket io not initialized")
+  }
+  return io
+}
+
+module.exports={initSocket,getIo,onlineCustomers,getCustomer}

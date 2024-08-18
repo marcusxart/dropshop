@@ -29,6 +29,10 @@ module.exports=(sequelize, DataTypes)=>{
         type: DataTypes.STRING, 
          allowNull: false
       },
+      riderNumber:{
+        type: DataTypes.STRING,
+        allowNull: true
+      },
       details:{
         type: DataTypes.STRING,
         allowNull: true
@@ -36,6 +40,11 @@ module.exports=(sequelize, DataTypes)=>{
     status:{
         type: DataTypes.STRING,
         defaultValue: "pending"
+    },
+    stage:{
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
     }
     })
      
