@@ -1,7 +1,22 @@
 const {Server} = require("socket.io")
-const {haversineDistance}= require("../utils/haversine")
+const {orderUpdate} = require("../controllers/order")
+
+
 let io
+
+const onlineCustomers=[]
+
+const addUser=(email,socketId)=>{
+   !onlineCustomers.some((user)=>user.email===email) && onlineCustomers.push({email,socketId})
+}
+const getCustomer =(name,customers)=>{
+  return customers.find((customer)=>customer.name===name)
+}
+const disconnect =(id)=>{
+  onlineCustomers =  customers.filter((customer)=>customer.id !==id)
+}
 const initSocket =(instant)=>{
+
     if (!io) {
        
       io = new Server(instant, {
@@ -10,18 +25,18 @@ const initSocket =(instant)=>{
         methods :[" GET", "POST"],
         allowedHeaders:["content-type"],
         credentials:true
-    },
+    }, 
  })
- const pickup = {latitude:9.0819688, longitude: 7.3920866}
    io.on("connection", (socket)=>{
     console.log("connected")
-     socket.on("location",(data)=>{
-      const distanceCovered = haversineDistance(pickup, data)
-        console.log(distanceCovered)
-     })
-
+    
+    socket.on("userLogin",({email})=>{
+     addUser(email,socket.id,onlineCustomers)
+    })
+  
        socket.on("disconnect",()=>{
         console.log(`${socket.id} disconnected`)
+        disconnect(socket.id)
      })
  })
 
@@ -30,4 +45,12 @@ const initSocket =(instant)=>{
  return io
 }
 
-module.exports={initSocket}
+
+const getIo=()=>{
+  if (!io) {
+    throw new Error("socket io not initialized")
+  }
+  return io
+}
+
+module.exports={initSocket,getIo,onlineCustomers,getCustomer}
