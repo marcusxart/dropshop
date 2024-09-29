@@ -7,13 +7,43 @@ body {
   color: #ffffff;
 }
 
-h1 {
+.gradient-grey {
   background: linear-gradient(to right, #e4e1f8, #e4e1f8cc);
   background-clip: text;
   color: transparent;
 }
-h1 span {
+.gradient-yellow {
   background: linear-gradient(to right, #f8c534, #f5d37a);
   background-clip: text;
   color: transparent;
+}
+.box-gradient {
+  background: linear-gradient(to left, #00000000, #000000);
+}
+.line_2_ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.line_2_ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.btn-icon svg path {
+  transition: all;
+  transition-duration: 150ms;
+}
+
+.btn-primaary:hover svg path {
+  fill: #d3d1d1;
+}
+
+.btn-secondary:hover svg path {
+  fill: #694e00;
 }
