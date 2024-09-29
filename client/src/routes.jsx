@@ -3,6 +3,7 @@ import PageWrapper from "./components/pageWrapper";
 import Landing from "./pages/landing";
 import Services from "./pages/services";
 import About from "./pages/about";
+import Support from "./pages/support";
 
 const routes = createBrowserRouter([
   {
@@ -12,6 +13,7 @@ const routes = createBrowserRouter([
       { index: true, element: <Landing /> },
       { path: "services", element: <Services /> },
       { path: "about", element: <About /> },
+      { path: "support", element: <Support /> },
     ],
   },
 ]);
