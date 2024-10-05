@@ -1,0 +1,7 @@
+.react-inputs-validation__error {
+  color: #ff4c4c;
+}
+
+.react-inputs-validation__error input {
+  border-color: #ff4c4c;
+}
