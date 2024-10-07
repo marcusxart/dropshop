@@ -31,7 +31,12 @@ const Login = () => {
       </div>
 
       <div className="mt-[40px] text-center text-[14px] text-[#969799] leading-[24px] [&_a]:text-[#FFFFFF]">
-        <span className=" font-semibold text-gray-600">Forgot password?</span>
+        <span
+          className=" font-semibold text-gray-600 cursor-pointer"
+          onClick={() => navigate("/auth/forgotten-pass")}
+        >
+          Forgot password?
+        </span>
         <div className="w-full h-[20%] mt-[20px] py-3 rounded border gap-2 border-[#FFC7274D] flex justify-center items-center ">
           <p className=" font-semibold text-slate-700">
             Don’t have an account?{" "}
