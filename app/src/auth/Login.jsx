@@ -1,9 +1,10 @@
-import React, { useState } from "react";
 import InputField from "../components/InputField/index";
 import Button from "../components/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { MdArrowRightAlt } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   return (
     <form>
       <div className="flex flex-col gap-[20px]">
@@ -28,15 +29,20 @@ const Login = () => {
           // Disable button while loading
         />
       </div>
+
       <div className="mt-[40px] text-center text-[14px] text-[#969799] leading-[24px] [&_a]:text-[#FFFFFF]">
-        <p>
-          By signing up, you agree to our <a href="#">Terms of Service</a> and{" "}
-          <a href="#">Data Processing Agreement</a>
-        </p>
-        <p className="mt-[40px] mb-[32px]">
-          Don’t have an account? <Link to="/auth/sign-up"> Sign up -{">"}</Link>
-        </p>
-        <Link to="/auth/forgetten-password">Forgot password?</Link>
+        <span className=" font-semibold text-gray-600">Forgot password?</span>
+        <div className="w-full h-[20%] mt-[20px] py-3 rounded border gap-2 border-[#FFC7274D] flex justify-center items-center ">
+          <p className=" font-semibold text-slate-700">
+            Don’t have an account?{" "}
+          </p>
+          <p
+            className=" font-semibold text-slate-300 cursor-pointer  flex justify-center items-center"
+            onClick={() => navigate("/auth/register")}
+          >
+            Sign up <MdArrowRightAlt />
+          </p>
+        </div>
       </div>
     </form>
   );
