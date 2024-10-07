@@ -38,7 +38,7 @@ const Button = ({ text, sm, type, full, border, icon, link, ...restProps }) => {
     { "h-[40px] leading-[40px]": sm },
     { "h-[48px] leading-[48px]": !sm },
     { "border border-[#2C2E33] border-solid": border },
-    { "bg-[#1E2025] text-white": type !== "secondary" },
+    { "bg-[#FFFFFFE5] text-black": type !== "secondary" },
     { "bg-[#E6E6E6] text-[#08090A]": type === "secondary" }
   );
 

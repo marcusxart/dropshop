@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Textbox } from "react-inputs-validation";
 import "./style.css";
 // import "react-inputs-validation/lib/react-inputs-validation.min.css";
@@ -34,12 +33,12 @@ const InputField = ({
     <>
       <Textbox
         value={value}
-        classNameInput="w-full h-[46px] px-[12px] bg-[#0F1011] border border-solid border-[#2C2E33] placeholder:text-[#595A5C] text-[14px] outline-none"
+        classNameInput="w-full h-[46px] px-[12px] bg-[#0F1011] rounded border border-solid border-[#FFC7274D] placeholder:text-[#595A5C] text-[14px] outline-none"
         attributesInput={{
           type,
           placeholder,
         }}
-        onChange={(value, e) => {
+        onChange={(value) => {
           onChange && onChange(value);
         }}
         onBlur={() => {}}
