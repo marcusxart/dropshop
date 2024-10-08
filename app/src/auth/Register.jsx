@@ -7,7 +7,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   return (
-    <form>
+    <form className=" max-md:w-[92%]">
       <div className="w-full h-[4rem] flex justify-center items-center">
         <p className=" font-semibold text-xl">Create Your Account</p>
       </div>
