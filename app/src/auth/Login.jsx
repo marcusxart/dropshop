@@ -37,7 +37,7 @@ const Login = () => {
         >
           Forgot password?
         </span>
-        <div className="w-full h-[20%] mt-[20px] py-3 rounded border gap-2 border-[#FFC7274D] flex justify-center items-center ">
+        <div className="w-full h-[20%] mt-[20px] px-5 py-3 rounded border gap-2 border-[#FFC7274D] flex justify-center items-center max-md:px-6 ">
           <p className=" font-semibold text-slate-700">
             Don’t have an account?{" "}
           </p>

@@ -33,7 +33,7 @@ const InputField = ({
     <>
       <Textbox
         value={value}
-        classNameInput="w-full h-[46px] px-[12px] bg-[#0F1011] rounded border border-solid border-[#FFC7274D] placeholder:text-[#595A5C] text-[14px] outline-none"
+        classNameInput="w-full transform duration-60 h-[46px] px-[12px] bg-[#0F1011]  rounded border border-solid border-[#FFC7274D] placeholder:text-[#595A5C] text-[14px] outline-none"
         attributesInput={{
           type,
           placeholder,
