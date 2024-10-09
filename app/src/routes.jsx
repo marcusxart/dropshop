@@ -5,6 +5,9 @@ import Register from "./auth/Register";
 import ForgotPassword from "./auth/ForgotPassword";
 
 import MainLayout from "./layout/MainLayout";
+import Home from "./Page/Home";
+import Orders from "./Page/Orders";
+import Orderhistory from "./Page/Orderhistory";
 
 const routes = createBrowserRouter([
   {
@@ -32,7 +35,20 @@ const routes = createBrowserRouter([
   {
     path: "user",
     element: <MainLayout />,
-    children: [],
+    children: [
+      {
+        path: "home",
+        element: <Home />,
+      },
+      {
+        path: "orders",
+        element: <Orders />,
+      },
+      {
+        path: "history",
+        element: <Orderhistory />,
+      },
+    ],
   },
 ]);
 
