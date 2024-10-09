@@ -1,40 +1,84 @@
+import { useState } from "react";
 import { GiCardPickup } from "react-icons/gi";
 import { TbTruckDelivery } from "react-icons/tb";
 import { FaRegThumbsUp } from "react-icons/fa";
 
 const Home = () => {
+  const [selectedOption, setSelectedOption] = useState("Delivery"); // Track selected option
+
   const card = [
     {
-      icon: <GiCardPickup />,
+      id: "Pick Up",
+      icon: <GiCardPickup className="text-[#f8c534]" size={40} />,
       title: "Pick Up",
-      text: "Lorem ipsum dolor sitamet consectetur.Lorem ipsum dolor sitamet consectetur.",
+      text: "Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
     },
     {
-      icon: <TbTruckDelivery />,
+      id: "Delivery",
+      icon: <TbTruckDelivery className="text-[#f8c534]" size={40} />,
       title: "Delivery",
-      text: "Lorem ipsum dolor sitamet consectetur.Lorem ipsum dolor sitamet consectetur.",
+      text: "Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
     },
   ];
 
+  // Reorder the card array based on the selected option
+  const reorderedCards = card.sort((a, b) =>
+    a.id === selectedOption ? -1 : b.id === selectedOption ? 1 : 0
+  );
+
+  const handleCardClick = (id) => {
+    setSelectedOption(id); // Set the selected option when a card is clicked
+  };
+
   return (
-    <div className="w-full h-screen  flex flex-col justify-center items-center">
+    <div className="w-full h-screen flex flex-col justify-center items-center">
       <div className="w-[90%] h-[15%] flex justify-center items-center">
-        <p className=" text-4xl font-bold">
-          I want to <span className=" font-bold text-[#f8c534]">Pick Up</span>{" "}
+        <p className="text-4xl font-bold">
+          I want to{" "}
+          <span className="font-bold text-[#f8c534]">
+            {selectedOption ? selectedOption : "Delivery"} {/* Dynamic text */}
+          </span>
         </p>
       </div>
-      <div className="w-[90%] h-[80%] flex justify-around flex-col items-center max-md:w-[100%]">
-        <div className="w-[80%] h-[80%] bg-yellow-300 flex justify-around items-center max-md:w-[100%]">
-          {card.map((cards, index) => (
+      <div className="w-[90%] h-[80%]  flex flex-col items-center max-md:w-[100%]">
+        <div className="w-[80%] h-[80%] flex justify-around flex-wrap items-center max-md:w-[100%] relative">
+          {reorderedCards.map((cards, index) => (
             <div
-              className="w-[40%] h-[80%] bg-pink-400 rounded"
               key={index}
-            ></div>
+              className={`w-[40%] h-[80%] cursor-pointer rounded-lg flex flex-col justify-center items-center absolute
+                transition-all duration-700 transform border 
+                ${
+                  selectedOption === cards.id
+                    ? "border-[#f8c534] translate-x-[-40%] bg-[#111214BF] z-10" // Selected card styling
+                    : "border-transparent bg-black z-0 translate-x-[70%]" // Non-selected cards
+                }`} // Conditionally apply border and background
+              onClick={() => handleCardClick(cards.id)} // Handle click event
+            >
+              <div className="w-full h-[50%] flex flex-col gap-2 justify-center items-center">
+                {cards.icon}
+                <h2 className="text-2xl font-bold">{cards.title}</h2>
+              </div>
+              <div className="w-full h-[30%] flex justify-center items-center text-center">
+                <p>{cards.text}</p>
+              </div>
+              <div className="w-full h-[20%] flex justify-center items-center">
+                <span className="w-[20px] h-[20px] rounded-full bg-gray-400"></span>
+              </div>
+            </div>
           ))}
         </div>
-        <div className="w-[80%] h-[20%] bg-green-400 flex justify-center items-center">
-          <button className="px-7 py-2 flex justify-center items-center gap-2 bg-slate-300 rounded text-gray-400 font-semibold">
-            Confirm <FaRegThumbsUp />{" "}
+
+        <div className="w-[80%] h-[20%] flex justify-center items-center">
+          <button
+            className={`px-7 py-2 flex justify-center items-center gap-2 rounded-lg font-semibold transition-all
+              ${
+                selectedOption
+                  ? "bg-gray-600 text-gray-800"
+                  : "bg-slate-300 text-gray-400"
+              }`} // Conditionally change button color
+            disabled={!selectedOption} // Disable button if no option is selected
+          >
+            Confirm <FaRegThumbsUp />
           </button>
         </div>
       </div>
