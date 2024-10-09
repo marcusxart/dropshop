@@ -7,7 +7,7 @@ body {
   color: #ffffff;
 }
 
-.PickUp {
+.main_body {
   background-image: url("./assets/Map.svg");
   background-position: center;
   background-size: cover;

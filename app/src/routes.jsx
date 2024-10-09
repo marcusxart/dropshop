@@ -3,7 +3,8 @@ import Login from "./auth/Login";
 import AuthWrapper from "./components/authWrapper";
 import Register from "./auth/Register";
 import ForgotPassword from "./auth/ForgotPassword";
-import PickUp from "./layout/PickUp";
+
+import MainLayout from "./layout/MainLayout";
 
 const routes = createBrowserRouter([
   {
@@ -29,8 +30,8 @@ const routes = createBrowserRouter([
     ],
   },
   {
-    path: "pick-up",
-    element: <PickUp />,
+    path: "user",
+    element: <MainLayout />,
     children: [],
   },
 ]);
