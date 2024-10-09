@@ -20,24 +20,24 @@ const Sidebar = () => {
   };
 
   const HandleSideMenu = () => {
-    setOpenSidebar(!OpenSidebar);
+    setOpenSidebar(!OpenSidebar); // Toggle sidebar state
   };
 
   const MenuItems = [
     {
       label: "Home",
       icon: <MdMapsHomeWork />,
-      path: "overview",
+      path: "home",
     },
     {
       label: "Orders",
       icon: <MdDeliveryDining />,
-      path: "history",
+      path: "orders",
     },
     {
       label: "Order History",
       icon: <MdLocalShipping />,
-      path: "transbank",
+      path: "history",
     },
     {
       label: "Customer Service",
@@ -47,31 +47,49 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-[17rem]  h-full flex justify-center items-center">
-      <div className=" w-[20%] h-[90%]  flex-auto justify-center flex items-center  px-2 py-3">
-        <ul className=" w-[80%] h-[70%]  flex justify-around flex-col  items-start relative  bg-black rounded-md">
+    <div className="relative w-[17rem] h-full flex justify-center items-center">
+      {/* Toggle Button above the Sidebar */}
+
+      {/* Sidebar container */}
+      <div
+        className={`transition-all duration-300 ${
+          OpenSidebar ? "w-[20%]" : "w-[5%]"
+        } h-[90%] flex-auto justify-center flex items-center px-2 py-3`}
+      >
+        <div
+          className="absolute top-32 left-[90%] transform -translate-x-1/2 bg-gray-800 p-2 rounded-full cursor-pointer z-10"
+          onClick={HandleSideMenu}
+        >
+          <MdArrowRight
+            size={30}
+            className={`text-white transition-transform duration-300 ${
+              OpenSidebar ? "" : "rotate-180"
+            }`}
+          />
+        </div>
+        <ul
+          className={`transition-all duration-300 ${
+            OpenSidebar ? "w-[80%]" : "w-[20%]"
+          } h-[70%] flex justify-center flex-col relative bg-[#111214BF] rounded-md`}
+        >
+          {/* Menu items */}
           {MenuItems.map((item, index) => (
             <li
               key={index}
-              className="flex items-center space-x-3 cursor-pointer"
+              className="flex items-center justify-center w-full h-full cursor-pointer"
               onClick={() =>
                 item.action ? item.action() : handleNavigation(item.path)
               }
             >
-              <div className="flex items-center text-sm hover:bg-blue-600 px-3 py-2 rounded-md w-full transition-all duration-200">
+              <div className="flex items-center justify-center text-sm hover:bg-blue-600 px-3 py-2 rounded-md w-full transition-all duration-200">
                 <span className="text-xl">{item.icon}</span>
-                <span className="ml-2">{item.label}</span>
+                {OpenSidebar && (
+                  <span className="ml-2 font-semibold">{item.label}</span>
+                )}
               </div>
             </li>
           ))}
         </ul>
-        <div
-          className="w-[2%] h-[6%] bg-black absolute top-[7.6rem] left-56 flex justify-center items-center  rounded cursor-pointer"
-          onClick={HandleSideMenu}
-        >
-          {" "}
-          <MdArrowRight size={30} />
-        </div>
       </div>
     </div>
   );

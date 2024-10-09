@@ -7,11 +7,11 @@ import ButtomNav from "../components/ButtomNav";
 const MainLayout = () => {
   return (
     <div className="main_body flex h-screen ">
-      <div className="">
+      <div className="hidden lg:block">
         <Sidebar />
       </div>
       {/* Main Content */}
-      <div className="flex-1 flex flex-col h-full">
+      <div className="bg-green-400 flex-1 flex flex-col h-full">
         {/* Header */}
         <Header />
 
