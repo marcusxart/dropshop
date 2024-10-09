@@ -1,5 +1,5 @@
 const ButtomNav = () => {
-  return <div>ButtomNav</div>;
+  return <div className="">ButtomNav</div>;
 };
 
 export default ButtomNav;
