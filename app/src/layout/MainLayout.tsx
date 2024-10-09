@@ -11,12 +11,12 @@ const MainLayout = () => {
         <Sidebar />
       </div>
       {/* Main Content */}
-      <div className="bg-green-400 flex-1 flex flex-col h-full">
+      <div className="flex-1 flex flex-col h-full">
         {/* Header */}
         <Header />
 
         {/* Page Content */}
-        <div className="flex-1  overflow-auto">
+        <div className="flex-1  overflow-auto scrollbar-hide">
           <Outlet />
         </div>
       </div>
