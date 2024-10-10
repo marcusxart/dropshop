@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { GiCardPickup } from "react-icons/gi";
 import { TbTruckDelivery } from "react-icons/tb";
+import { MdOutlineClear } from "react-icons/md";
 import { FaRegThumbsUp } from "react-icons/fa";
+import SendPackagesModal from "../components/SendPackagesModal"; // Import the modal component
 
 const Home = () => {
-  const [selectedOption, setSelectedOption] = useState("Delivery"); // Track selected option
+  const [selectedOption, setSelectedOption] = useState("Delivery");
+  const [openModal, setOpenModal] = useState(false); // State for modal visibility
 
   const card = [
     {
@@ -30,6 +33,16 @@ const Home = () => {
     setSelectedOption(id); // Set the selected option when a card is clicked
   };
 
+  const handleConfirm = () => {
+    if (selectedOption) {
+      setOpenModal(true); // Open the modal when confirm is clicked
+    }
+  };
+
+  const closeModal = () => {
+    setOpenModal(false); // Close the modal
+  };
+
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <div className="w-[90%] h-[15%] flex justify-center items-center">
@@ -40,7 +53,7 @@ const Home = () => {
           </span>
         </p>
       </div>
-      <div className="w-[90%] h-[80%]  flex flex-col items-center max-md:w-[100%]">
+      <div className="w-[90%] h-[80%] flex flex-col items-center max-md:w-[100%]">
         <div className="w-[80%] h-[80%] flex justify-around flex-wrap items-center max-md:w-[100%] relative">
           {reorderedCards.map((cards, index) => (
             <div
@@ -77,11 +90,26 @@ const Home = () => {
                   : "bg-slate-300 text-gray-400"
               }`} // Conditionally change button color
             disabled={!selectedOption} // Disable button if no option is selected
+            onClick={handleConfirm} // Open modal on confirm click
           >
             Confirm <FaRegThumbsUp />
           </button>
         </div>
       </div>
+
+      {openModal && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+          <div className="relative">
+            <SendPackagesModal />
+            <button
+              className="absolute top-2 right-2 text-white"
+              onClick={closeModal} // Close modal on click
+            >
+              <MdOutlineClear size={30} /> {/* Close button */}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
