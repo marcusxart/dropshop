@@ -62,8 +62,8 @@ const Home = () => {
                 transition-all duration-700 transform border 
                 ${
                   selectedOption === cards.id
-                    ? "border-[#f8c534] translate-x-[-40%] bg-[#111214BF] z-10" // Selected card styling
-                    : "border-transparent bg-black z-0 translate-x-[70%]" // Non-selected cards
+                    ? "border-[#f8c534] translate-x-[-40%] bg-black z-10" // Selected card styling
+                    : "border-transparent bg-[#111214BF]  z-0 translate-x-[70%]" // Non-selected cards
                 }`} // Conditionally apply border and background
               onClick={() => handleCardClick(cards.id)} // Handle click event
             >
@@ -75,7 +75,9 @@ const Home = () => {
                 <p>{cards.text}</p>
               </div>
               <div className="w-full h-[20%] flex justify-center items-center">
-                <span className="w-[20px] h-[20px] rounded-full bg-gray-400"></span>
+                <span
+                  className={`w-[20px] h-[20px] rounded-full bg-gray-400 `}
+                ></span>
               </div>
             </div>
           ))}
