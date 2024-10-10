@@ -8,6 +8,7 @@ import MainLayout from "./layout/MainLayout";
 import Home from "./Page/Home";
 import Orders from "./Page/Orders";
 import Orderhistory from "./Page/Orderhistory";
+import Profile from "./Page/Account/Profile";
 
 const routes = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const routes = createBrowserRouter([
       {
         path: "history",
         element: <Orderhistory />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
     ],
   },

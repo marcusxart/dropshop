@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
   const navigate = useNavigate();
 
-  const [OpenSidebar, setOpenSidebar] = useState(true);
+  const [OpenSidebar, setOpenSidebar] = useState(false);
 
   // Handle menu item click
   const handleNavigation = (path) => {
@@ -70,7 +70,7 @@ const Sidebar = () => {
         <ul
           className={`transition-all duration-300 ${
             OpenSidebar ? "w-[80%]" : "w-[20%]"
-          } h-[70%] flex justify-center flex-col relative bg-[#111214BF] rounded-md`}
+          } h-[70%] flex justify-center flex-col relative bg-[#111214BF] rounded-lg`}
         >
           {/* Menu items */}
           {MenuItems.map((item, index) => (
@@ -81,7 +81,7 @@ const Sidebar = () => {
                 item.action ? item.action() : handleNavigation(item.path)
               }
             >
-              <div className="flex items-center justify-center text-sm hover:bg-blue-600 px-3 py-2 rounded-md w-full transition-all duration-200">
+              <div className="flex items-center justify-center text-sm hover:bg-black px-3  py-2 rounded-md w-[90%] transition-all duration-200">
                 <span className="text-xl">{item.icon}</span>
                 {OpenSidebar && (
                   <span className="ml-2 font-semibold">{item.label}</span>

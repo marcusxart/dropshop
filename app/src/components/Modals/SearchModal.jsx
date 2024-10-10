@@ -20,8 +20,8 @@ const SearchModal = () => {
           </div>
         </div>
       </div>
-      <div className="w-full h-[70%]  flex justify-center items-center">
-        <img src={Search} alt="" />
+      <div className="w-full h-[50%] flex justify-center items-center">
+        <img src={Search} alt="" className="w-full h-full object-contain" />
       </div>
     </div>
   );
