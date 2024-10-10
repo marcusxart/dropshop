@@ -6,90 +6,61 @@ import {
   MdChat,
   MdArrowRight,
 } from "react-icons/md";
-
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(true);
 
-  const [OpenSidebar, setOpenSidebar] = useState(false);
-
-  // Handle menu item click
   const handleNavigation = (path) => {
-    navigate(path); // Navigate to the provided path
+    navigate(path);
   };
 
-  const HandleSideMenu = () => {
-    setOpenSidebar(!OpenSidebar); // Toggle sidebar state
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
   };
 
   const MenuItems = [
-    {
-      label: "Home",
-      icon: <MdMapsHomeWork />,
-      path: "home",
-    },
-    {
-      label: "Orders",
-      icon: <MdDeliveryDining />,
-      path: "orders",
-    },
-    {
-      label: "Order History",
-      icon: <MdLocalShipping />,
-      path: "history",
-    },
-    {
-      label: "Customer Service",
-      icon: <MdChat />,
-      path: "door2door",
-    },
+    { label: "Home", icon: <MdMapsHomeWork />, path: "home" },
+    { label: "Orders", icon: <MdDeliveryDining />, path: "orders" },
+    { label: "Order History", icon: <MdLocalShipping />, path: "history" },
+    { label: "Customer Service", icon: <MdChat />, path: "door2door" },
   ];
 
   return (
-    <div className="relative w-[17rem] h-full flex justify-center items-center">
-      {/* Toggle Button above the Sidebar */}
-
-      {/* Sidebar container */}
+    <div
+      className={`relative h-screen bg-[#111214BF] transition-all duration-300 ease-in-out ${
+        isOpen ? "w-64" : "w-20"
+      }`}
+    >
       <div
-        className={`transition-all duration-300 ${
-          OpenSidebar ? "w-[20%]" : "w-[5%]"
-        } h-[90%] flex-auto justify-center flex items-center px-2 py-3`}
+        className="absolute top-4 -right-3 bg-gray-800 rounded-full p-1 cursor-pointer"
+        onClick={toggleSidebar}
       >
-        <div
-          className="absolute top-32 left-[90%] transform -translate-x-1/2 bg-gray-800 p-2 rounded-full cursor-pointer z-10"
-          onClick={HandleSideMenu}
-        >
-          <MdArrowRight
-            size={30}
-            className={`text-white transition-transform duration-300 ${
-              OpenSidebar ? "" : "rotate-180"
-            }`}
-          />
-        </div>
-        <ul
-          className={`transition-all duration-300 ${
-            OpenSidebar ? "w-[80%]" : "w-[20%]"
-          } h-[70%] flex justify-center flex-col relative bg-[#111214BF] rounded-lg`}
-        >
-          {/* Menu items */}
-          {MenuItems.map((item, index) => (
-            <li
-              key={index}
-              className="flex items-center justify-center w-full h-full cursor-pointer"
-              onClick={() =>
-                item.action ? item.action() : handleNavigation(item.path)
-              }
-            >
-              <div className="flex items-center justify-center text-sm hover:bg-black px-3  py-2 rounded-md w-[90%] transition-all duration-200">
-                <span className="text-xl">{item.icon}</span>
-                {OpenSidebar && (
-                  <span className="ml-2 font-semibold">{item.label}</span>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
+        <MdArrowRight
+          size={24}
+          className={`text-white transition-transform duration-300 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+      </div>
+      <div className="flex flex-col h-full pt-16 px-4">
+        {MenuItems.map((item, index) => (
+          <div
+            key={index}
+            className="flex items-center mb-4 cursor-pointer hover:bg-black rounded-md transition-colors duration-200"
+            onClick={() => handleNavigation(item.path)}
+          >
+            <div className="p-2 rounded-md">
+              <span className="text-2xl text-white">{item.icon}</span>
+            </div>
+            {isOpen && (
+              <span className="ml-2 text-white font-semibold">
+                {item.label}
+              </span>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
