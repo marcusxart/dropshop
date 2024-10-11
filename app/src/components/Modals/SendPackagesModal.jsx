@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { FaRegEdit, FaRegThumbsUp } from "react-icons/fa";
 import { MdLocationOn, MdOutlineClear } from "react-icons/md";
-import SearchModal from "./SearchModal";
+// import SearchModal from "./SearchModal";
+import Pickdetails from "./Pickdetails";
 
 const SendPackagesModal = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // State for SearchModal
@@ -15,11 +16,11 @@ const SendPackagesModal = () => {
   };
 
   return (
-    <div className="w-[40rem] h-[35rem] bg-black max-md:w-[23rem] rounded-lg flex-col flex justify-around items-center">
+    <div className="w-[40rem] h-[35rem]  bg-black max-md:w-[23rem] rounded-lg flex-col flex justify-around items-center">
       {isSearchModalOpen ? (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
           <div className="relative ">
-            <SearchModal />
+            <Pickdetails />
             <button
               className="absolute top-2 right-2 border px-2 rounded-lg py-1 text-white"
               onClick={handleCloseSearchModal} // Close SearchModal on click
@@ -31,7 +32,7 @@ const SendPackagesModal = () => {
       ) : (
         // SendPackagesModal content when SearchModal is not open
         <>
-          <div className="w-full h-[20%] flex justify-center items-start flex-col px-8">
+          <div className="w-full h-[20%]  flex justify-center items-start flex-col px-8">
             <p className="font-semibold text-2xl max-md:text-xl">
               Send Packages in Abuja
             </p>
