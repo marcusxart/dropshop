@@ -9,7 +9,7 @@ const Profile = () => {
             <img src="" alt="" />
           </div>
 
-          <div className="w-[30px] h-[30px] bg-[#f8c534] rounded-full flex justify-center items-center">
+          <div className="w-[30px] h-[30px] bg-[#f8c534] cursor-pointer rounded-full flex justify-center items-center">
             <FaRegEdit size={20} className="text-black" />
           </div>
         </div>

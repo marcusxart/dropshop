@@ -44,7 +44,7 @@ const Sidebar = () => {
           }`}
         />
       </div>
-      <div className="flex flex-col h-full pt-16 px-4">
+      <div className="flex flex-col h-full pt-16 px-4 ">
         {MenuItems.map((item, index) => (
           <div
             key={index}

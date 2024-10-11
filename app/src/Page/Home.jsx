@@ -3,11 +3,11 @@ import { GiCardPickup } from "react-icons/gi";
 import { TbTruckDelivery } from "react-icons/tb";
 import { MdOutlineClear } from "react-icons/md";
 import { FaRegThumbsUp } from "react-icons/fa";
-import SendPackagesModal from "../components/Modals/SendPackagesModal";
+import SendPackagesModal from "../components/Modals/SendPackagesModal"; // Import the modal component
 
 const Home = () => {
   const [selectedOption, setSelectedOption] = useState("Delivery");
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false); // State for modal visibility
 
   const card = [
     {
@@ -24,89 +24,95 @@ const Home = () => {
     },
   ];
 
+  // Reorder the card array based on the selected option
   const reorderedCards = card.sort((a, b) =>
     a.id === selectedOption ? -1 : b.id === selectedOption ? 1 : 0
   );
 
   const handleCardClick = (id) => {
-    setSelectedOption(id);
+    setSelectedOption(id); // Set the selected option when a card is clicked
   };
 
   const handleConfirm = () => {
     if (selectedOption) {
-      setOpenModal(true);
+      setOpenModal(true); // Open the modal when confirm is clicked
     }
   };
 
   const closeModal = () => {
-    setOpenModal(false);
+    setOpenModal(false); // Close the modal
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center p-4">
-      {openModal ? (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 p-4">
-          <div className="relative w-full max-w-md">
+    <div className="w-full h-screen flex flex-col justify-center items-center max-md:h-[45rem]">
+      {openModal ? ( // Show only the modal if openModal is true
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+          <div className="relative">
             <SendPackagesModal />
             <button
-              className="absolute top-2 right-2 border rounded-lg text-white p-1"
-              onClick={closeModal}
+              className="absolute top-4 right-5 border rounded-lg text-white"
+              onClick={closeModal} // Close modal on click
             >
-              <MdOutlineClear size={24} />
+              <MdOutlineClear size={30} /> {/* Close button */}
             </button>
           </div>
         </div>
       ) : (
+        // Render the home content if modal is not open
         <>
-          <div className="w-full text-center mb-8">
-            <p className="text-2xl md:text-4xl font-bold">
+          <div className="w-[90%] h-[15%] flex justify-center items-center">
+            <p className="text-4xl font-bold">
               I want to{" "}
               <span className="font-bold text-[#f8c534]">
-                {selectedOption ? selectedOption : "Delivery"}
+                {selectedOption ? selectedOption : "Delivery"}{" "}
+                {/* Dynamic text */}
               </span>
             </p>
           </div>
-          <div className="w-full max-w-md relative h-[400px] md:h-[500px] mb-8">
-            {reorderedCards.map((cards, index) => (
-              <div
-                key={index}
-                className={`w-full h-full cursor-pointer rounded-lg flex flex-col justify-center items-center absolute
-                transition-all duration-700 ease-in-out transform border p-4
+          <div className="w-[90%] h-[80%] flex flex-col items-center max-md:w-[100%]">
+            <div className="w-[80%] h-[80%] flex justify-around flex-wrap items-center max-md:w-[100%] relative">
+              {reorderedCards.map((cards, index) => (
+                <div
+                  key={index}
+                  className={`w-[40%] h-[80%] cursor-pointer rounded-lg flex flex-col justify-center items-center absolute
+                transition-all duration-700 ease-in-out transform border 
                 ${
                   selectedOption === cards.id
-                    ? "border-[#f8c534] translate-x-0 scale-100 z-10 bg-black"
-                    : "border-transparent bg-[#111214BF] translate-x-[85%] scale-90 opacity-60 z-0"
-                }`}
-                onClick={() => handleCardClick(cards.id)}
-              >
-                <div className="w-full flex flex-col gap-2 items-center mb-4">
-                  {cards.icon}
-                  <h2 className="text-xl md:text-2xl font-bold">
-                    {cards.title}
-                  </h2>
+                    ? "border-[#f8c534] translate-x-[-40%] bg-black max-md:w-[90%]  scale-110" // Selected card slides and enlarges
+                    : "border-transparent bg-[#111214BF]  z-0 translate-x-[70%] scale-90 opacity-60" // Non-selected cards shrink and fade
+                }`} // Conditionally apply border and background
+                  onClick={() => handleCardClick(cards.id)} // Handle click event
+                >
+                  <div className="w-full h-[50%] flex flex-col gap-2 justify-center items-center">
+                    {cards.icon}
+                    <h2 className="text-2xl font-bold">{cards.title}</h2>
+                  </div>
+                  <div className="w-full h-[30%] flex justify-center items-center text-center">
+                    <p>{cards.text}</p>
+                  </div>
+                  <div className="w-full h-[20%] flex justify-center items-center">
+                    <span
+                      className={`w-[20px] h-[20px] rounded-full bg-gray-400 `}
+                    ></span>
+                  </div>
                 </div>
-                <div className="w-full text-center mb-4">
-                  <p className="text-sm md:text-base">{cards.text}</p>
-                </div>
-                <div className="w-full flex justify-center">
-                  <span className="w-4 h-4 rounded-full bg-gray-400"></span>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="w-full flex justify-center">
-            <button
-              className={`px-5 py-2 flex justify-center items-center gap-2 rounded-lg font-semibold transition-all
+              ))}
+            </div>
+
+            <div className="w-[80%] h-[20%] flex justify-center items-center">
+              <button
+                className={`px-7 py-2 flex justify-center items-center gap-2 rounded-lg font-semibold transition-all
               ${
                 selectedOption
-                  ? "bg-gray-600 text-white"
+                  ? "bg-gray-200 text-gray-800"
                   : "bg-slate-300 text-gray-400"
-              }`}
-              disabled={!selectedOption}
-              onClick={handleConfirm}
-            >
-              Confirm <FaRegThumbsUp />
-            </button>
+              }`} // Conditionally change button color
+                disabled={!selectedOption} // Disable button if no option is selected
+                onClick={handleConfirm} // Open modal on confirm click
+              >
+                Confirm <FaRegThumbsUp />
+              </button>
+            </div>
           </div>
         </>
       )}
