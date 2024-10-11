@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTable } from "react-table";
 import { FaMap } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
+import DeliveryModal from "../components/Modals/DeliveryModal";
 
-// Sample order data
 const orders = [
   {
     id: 1,
@@ -36,6 +36,14 @@ const orders = [
 ];
 
 const Orders = () => {
+  const [openModal, setOpenModal] = useState(false); // Modal state
+  const [selectedOrder, setSelectedOrder] = useState(null); // Store selected order
+
+  const toggleModal = (order) => {
+    setSelectedOrder(order);
+    setOpenModal(!openModal);
+  };
+
   const columns = React.useMemo(
     () => [
       {
@@ -105,8 +113,12 @@ const Orders = () => {
     });
 
   return (
-    <div className="w-full min-h-screen p-4 scrollbar-hide overflow-y-scroll">
-      <div className="max-w-7xl mx-auto rounded-lg shadow-md overflow-hidden">
+    <div className="relative w-full min-h-screen p-4 scrollbar-hide overflow-y-scroll">
+      <div
+        className={`max-w-7xl mx-auto rounded-lg shadow-md overflow-hidden ${
+          openModal ? "opacity-50" : ""
+        }`} // Adjust opacity when modal is open
+      >
         <div className="overflow-x-auto max-md:w-[22.4rem]">
           <table
             {...getTableProps()}
@@ -134,6 +146,7 @@ const Orders = () => {
                   <tr
                     {...row.getRowProps()}
                     className="hover:bg-gray-900 cursor-pointer"
+                    onClick={() => toggleModal(row.original)} // Open modal on row click
                     key={row.id}
                   >
                     {row.cells.map((cell) => (
@@ -152,6 +165,14 @@ const Orders = () => {
           </table>
         </div>
       </div>
+
+      {/* Modal */}
+      {openModal && (
+        <DeliveryModal
+          order={selectedOrder}
+          closeModal={() => setOpenModal(false)}
+        />
+      )}
     </div>
   );
 };
