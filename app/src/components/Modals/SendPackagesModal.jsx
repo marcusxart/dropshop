@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FaRegEdit, FaRegThumbsUp } from "react-icons/fa";
 import { MdLocationOn, MdOutlineClear } from "react-icons/md";
-// import SearchModal from "./SearchModal";
-import Pickdetails from "./Pickdetails";
+import SearchModal from "./SearchModal";
+// import Pickdetails from "./Pickdetails";
 
 const SendPackagesModal = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // State for SearchModal
@@ -20,7 +20,7 @@ const SendPackagesModal = () => {
       {isSearchModalOpen ? (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
           <div className="relative ">
-            <Pickdetails />
+            <SearchModal />
             <button
               className="absolute top-2 right-2 border px-2 rounded-lg py-1 text-white"
               onClick={handleCloseSearchModal} // Close SearchModal on click
