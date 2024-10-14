@@ -111,7 +111,7 @@ const Orderhistory = () => {
     <div className="w-full h-screen">
       {/* Filter Options */}
       <div className="w-full h-[10%] flex justify-end px-2 items-center">
-        <div className="w-[25%] h-[90%] flex justify-around items-center">
+        <div className="w-[25%] h-[90%] flex justify-around items-center max-md:w-[80%]">
           <select
             name="By Status"
             className="w-[40%] h-[70%] px-1 border-gray-500 rounded border-2 outline-none bg-transparent text-slate-200 font-bold"
@@ -128,7 +128,7 @@ const Orderhistory = () => {
       </div>
 
       {/* Order Table */}
-      <div className="overflow-x-auto max-md:w-[22.4rem]">
+      <div className="overflow-x-auto max-md:w-[24.3rem]">
         <table
           {...getTableProps()}
           className="w-full table-auto bg-black max-md:w-[20rem] overflow-x-scroll"
