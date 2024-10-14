@@ -1,7 +1,7 @@
 import { BiMap } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 
-const DeliveryModal = ({ order, closeModal }) => {
+const DeliveryModal = ({ closeModal }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="bg-black  p-8 rounded-lg shadow-lg w-[40rem] h-[30rem] relative">
