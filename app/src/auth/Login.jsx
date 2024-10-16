@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setCustomer } from "../Global/customerSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,6 +14,8 @@ const Login = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [loading, setloading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const HandleLogin = async (e) => {
     e.preventDefault();
@@ -30,8 +34,9 @@ const Login = () => {
           navigate("/user/home");
         }, 2000);
       }
+      dispatch(setCustomer(response.data));
     } catch (error) {
-      toast.error(error.response?.data?.message || "Registration failed!");
+      toast.error(error.response?.data?.message || "Login Failed!");
     } finally {
       toast.dismiss(toastLoading);
       setloading(false);
@@ -60,7 +65,7 @@ const Login = () => {
         />
         <Button
           type="submit"
-          text={loading ? "Signing..." : "Create Account"}
+          text={loading ? "Signing..." : "Sign In"}
           full
           border
           disabled={loading}
