@@ -4,7 +4,7 @@ import { MdClose } from "react-icons/md";
 const DeliveryModal = ({ closeModal }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="bg-black  p-8 rounded-lg shadow-lg w-[40rem] h-[30rem] relative">
+      <div className="bg-red-500  p-8 rounded-lg shadow-lg w-[40rem] h-[30rem] relative max-md:w-[20rem]">
         <button
           onClick={closeModal}
           className="absolute top-2 right-2 text-white font-bold text-2xl"
