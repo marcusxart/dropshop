@@ -2,11 +2,44 @@ import InputField from "../components/InputField/index";
 import Button from "../components/Button";
 import { MdArrowRightAlt } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [loading, setloading] = useState(false);
+
+  const HandleLogin = async (e) => {
+    e.preventDefault();
+    setloading(true);
+
+    const toastLoading = toast.loading("Please wait...");
+
+    const data = { email, password };
+    try {
+      const response = await axios.post("http://localhost:5000/login", data);
+
+      if (response.status === 201 || response.status === 200) {
+        toast.success("Registration successful! Redirecting to Home...");
+
+        setTimeout(() => {
+          navigate("/user/home");
+        }, 2000);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Registration failed!");
+    } finally {
+      toast.dismiss(toastLoading);
+      setloading(false);
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={HandleLogin}>
       <div className="flex flex-col gap-[20px]">
         <div className="w-full h-[4rem] flex justify-center items-center">
           <p className=" font-semibold text-xl">Login To DropShop </p>
@@ -14,19 +47,23 @@ const Login = () => {
         <InputField
           placeholder="Enter your email address…"
           type="email"
+          value={email}
+          onChange={setemail}
           required
         />
         <InputField
           placeholder="Enter your password"
           type="password"
+          value={password}
+          onChange={setpassword}
           required
         />
         <Button
           type="submit"
-          text="Login your account"
+          text={loading ? "Signing..." : "Create Account"}
           full
           border
-          // Disable button while loading
+          disabled={loading}
         />
       </div>
 
