@@ -3,6 +3,7 @@ import { useTable } from "react-table";
 import { FaMap } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
 import DeliveryModal from "../components/Modals/DeliveryModal";
+import { useSelector } from "react-redux";
 
 const orders = [
   {
@@ -37,7 +38,10 @@ const orders = [
 
 const Orders = () => {
   const [openModal, setOpenModal] = useState(false); // Modal state
-  const [selectedOrder, setSelectedOrder] = useState(null); // Store selected order
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  const customerOrder = useSelector((state) => state.customer.orders);
+  console.log(customerOrder);
 
   const toggleModal = (order) => {
     setSelectedOrder(order);

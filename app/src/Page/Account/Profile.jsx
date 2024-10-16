@@ -3,8 +3,8 @@ import { FaRegEdit } from "react-icons/fa";
 const Profile = () => {
   return (
     <div className="w-full h-screen flex justify-center items-center scrollbar-hide overflow-y-scroll">
-      <div className="w-[50%] h-[90%] bg-[#0B0C0D] rounded-lg max-md:w-[90%] max-md:h-[80%]">
-        <div className="w-full h-[20%]  flex justify-center gap-2 items-center max-md:h-[30%]">
+      <div className="w-[50%] h-[80%] bg-[#0B0C0D] rounded-lg max-md:w-[90%] max-md:h-[80%]">
+        <div className="w-full h-[27%] flex justify-center gap-2 items-center max-md:h-[30%]">
           <div className="w-[90px] h-[90px] rounded-full border">
             <img src="" alt="" />
           </div>
@@ -13,7 +13,7 @@ const Profile = () => {
             <FaRegEdit size={20} className="text-black" />
           </div>
         </div>
-        <div className="w-full h-[20%] flex justify-around items-center">
+        <div className="w-full h-[23%]  flex justify-around items-center">
           <div className="w-[40%] h-[60%] flex flex-col justify-center items-start gap-1 max-md:h-[70%] ">
             <label htmlFor="" className=" font-semibold text-gray-500">
               First Name
@@ -41,7 +41,7 @@ const Profile = () => {
             />
           </div>
         </div>
-        <div className="w-full h-[20%]   flex justify-around items-center">
+        <div className="w-full h-[23%]   flex justify-around items-center">
           <div className="w-[40%] h-[60%] flex flex-col justify-center items-start gap-1 max-md:h-[70%]">
             <label htmlFor="" className=" font-semibold text-gray-500">
               Phone Number

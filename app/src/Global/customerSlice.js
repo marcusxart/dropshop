@@ -13,8 +13,12 @@ const CustomerSlice = createSlice({
     setOrders: (state, action) => {
       state.orders = action.payload;
     },
+    clearCustomers: (state) => {
+      state.Customer = [];
+      state.orders = [];
+    },
   },
 });
 
-export const { setCustomer, setOrders } = CustomerSlice.actions;
+export const { setCustomer, setOrders, clearCustomers } = CustomerSlice.actions;
 export default CustomerSlice.reducer;
