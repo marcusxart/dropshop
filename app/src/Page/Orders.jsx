@@ -5,37 +5,6 @@ import { BiMap } from "react-icons/bi";
 import DeliveryModal from "../components/Modals/DeliveryModal";
 import { useSelector } from "react-redux";
 
-const orders = [
-  {
-    id: 1,
-    rider: "John Doe",
-    orderType: "Delivery",
-    orderStatus: "In Progress",
-    location: "123 Main St, City",
-    activity: "En route",
-    price: "$150.00",
-  },
-  {
-    id: 2,
-    rider: "Jane Smith",
-    orderType: "Pickup",
-    orderStatus: "Completed",
-    location: "456 Elm St, Town",
-    activity: "Delivered",
-    price: "$75.50",
-  },
-  {
-    id: 3,
-    rider: "Bob Johnson",
-    orderType: "Delivery",
-    orderStatus: "Pending",
-    location: "789 Oak St, Village",
-    activity: "Waiting",
-    price: "$200.25",
-  },
-  // Add more orders as needed
-];
-
 const Orders = () => {
   const [openModal, setOpenModal] = useState(false); // Modal state
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -108,7 +77,8 @@ const Orders = () => {
     []
   );
 
-  const data = React.useMemo(() => orders, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const data = React.useMemo(() => customerOrder, []);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
@@ -123,7 +93,7 @@ const Orders = () => {
           openModal ? "opacity-50" : ""
         }`} // Adjust opacity when modal is open
       >
-        <div className="overflow-x-auto max-md:w-[22.4rem]">
+        <div className="overflow-x-auto max-md:w-[21rem]">
           <table
             {...getTableProps()}
             className="w-full table-auto overflow-x-scroll bg-black max-md:w-[20rem]"
@@ -134,7 +104,7 @@ const Orders = () => {
                   {headerGroup.headers.map((column) => (
                     <th
                       {...column.getHeaderProps()}
-                      className="px-6 py-3 text-left bg-[#f8c324] text-sm max-md:tex-xs font-semibold text-black uppercase tracking-wider"
+                      className="px-6 py-3 text-left bg-[#f8c324] text-sm max-md:text-xs font-semibold text-black uppercase tracking-wider"
                       key={column.id}
                     >
                       {column.render("Header")}

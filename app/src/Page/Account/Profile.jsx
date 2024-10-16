@@ -1,6 +1,11 @@
 import { FaRegEdit } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
+  const customer = useSelector((state) => state.customer.Customer);
+
+  console.log(customer);
+
   return (
     <div className="w-full h-screen flex justify-center items-center scrollbar-hide overflow-y-scroll">
       <div className="w-[50%] h-[80%] bg-[#0B0C0D] rounded-lg max-md:w-[90%] max-md:h-[80%]">
@@ -13,7 +18,7 @@ const Profile = () => {
             <FaRegEdit size={20} className="text-black" />
           </div>
         </div>
-        <div className="w-full h-[23%]  flex justify-around items-center">
+        <div className="w-full h-[23%]  flex justify-around items-center max-md:h-[15%]">
           <div className="w-[40%] h-[60%] flex flex-col justify-center items-start gap-1 max-md:h-[70%] ">
             <label htmlFor="" className=" font-semibold text-gray-500">
               First Name
@@ -22,7 +27,7 @@ const Profile = () => {
               type="text"
               name=""
               id=""
-              placeholder="Jessica"
+              placeholder={customer.name}
               readOnly
               className="w-full h-[90%] border rounded-md bg-transparent px-2 outline-none"
             />
@@ -35,13 +40,13 @@ const Profile = () => {
               type="text"
               name=""
               id=""
-              placeholder="Ibu"
+              placeholder={customer.name}
               readOnly
               className="w-full h-[90%] border rounded-md bg-transparent px-2 outline-none"
             />
           </div>
         </div>
-        <div className="w-full h-[23%]   flex justify-around items-center">
+        <div className="w-full h-[23%]   flex justify-around items-center max-md:h-[15%]">
           <div className="w-[40%] h-[60%] flex flex-col justify-center items-start gap-1 max-md:h-[70%]">
             <label htmlFor="" className=" font-semibold text-gray-500">
               Phone Number
@@ -63,7 +68,7 @@ const Profile = () => {
               type="text"
               name=""
               id=""
-              placeholder="jes@example.com"
+              placeholder={customer.email}
               readOnly
               className="w-full h-[90%] border rounded-md bg-transparent px-2 outline-none"
             />

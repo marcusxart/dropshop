@@ -2,40 +2,44 @@ import React from "react";
 import { useTable } from "react-table";
 import { FaMap } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
+import { useSelector } from "react-redux";
 
 // Sample data
-const orders = [
-  {
-    id: 1,
-    rider: "John Doe",
-    orderType: "Delivery",
-    orderStatus: "In Progress",
-    location: "123 Main St, City",
-    activity: "En route",
-    price: "$150.00",
-  },
-  {
-    id: 2,
-    rider: "Jane Smith",
-    orderType: "Pickup",
-    orderStatus: "Completed",
-    location: "456 Elm St, Town",
-    activity: "Delivered",
-    price: "$75.50",
-  },
-  {
-    id: 3,
-    rider: "Bob Johnson",
-    orderType: "Delivery",
-    orderStatus: "Pending",
-    location: "789 Oak St, Village",
-    activity: "Waiting",
-    price: "$200.25",
-  },
-];
+// const orders = [
+//   {
+//     id: 1,
+//     rider: "John Doe",
+//     orderType: "Delivery",
+//     orderStatus: "In Progress",
+//     location: "123 Main St, City",
+//     activity: "En route",
+//     price: "$150.00",
+//   },
+//   {
+//     id: 2,
+//     rider: "Jane Smith",
+//     orderType: "Pickup",
+//     orderStatus: "Completed",
+//     location: "456 Elm St, Town",
+//     activity: "Delivered",
+//     price: "$75.50",
+//   },
+//   {
+//     id: 3,
+//     rider: "Bob Johnson",
+//     orderType: "Delivery",
+//     orderStatus: "Pending",
+//     location: "789 Oak St, Village",
+//     activity: "Waiting",
+//     price: "$200.25",
+//   },
+// ];
 
 // Main Orderhistory component
 const Orderhistory = () => {
+  const allHistory = useSelector((state) => state.customer.orderHistory || []);
+  console.log(allHistory);
+
   // Define table columns
   const columns = React.useMemo(
     () => [
@@ -98,7 +102,8 @@ const Orderhistory = () => {
     []
   );
 
-  const data = React.useMemo(() => orders, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const data = React.useMemo(() => allHistory, []);
 
   // Create table instance using useTable hook
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -128,10 +133,10 @@ const Orderhistory = () => {
       </div>
 
       {/* Order Table */}
-      <div className="overflow-x-auto max-md:w-[24.3rem]">
+      <div className="overflow-x-auto max-md:w-[23rem] px-3">
         <table
           {...getTableProps()}
-          className="w-full table-auto bg-black max-md:w-[20rem] overflow-x-scroll"
+          className="w-full table-auto bg-black max-md:w-[20rem] overflow-x-scroll "
         >
           {/* Table Head */}
           <thead>
@@ -140,7 +145,7 @@ const Orderhistory = () => {
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps()}
-                    className="px-6 py-5 text-left bg-[#f8c324] text-sm max-md:text-xs font-semibold text-black uppercase tracking-wider"
+                    className="px-6 py-3 text-left  bg-[#f8c324] text-sm max-md:text-xs font-semibold text-black uppercase tracking-wider"
                     key={column.id}
                   >
                     {column.render("Header")}

@@ -5,6 +5,7 @@ const CustomerSlice = createSlice({
   initialState: {
     Customer: [],
     orders: [],
+    orderHistory: [],
   },
   reducers: {
     setCustomer: (state, action) => {
@@ -13,6 +14,9 @@ const CustomerSlice = createSlice({
     setOrders: (state, action) => {
       state.orders = action.payload;
     },
+    setHistory: (state, action) => {
+      state.orderHistory = action.payload;
+    },
     clearCustomers: (state) => {
       state.Customer = [];
       state.orders = [];
@@ -20,5 +24,6 @@ const CustomerSlice = createSlice({
   },
 });
 
-export const { setCustomer, setOrders, clearCustomers } = CustomerSlice.actions;
+export const { setCustomer, setOrders, clearCustomers, setHistory } =
+  CustomerSlice.actions;
 export default CustomerSlice.reducer;
