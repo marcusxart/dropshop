@@ -7,7 +7,7 @@ import classNames from "classnames";
  * @param {Object} props
  * @param {string} [props.text]
  * @param {boolean} [props.sm]
- * @param {"primary" | "secondary"} [props.type]
+ * @param {"primary" | "secondary" | "submit"} [props.type]
  * @param {boolean} [props.full]
  * @param {boolean} [props.border]
  * @param {Object} [props.icon]

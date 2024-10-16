@@ -1,6 +1,5 @@
 import { Textbox } from "react-inputs-validation";
 import "./style.css";
-// import "react-inputs-validation/lib/react-inputs-validation.min.css";
 
 /**
  *
@@ -16,11 +15,12 @@ import "./style.css";
 const InputField = ({
   placeholder = "Enter text.",
   type = "text",
-  required,
-  check,
+  required = false,
+  check = true,
   onChange,
   value,
 }) => {
+  // Validation rules based on input type
   const validate =
     type === "password"
       ? {
@@ -28,33 +28,37 @@ const InputField = ({
           regMsg:
             "Password must be 8+ characters with 1 uppercase, 1 number, and 1 special character.",
         }
+      : type === "email"
+      ? {
+          reg: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+          regMsg: "Please enter a valid email address.",
+        }
       : {};
+
   return (
-    <>
-      <Textbox
-        value={value}
-        classNameInput="w-full transform duration-60 h-[46px] px-[12px] bg-[#0F1011]  rounded border border-solid border-[#FFC7274D] placeholder:text-[#595A5C] text-[14px] outline-none"
-        attributesInput={{
-          type,
-          placeholder,
-        }}
-        onChange={(value) => {
-          onChange && onChange(value);
-        }}
-        onBlur={() => {}}
-        validationOption={{
-          ...validate,
-          required: required ? "This field is required." : false,
-          check,
-          customFunc: (value) => {
-            if (required && !value) {
-              return "This field is required.";
-            }
-            return true; // Returning true means the validation passed
-          },
-        }}
-      />
-    </>
+    <Textbox
+      value={value}
+      classNameInput="w-full transform duration-60 h-[46px] px-[12px] bg-[#0F1011] rounded border border-solid border-[#FFC7274D] placeholder:text-[#595A5C] text-[14px] outline-none"
+      attributesInput={{
+        type,
+        placeholder,
+      }}
+      onChange={(value) => {
+        onChange && onChange(value);
+      }}
+      onBlur={() => {}}
+      validationOption={{
+        ...validate,
+        required: required ? "This field is required." : false,
+        check,
+        customFunc: (value) => {
+          if (required && !value) {
+            return "This field is required.";
+          }
+          return true; // Validation passed
+        },
+      }}
+    />
   );
 };
 

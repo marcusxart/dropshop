@@ -2,13 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const CustomerSlice = createSlice({
   name: "customer",
-  initialState: {},
+  initialState: {
+    Customer: [],
+    orders: [],
+  },
   reducers: {
     setCustomer: (state, action) => {
-      state.CustomerSlice = action.payload;
+      state.Customer = action.payload;
+    },
+    setOrders: (state, action) => {
+      state.orders = action.payload;
     },
   },
 });
 
-export const { setCustomer } = CustomerSlice.actions;
+export const { setCustomer, setOrders } = CustomerSlice.actions;
 export default CustomerSlice.reducer;
