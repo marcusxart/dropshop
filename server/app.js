@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // root route
-app.use("/", require("./routes"));
+app.use("/api", require("./routes"));
 
 // error middleware
 app.use(errorMiddleware);

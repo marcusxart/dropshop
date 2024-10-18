@@ -35,7 +35,7 @@ const acceptOrder=async(req,res,next)=>{
 
     if (!findOrder) {
         const err = new Error("order not found")
-        err.status= 400
+        err.status= 404
         return next(err)
     }
     findOrder.rider = riderName
@@ -62,7 +62,7 @@ const getAllOrders =async(req,res,next)=>{
 try {
    const getOrders = await Orders.findAll(queryOptions) 
    if (!getOrders) {
-    return res.status(200).json("No orders yet")
+    return res.status(404).json("No orders yet")
   }
   res.status(200).json(getOrders)
 } catch (error) {
@@ -77,7 +77,7 @@ const getOrderById =async(req,res,next) =>{
     const order = await Orders.findByPk(id)
 
     if (!order) {
-        return res.status(200).json("Order not found")
+        return res.status(404).json("Order not found")
       }
       res.status(200).json(order)
 
@@ -112,7 +112,7 @@ const riderOrderHistory = async(req,res,next)=>{
 
     if (!getOrderHistory) {
       const err = new Error("No orders yet")
-      err.status= 400
+      err.status= 404
       return next(err)
     }
     res.status(200).json(getOrderHistory)
@@ -130,7 +130,7 @@ const riderOngoingOrder = async(req,res,next)=>{
 
     if (!ongoingOrder) {
       const err = new Error("No orders yet")
-      err.status= 400
+      err.status= 404
       return next(err)
     }
     res.status(200).json(ongoingOrder)
@@ -147,7 +147,7 @@ const customerOngoingOrder = async(req,res,next)=>{
 
     if (!ongoingOrder) {
       const err = new Error("No orders yet")
-      err.status= 400
+      err.status= 404
       return next(err)
     }
     res.status(200).json(ongoingOrder)

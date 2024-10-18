@@ -2,7 +2,6 @@ const {Users} = require("../database")
 const {Forgetpassword} = require("../database")
 const crypto = require("crypto")
 const bcrypt = require("bcryptjs")
-const { where } = require("sequelize")
 
 const forgetPassword=async(req,res,next)=>{
   const {email} = req.body
@@ -17,7 +16,7 @@ const forgetPassword=async(req,res,next)=>{
   }
   
   const userid = findEmail.id
-  const token = crypto.randomUUID(20).toString("hex")
+  const token = crypto.randomUUID()
   const expiry = Date.now() + 360000 // 1 hour
 
  const passwordReset = await Forgetpassword.create({token,expiry: new Date(expiry), userid})

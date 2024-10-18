@@ -1,6 +1,6 @@
 const api = require("express").Router();
 const {isAuthenticated} = require("../controllers/isauthenticated")
-const {riderAuth,customerAuth} = require("../middlewares/authMiddleware")
+const {riderAuth,customerAuth,checkToken} = require("../middlewares/authMiddleware")
 const {signup,login} = require("../controllers/auth")
 const {signupAdmin,loginAdmin} = require("../controllers/admin")
 const {newPassword,forgetPassword} = require("../controllers/forgetPassword")
@@ -14,7 +14,7 @@ api.get("/", (req, res) => {
 //  add routes here!
 
 //authenticated user
-api.get("/isAuthenticated", isAuthenticated)
+api.get("/isAuthenticated",checkToken, isAuthenticated)
 //customers
 api.post("/signup", signup)
 api.post("/login", login)
