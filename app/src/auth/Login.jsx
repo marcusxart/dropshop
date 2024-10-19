@@ -25,7 +25,10 @@ const Login = () => {
 
     const data = { email, password };
     try {
-      const response = await axios.post("http://localhost:5000/login", data);
+      const response = await axios.post(
+        "http://localhost:5000/api/login",
+        data
+      );
 
       if (response.status === 201 || response.status === 200) {
         toast.success("Registration successful! Redirecting to Home...");
