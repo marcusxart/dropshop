@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const AdminSlice = createSlice({
   name: "admin",
-  initialState: {},
+  initialState: {
+    allCustomers: [],
+  },
   reducers: {
     setAdmin: (state, action) => {
-      state.admin = action.payload;
+      state.allCustomers = action.payload;
     },
   },
 });

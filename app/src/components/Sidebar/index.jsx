@@ -4,9 +4,16 @@ import {
   MdDeliveryDining,
   MdLocalShipping,
   MdChat,
+  MdDashboard,
+  MdPeople,
+  MdExitToApp,
   MdArrowRight,
 } from "react-icons/md";
+import { LuPackageOpen } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+
+// Example role. Replace this with actual state/logic to determine the user role
+const isAdmin = true; // This could be 'admin' or 'customer'
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -20,12 +27,26 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const MenuItems = [
+  // Menu items for both admin and customer
+  const AdminMenuItems = [
+    { label: "Dashboard", icon: <MdDashboard />, path: "overview" },
+    { label: "Riders", icon: <MdDeliveryDining />, path: "all-riders" },
+    { label: "Orders", icon: <LuPackageOpen />, path: "orders" },
+    { label: "Order History", icon: <MdLocalShipping />, path: "history" },
+    { label: "Customers", icon: <MdPeople />, path: "customers" },
+    { label: "Logout", icon: <MdExitToApp />, path: "logout" },
+  ];
+
+  const CustomerMenuItems = [
     { label: "Home", icon: <MdMapsHomeWork />, path: "home" },
     { label: "Orders", icon: <MdDeliveryDining />, path: "orders" },
     { label: "Order History", icon: <MdLocalShipping />, path: "history" },
     { label: "Customer Service", icon: <MdChat />, path: "door2door" },
+    { label: "Logout", icon: <MdExitToApp />, path: "logout" },
   ];
+
+  // Determine which menu items to show based on role
+  const MenuItems = isAdmin ? AdminMenuItems : CustomerMenuItems;
 
   return (
     <div
@@ -44,11 +65,13 @@ const Sidebar = () => {
           }`}
         />
       </div>
-      <div className="flex flex-col h-full pt-16 px-4 ">
+      <div className="flex flex-col h-full pt-16 px-4">
         {MenuItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center mb-4 cursor-pointer hover:bg-black rounded-md transition-colors duration-200"
+            className={`flex items-center mb-4 cursor-pointer rounded-md transition-colors duration-200 ${
+              isAdmin ? "hover:bg-[#f8c324]" : "hover:bg-black"
+            }`}
             onClick={() => handleNavigation(item.path)}
           >
             <div className="p-2 rounded-md">
