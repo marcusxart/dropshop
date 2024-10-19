@@ -71,7 +71,7 @@ const signupAdmin = async(req,res,next)=>{
             role: existingUser.role,
             name: existingUser.name
           };
-          correct ? res.status(200).json({ email, id, isAdmin, name,token: generateToken(userInfo) })
+          correct ? res.status(200).json({ email, id, isAdmin,role, name,token: generateToken(userInfo) })
             : res.status(400).json("incorrect password");
       
         } catch (error) {
