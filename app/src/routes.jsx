@@ -15,6 +15,8 @@ import Adminreg from "./Admin/adminauth/adminreg";
 import Adminlayout from "./Admin/layout/Adminlayout";
 import OverView from "./Admin/page/overview";
 import Riders from "./Admin/page/Riders";
+import Allorders from "./Admin/page/allOrders";
+import AdminHistory from "./Admin/page/adminhistory";
 
 const routes = createBrowserRouter([
   {
@@ -91,6 +93,14 @@ const routes = createBrowserRouter([
       {
         path: "all-riders",
         element: <Riders />,
+      },
+      {
+        path: "all-orders",
+        element: <Allorders />,
+      },
+      {
+        path: "all-history",
+        element: <AdminHistory />,
       },
     ],
   },
