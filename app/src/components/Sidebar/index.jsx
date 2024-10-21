@@ -27,7 +27,7 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  // Menu items for both admin and customer
+  // Menu items for both admin and custoeb
   const AdminMenuItems = [
     { label: "Dashboard", icon: <MdDashboard />, path: "overview" },
     { label: "Riders", icon: <MdDeliveryDining />, path: "all-riders" },
