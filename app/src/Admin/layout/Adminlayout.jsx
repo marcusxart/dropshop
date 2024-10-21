@@ -1,7 +1,9 @@
 import { Outlet } from "react-router-dom";
-import Header from "../../components/Header";
+
 import Sidebar from "../../components/Sidebar";
-import ButtomNav from "../../components/ButtomNav";
+
+import AdminNav from "../../components/ButtomNav/adminNav";
+import AdminHeader from "../../components/Header/adminheader";
 
 const Adminlayout = () => {
   return (
@@ -12,7 +14,7 @@ const Adminlayout = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-full">
         {/* Header */}
-        <Header />
+        <AdminHeader />
 
         {/* Page Content */}
         <div className="flex-1  overflow-auto scrollbar-hide">
@@ -22,7 +24,7 @@ const Adminlayout = () => {
 
       {/* Bottom Navigation: Visible on small screens, hidden on large screens */}
       <div className="lg:hidden fixed bottom-0 w-full">
-        <ButtomNav />
+        <AdminNav />
       </div>
     </div>
   );

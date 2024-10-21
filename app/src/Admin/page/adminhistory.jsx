@@ -114,9 +114,9 @@ const AdminHistory = () => {
   );
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container px-3">
       <div
-        className="mb-4 flex items-center border rounded max-md:w-[97%] py-1
+        className="mb-4 flex items-center border rounded max-md:w-[97%] 
        border-[#f8c324] px-3 w-[50%] "
       >
         <Search />
@@ -125,7 +125,7 @@ const AdminHistory = () => {
           className="p-2 w-[100%] max-md:w-[98%] px-3 outline-none border-gray-900 rounded bg-transparent"
         />
       </div>
-      <div className="w-full h-[90%]  overflow-y-scroll scrollbar-thin scrollbar-hide">
+      <div className="w-full h-[90%]  max-md:w-[22rem] overflow-y-scroll scrollbar-thin scrollbar-hide">
         <Table columns={columns} data={data} />
       </div>
     </div>
