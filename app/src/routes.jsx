@@ -18,6 +18,9 @@ import Riders from "./Admin/page/Riders";
 import Allorders from "./Admin/page/allOrders";
 import AdminHistory from "./Admin/page/adminhistory";
 import Customers from "./Admin/page/customers";
+import RiderAuthWrapper from "./Rider/layouts/RiderAuthWrpper";
+import RiderLogin from "./Rider/Auth/riderlogin";
+import RiderRegister from "./Rider/Auth/ridergister";
 
 const routes = createBrowserRouter([
   {
@@ -106,6 +109,24 @@ const routes = createBrowserRouter([
       {
         path: "all-customers",
         element: <Customers />,
+      },
+    ],
+  },
+  {
+    path: "rider-auth",
+    element: <RiderAuthWrapper />,
+    children: [
+      {
+        index: true,
+        element: <RiderLogin />,
+      },
+      {
+        path: "rider-login",
+        element: <RiderLogin />,
+      },
+      {
+        path: "rider-reg",
+        element: <RiderRegister />,
       },
     ],
   },
