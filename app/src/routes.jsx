@@ -17,6 +17,7 @@ import OverView from "./Admin/page/overview";
 import Riders from "./Admin/page/Riders";
 import Allorders from "./Admin/page/allOrders";
 import AdminHistory from "./Admin/page/adminhistory";
+import Customers from "./Admin/page/customers";
 
 const routes = createBrowserRouter([
   {
@@ -101,6 +102,10 @@ const routes = createBrowserRouter([
       {
         path: "all-history",
         element: <AdminHistory />,
+      },
+      {
+        path: "all-customers",
+        element: <Customers />,
       },
     ],
   },
