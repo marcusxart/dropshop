@@ -114,10 +114,7 @@ const AdminHistory = () => {
   );
 
   return (
-    <div
-      className="container mx-auto 
-    "
-    >
+    <div className="container mx-auto px-4">
       <div
         className="mb-4 flex items-center border rounded max-md:w-[97%] py-1
        border-[#f8c324] px-3 w-[50%] "
