@@ -124,7 +124,7 @@ const Riders = () => {
           value={globalFilter || ""}
           onChange={(e) => setGlobalFilter(e.target.value)}
           placeholder="Search riders..."
-          className="p-2 border-2 outline-none border-gray-900 rounded bg-transparent"
+          className="p-2 border-2 w-[40%] max-md:w-[98%] px-3 outline-none border-gray-900 rounded bg-transparent"
         />
       </div>
       <div className="overflow-x-auto shadow-md sm:rounded-lg bg-black max-md:w-[22rem]">
