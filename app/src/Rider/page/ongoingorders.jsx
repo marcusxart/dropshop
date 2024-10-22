@@ -1,5 +1,5 @@
 const Ongoing = () => {
-  return <div>Ongoing</div>;
+  return <div className="">Ongoing</div>;
 };
 
 export default Ongoing;
