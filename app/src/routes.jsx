@@ -21,6 +21,10 @@ import Customers from "./Admin/page/customers";
 import RiderAuthWrapper from "./Rider/layouts/RiderAuthWrpper";
 import RiderLogin from "./Rider/Auth/riderlogin";
 import RiderRegister from "./Rider/Auth/ridergister";
+import Riderlayout from "./Rider/layouts/RiderLayout";
+import RiderOrders from "./Rider/page/orders";
+import Ongoing from "./Rider/page/ongoingorders";
+import RiderHistory from "./Rider/page/riderhistory";
 
 const routes = createBrowserRouter([
   {
@@ -127,6 +131,24 @@ const routes = createBrowserRouter([
       {
         path: "rider-reg",
         element: <RiderRegister />,
+      },
+    ],
+  },
+  {
+    path: "rider",
+    element: <Riderlayout />,
+    children: [
+      {
+        path: "orders",
+        element: <RiderOrders />,
+      },
+      {
+        path: "ongoing-orders",
+        element: <Ongoing />,
+      },
+      {
+        path: "order-history",
+        element: <RiderHistory />,
       },
     ],
   },

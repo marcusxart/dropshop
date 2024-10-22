@@ -55,6 +55,24 @@ const RiderRegister = () => {
           onChange={setName}
         />
         <InputField
+          placeholder="Enter your Guarantor Name"
+          type="text"
+          value={name}
+          onChange={setName}
+        />
+        <InputField
+          placeholder="Enter your Guarantor Number"
+          type="text"
+          value={name}
+          onChange={setName}
+        />
+        <InputField
+          placeholder="Enter your  Number"
+          type="text"
+          value={name}
+          onChange={setName}
+        />
+        <InputField
           placeholder="Enter your email address"
           type="email"
           value={email}

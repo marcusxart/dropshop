@@ -12,8 +12,8 @@ import {
 import { LuPackageOpen } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
-// Example role. Replace this with actual state/logic to determine the user role
-const isAdmin = true; // This could be 'admin' or 'customer'
+// Example roles. Replace these with actual state/logic to determine the user role
+const role = "rider"; // This could be 'admin', 'customer', or 'rider'
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  // Menu items for both admin and custoeb
+  // Menu items for each role
   const AdminMenuItems = [
     { label: "Dashboard", icon: <MdDashboard />, path: "overview" },
     { label: "Riders", icon: <MdDeliveryDining />, path: "all-riders" },
@@ -45,8 +45,24 @@ const Sidebar = () => {
     { label: "Logout", icon: <MdExitToApp />, path: "logout" },
   ];
 
+  const RiderMenuItems = [
+    { label: "Orders", icon: <MdDeliveryDining />, path: "rider-orders" }, // All orders for rider
+    {
+      label: "Ongoing Orders",
+      icon: <MdLocalShipping />,
+      path: "rider-ongoing-orders",
+    }, // Ongoing orders
+    { label: "History", icon: <LuPackageOpen />, path: "rider-history" }, // Order history
+    { label: "Logout", icon: <MdExitToApp />, path: "logout" },
+  ];
+
   // Determine which menu items to show based on role
-  const MenuItems = isAdmin ? AdminMenuItems : CustomerMenuItems;
+  const MenuItems =
+    role === "admin"
+      ? AdminMenuItems
+      : role === "customer"
+      ? CustomerMenuItems
+      : RiderMenuItems; // Assign menu for rider role
 
   return (
     <div
@@ -70,7 +86,7 @@ const Sidebar = () => {
           <div
             key={index}
             className={`flex items-center mb-4 cursor-pointer rounded-md transition-colors duration-200 ${
-              isAdmin ? "hover:bg-[#f8c324]" : "hover:bg-black"
+              role === "admin" ? "hover:bg-[#f8c324]" : "hover:bg-black"
             }`}
             onClick={() => handleNavigation(item.path)}
           >
