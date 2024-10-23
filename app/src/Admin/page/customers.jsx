@@ -50,9 +50,9 @@ const Customers = () => {
   ];
 
   return (
-    <div className="container px-3">
+    <div className="container">
       <div
-        className="mb-4 flex items-center border rounded max-md:w-[97%] py-1
+        className="mb-4 flex items-center border rounded max-md:w-[98%] py-1
        border-[#f8c324] px-3 w-[50%]"
       >
         <Search />

@@ -33,7 +33,7 @@ const Adminlogin = () => {
         toast.success("Login Successful ! Redirecting to Home...");
 
         setTimeout(() => {
-          navigate("/admin");
+          navigate("/admin/overview");
         }, 2000);
       }
       dispatch(response.data);
