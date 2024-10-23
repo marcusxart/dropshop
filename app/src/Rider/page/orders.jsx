@@ -65,7 +65,7 @@ const RiderOrders = () => {
       </div>
       {isAvailable ? (
         <div className="w-full h-[80%]">
-          <div className="w-full h-[70rem] space-y-4 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 scrollbar-hide flex flex-col items-center py-2">
+          <div className="w-full h-screen space-y-4 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 scrollbar-hide flex flex-col items-center py-2">
             {orders.map((order) => (
               <div
                 key={order.id}
