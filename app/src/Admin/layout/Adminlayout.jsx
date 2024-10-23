@@ -1,15 +1,14 @@
 import { Outlet } from "react-router-dom";
 
-import Sidebar from "../../components/Sidebar";
-
 import AdminNav from "../../components/ButtomNav/adminNav";
 import AdminHeader from "../../components/Header/adminheader";
+import AdminSidebar from "../../components/Sidebar/adminsidebar";
 
 const Adminlayout = () => {
   return (
     <div className=" flex h-screen ">
       <div className="hidden lg:block">
-        <Sidebar />
+        <AdminSidebar />
       </div>
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-full">

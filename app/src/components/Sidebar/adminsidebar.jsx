@@ -1,6 +1,8 @@
 import {
+  MdDashboard,
   MdDeliveryDining,
   MdLocalShipping,
+  MdPeople,
   MdExitToApp,
   MdArrowRight,
 } from "react-icons/md";
@@ -8,7 +10,7 @@ import { LuPackageOpen } from "react-icons/lu";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const RiderSidebar = () => {
+const AdminSidebar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
 
@@ -20,14 +22,12 @@ const RiderSidebar = () => {
     navigate(path);
   };
 
-  const RiderMenuItems = [
-    { label: "Orders", icon: <MdDeliveryDining />, path: "rider-orders" },
-    {
-      label: "Ongoing Orders",
-      icon: <MdLocalShipping />,
-      path: "rider-ongoing-orders",
-    },
-    { label: "History", icon: <LuPackageOpen />, path: "rider-history" },
+  const AdminMenuItems = [
+    { label: "Dashboard", icon: <MdDashboard />, path: "overview" },
+    { label: "Riders", icon: <MdDeliveryDining />, path: "all-riders" },
+    { label: "Orders", icon: <LuPackageOpen />, path: "all-orders" },
+    { label: "Order History", icon: <MdLocalShipping />, path: "all-history" },
+    { label: "Customers", icon: <MdPeople />, path: "all-customers" },
     { label: "Logout", icon: <MdExitToApp />, path: "logout" },
   ];
 
@@ -49,10 +49,10 @@ const RiderSidebar = () => {
         />
       </div>
       <div className="flex flex-col h-full pt-16 px-4">
-        {RiderMenuItems.map((item, index) => (
+        {AdminMenuItems.map((item, index) => (
           <div
             key={index}
-            className={`flex items-center mb-4 cursor-pointer rounded-md transition-colors duration-200 hover:bg-black`}
+            className={`flex items-center mb-4 cursor-pointer rounded-md transition-colors duration-200 hover:bg-[#f8c324]`}
             onClick={() => handleNavigation(item.path)}
           >
             <div className="p-2 rounded-md">
@@ -70,4 +70,4 @@ const RiderSidebar = () => {
   );
 };
 
-export default RiderSidebar;
+export default AdminSidebar;

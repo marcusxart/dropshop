@@ -1,14 +1,15 @@
 import {
+  MdMapsHomeWork,
   MdDeliveryDining,
   MdLocalShipping,
+  MdChat,
   MdExitToApp,
   MdArrowRight,
 } from "react-icons/md";
-import { LuPackageOpen } from "react-icons/lu";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const RiderSidebar = () => {
+const CustomerSidebar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
 
@@ -20,14 +21,11 @@ const RiderSidebar = () => {
     navigate(path);
   };
 
-  const RiderMenuItems = [
-    { label: "Orders", icon: <MdDeliveryDining />, path: "rider-orders" },
-    {
-      label: "Ongoing Orders",
-      icon: <MdLocalShipping />,
-      path: "rider-ongoing-orders",
-    },
-    { label: "History", icon: <LuPackageOpen />, path: "rider-history" },
+  const CustomerMenuItems = [
+    { label: "Home", icon: <MdMapsHomeWork />, path: "home" },
+    { label: "Orders", icon: <MdDeliveryDining />, path: "orders" },
+    { label: "Order History", icon: <MdLocalShipping />, path: "history" },
+    { label: "Customer Service", icon: <MdChat />, path: "door2door" },
     { label: "Logout", icon: <MdExitToApp />, path: "logout" },
   ];
 
@@ -49,7 +47,7 @@ const RiderSidebar = () => {
         />
       </div>
       <div className="flex flex-col h-full pt-16 px-4">
-        {RiderMenuItems.map((item, index) => (
+        {CustomerMenuItems.map((item, index) => (
           <div
             key={index}
             className={`flex items-center mb-4 cursor-pointer rounded-md transition-colors duration-200 hover:bg-black`}
@@ -70,4 +68,4 @@ const RiderSidebar = () => {
   );
 };
 
-export default RiderSidebar;
+export default CustomerSidebar;

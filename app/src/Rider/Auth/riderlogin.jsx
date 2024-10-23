@@ -10,8 +10,8 @@ import { useDispatch } from "react-redux";
 const RiderLogin = () => {
   const navigate = useNavigate();
 
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
+  const [riderName, setRiderName] = useState("");
+  const [riderpassword, setRiderpassword] = useState("");
   const [loading, setloading] = useState(false);
 
   const dispatch = useDispatch();
@@ -22,10 +22,10 @@ const RiderLogin = () => {
 
     const toastLoading = toast.loading("Please wait...");
 
-    const data = { email, password };
+    const data = { riderName, riderpassword };
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/login",
+        "http://localhost:5000/api/loginRider",
         data
       );
 
@@ -33,7 +33,7 @@ const RiderLogin = () => {
         toast.success("Registration successful! Redirecting to Home...");
 
         setTimeout(() => {
-          navigate("/user/home");
+          navigate("/rider/orders");
         }, 2000);
       }
       dispatch();
@@ -52,17 +52,17 @@ const RiderLogin = () => {
           <p className=" font-semibold text-xl">Rider Login</p>
         </div>
         <InputField
-          placeholder="Enter your email address…"
-          type="email"
-          value={email}
-          onChange={setemail}
+          placeholder="Enter your Name"
+          type="text"
+          value={riderName}
+          onChange={setRiderName}
           required
         />
         <InputField
           placeholder="Enter your password"
           type="password"
-          value={password}
-          onChange={setpassword}
+          value={riderpassword}
+          onChange={setRiderpassword}
           required
         />
         <Button

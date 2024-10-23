@@ -11,9 +11,21 @@ const RiderRegister = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [guarantor, setGuarantorName] = useState("");
+  const [guarantorNumber, setGuarantorNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [riderNumber, setRiderNumber] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const data = { name, email, password };
+  const data = {
+    name,
+    email,
+    password,
+    guarantor,
+    guarantorNumber,
+    riderNumber,
+    address,
+  };
 
   const HandleRegister = async (e) => {
     e.preventDefault();
@@ -23,7 +35,7 @@ const RiderRegister = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/signup",
+        "http://localhost:5000/api/registerRider",
         data
       );
 
@@ -57,20 +69,26 @@ const RiderRegister = () => {
         <InputField
           placeholder="Enter your Guarantor Name"
           type="text"
-          value={name}
-          onChange={setName}
+          value={guarantor}
+          onChange={setGuarantorName}
         />
         <InputField
           placeholder="Enter your Guarantor Number"
           type="text"
-          value={name}
-          onChange={setName}
+          value={guarantorNumber}
+          onChange={setGuarantorNumber}
         />
         <InputField
           placeholder="Enter your  Number"
           type="text"
-          value={name}
-          onChange={setName}
+          value={riderNumber}
+          onChange={setRiderNumber}
+        />
+        <InputField
+          placeholder="Enter your Address"
+          type="text"
+          value={address}
+          onChange={setAddress}
         />
         <InputField
           placeholder="Enter your email address"
