@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import { useTable } from "react-table";
 
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data, onRowClick }) => {
   const tableInstance = useTable({ columns, data });
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -32,6 +32,7 @@ const Table = ({ columns, data }) => {
                 <tr
                   {...row.getRowProps()}
                   className="border-b px-4 hover:bg-gray-800"
+                  onClick={() => onRowClick(row.original)}
                 >
                   {row.cells.map((cell) => (
                     <td
