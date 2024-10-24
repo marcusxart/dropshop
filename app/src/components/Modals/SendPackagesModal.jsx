@@ -1,16 +1,14 @@
 import { useState } from "react";
 import { FaRegEdit, FaRegThumbsUp } from "react-icons/fa";
 import { MdLocationOn, MdOutlineClear } from "react-icons/md";
-import SearchModal from "./SearchModal";
+// import SearchModal from "./SearchModal";
+import LocationModalSystem from "./LocationModal";
+// import Pickdetails from "./Pickdetails";
 
 const SendPackagesModal = () => {
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const [isPickup, setIsPickup] = useState(true);
-  const [pickupLocation, setPickupLocation] = useState("");
-  const [dropPointLocation, setDropPointLocation] = useState("");
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // State for SearchModal
 
-  const handleOpenSearchModal = (forPickup) => {
-    setIsPickup(forPickup);
+  const handleOpenSearchModal = () => {
     setIsSearchModalOpen(true);
   };
 
@@ -18,30 +16,22 @@ const SendPackagesModal = () => {
     setIsSearchModalOpen(false);
   };
 
-  const handleSelectLocation = (location) => {
-    if (isPickup) {
-      setPickupLocation(location);
-    } else {
-      setDropPointLocation(location);
-    }
-    handleCloseSearchModal();
-  };
-
   return (
     <div className="w-[40rem] h-[35rem]  bg-black max-md:w-[23rem] rounded-lg flex-col flex justify-around items-center">
       {isSearchModalOpen ? (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
           <div className="relative ">
-            <SearchModal onSelectLocation={handleSelectLocation} />
+            <LocationModalSystem />
             <button
               className="absolute top-2 right-2 border px-2 rounded-lg py-1 text-white"
-              onClick={handleCloseSearchModal}
+              onClick={handleCloseSearchModal} // Close SearchModal on click
             >
               <MdOutlineClear size={30} />
             </button>
           </div>
         </div>
       ) : (
+        // SendPackagesModal content when SearchModal is not open
         <>
           <div className="w-full h-[20%]  flex justify-center items-start flex-col px-8">
             <p className="font-semibold text-2xl max-md:text-xl">
@@ -51,12 +41,15 @@ const SendPackagesModal = () => {
           </div>
 
           <div className="w-full h-[30%] flex justify-start px-8 items-center">
+            {/* Left part for the line and location markers */}
             <div className="w-[10%] h-full flex flex-col justify-center items-center relative">
               <MdLocationOn className="text-red-500 text-3xl" />
+              {/* Line connecting pickup and drop-off */}
               <div className="w-[2px] h-[50%] bg-gray-300"></div>
               <MdLocationOn className="text-green-500 text-3xl" />
             </div>
 
+            {/* Right part for the location details */}
             <div className="w-[90%] h-[92%] flex justify-around items-center flex-col max-md:h-[100%]">
               <div className="w-[90%] h-[50%] flex flex-col px-2 justify-center gap-1 items-start">
                 <label className="font-semibold text-slate-400">
@@ -64,24 +57,18 @@ const SendPackagesModal = () => {
                 </label>
                 <div
                   className="py-1 cursor-pointer text-slate-200 w-full outline-none bg-transparent border-b-2 border-[#f8c534]"
-                  onClick={() => handleOpenSearchModal(true)} // Open search modal for pickup location
+                  onClick={handleOpenSearchModal} // Open SearchModal on click
                 >
-                  <p className="font-semibold">
-                    {pickupLocation || "Search pickup location"}
-                  </p>
+                  <p className="font-semibold">Search pickup location</p>
                 </div>
               </div>
-
               <div className="w-[90%] h-[50%] flex flex-col px-2 justify-center items-start">
                 <label className="font-semibold text-slate-400">
                   Drop Point <span className="text-red-500">*</span>
                 </label>
-                <div
-                  className="py-1 cursor-pointer text-slate-200 w-full outline-none bg-transparent border-b-2 border-[#f8c534]"
-                  onClick={() => handleOpenSearchModal(false)} // Open search modal for drop point
-                >
-                  <p className="font-semibold">
-                    {dropPointLocation || "Search drop point"}
+                <div className="text-slate-300 w-full outline-none bg-transparent">
+                  <p className="max-md:text-sm">
+                    Kempegowda, Sevashrama, Bengaluru, Karnataka, India
                   </p>
                 </div>
               </div>
