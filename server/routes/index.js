@@ -5,7 +5,7 @@ const {signup,login} = require("../controllers/auth")
 const {signupAdmin,loginAdmin} = require("../controllers/admin")
 const {newPassword,forgetPassword} = require("../controllers/forgetPassword")
 const {registerRider,getAllRiders,getRiderById,loginRider,riderStatus,deleteRider} = require("../controllers/rider")
-const {getOrderById,getAllOrders,updateOrder,createOrder,acceptOrder, riderOrderHistory, riderOngoingOrder, customerOngoingOrder,} = require("../controllers/order")
+const {getOrderById,getAllOrders,updateOrder,getPendingOrders,createOrder,acceptOrder, riderOrderHistory, riderOngoingOrder, customerOngoingOrder,} = require("../controllers/order")
 
 api.get("/", (req, res) => {
   res.send("Server running");
@@ -26,6 +26,7 @@ api.post("/forgetPassword", forgetPassword)
 api.post("/newPassword/:token", newPassword)
 //orders
 api.get("/getAllOrders", getAllOrders)
+api.get("/getPendingOrders", getPendingOrders)
 api.get("/getOrderById/:id", getOrderById)
 api.put("/updateOrder/:id", updateOrder) 
 api.post("/createOrder",customerAuth, createOrder)

@@ -70,7 +70,18 @@ try {
     return next(err)  
 }
 }
-
+const getPendingOrders=async(req,res,next)=>{
+try {
+  const pending= await findAll({where:{status: "pending"}})
+  if (!pending) {
+    return res.status(404).json("No pending order")
+  }
+  res.status(200).json(pending)
+} catch (error) {
+  const err = new Error(error.message)
+  return next(err) 
+}
+}
 const getOrderById =async(req,res,next) =>{
     const {id} = req.params
  try {
@@ -159,6 +170,7 @@ const customerOngoingOrder = async(req,res,next)=>{
 module.exports={
   getAllOrders
   ,getOrderById,
+  getPendingOrders,
   createOrder,
   acceptOrder,
   updateOrder,
