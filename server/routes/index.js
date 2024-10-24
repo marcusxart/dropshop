@@ -1,6 +1,6 @@
 const api = require("express").Router();
 const {isAuthenticated} = require("../controllers/isauthenticated")
-const {riderAuth,customerAuth,checkToken} = require("../middlewares/authMiddleware")
+const {riderAuth,customerAuth,checkToken, adminAuth} = require("../middlewares/authMiddleware")
 const {signup,login} = require("../controllers/auth")
 const {signupAdmin,loginAdmin} = require("../controllers/admin")
 const {newPassword,forgetPassword} = require("../controllers/forgetPassword")
@@ -25,8 +25,8 @@ api.post("/loginAdmin", loginAdmin)
 api.post("/forgetPassword", forgetPassword)
 api.post("/newPassword/:token", newPassword)
 //orders
-api.get("/getAllOrders", getAllOrders)
-api.get("/getPendingOrders", getPendingOrders)
+api.get("/getAllOrders",adminAuth, getAllOrders)
+api.get("/getPendingOrders",riderAuth, getPendingOrders)
 api.get("/getOrderById/:id", getOrderById)
 api.put("/updateOrder/:id", updateOrder) 
 api.post("/createOrder",customerAuth, createOrder)
