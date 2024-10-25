@@ -33,9 +33,9 @@ const RiderLogin = () => {
       toast.success("Login Successful");
       dispatch(setRider(response.data));
       console.log(response.data);
-      navigate("/rider/order");
+      navigate("/rider/orders");
     } catch (err) {
-      console.log(err.message);
+      toast.error(err.response?.data?.message || "Login Failed!");
     } finally {
       setloading(false);
       toast.dismiss(toastLoading);
