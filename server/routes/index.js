@@ -1,7 +1,7 @@
 const api = require("express").Router();
 const {isAuthenticated} = require("../controllers/isauthenticated")
 const {riderAuth,customerAuth,checkToken, adminAuth} = require("../middlewares/authMiddleware")
-const {signup,login} = require("../controllers/auth")
+const {signup,login,getAllUsers} = require("../controllers/auth")
 const {signupAdmin,loginAdmin} = require("../controllers/admin")
 const {newPassword,forgetPassword} = require("../controllers/forgetPassword")
 const {registerRider,getAllRiders,getRiderById,loginRider,riderStatus,deleteRider} = require("../controllers/rider")
@@ -18,6 +18,7 @@ api.get("/isAuthenticated",checkToken, isAuthenticated)
 //customers
 api.post("/signup", signup)
 api.post("/login", login)
+api.post("/getAllUsers", getAllUsers)
 //admin
 api.post("/signUpAdmin", signupAdmin)
 api.post("/loginAdmin", loginAdmin)
@@ -35,7 +36,7 @@ api.get("/riderOrderHistory",riderAuth, riderOrderHistory)
 api.get("/ongoingOrder",riderAuth, riderOngoingOrder)//test on postman
 api.get("/customerOngoingOrder",customerAuth,customerOngoingOrder)  
 
-//riders
+//riders  
 api.post("/registerRider", registerRider)
 api.post("/loginRider", loginRider)
 api.get("/getAllRiders", getAllRiders)

@@ -14,7 +14,7 @@ try {
     }
     const createOrder = await Orders.create({type,price,from,to,details,number,customer:customerName})
     if (createOrder) {
-        res.status(200).json("order created")
+        res.status(200).json(createOrder)
     }
 } catch (error) {
     const err = new Error(error.message)

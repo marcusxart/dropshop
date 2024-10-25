@@ -81,6 +81,17 @@ const login = async (req, res,next) => {
   }
 };
 
- 
+ const getAllUsers=async(req,res,next)=>{
+  try {
+    const allUsers = await Users.findAll()
+    if (!allUsers) {
+      return res.status(200).json("No created user yet")
+    }
+   res.status(200).json(allUsers)
+} catch (error) {
+      const err = new Error(error.message)
+      return next(err) 
+  } 
+ }
 
- module.exports ={signup,login} 
+ module.exports ={signup,login,getAllUsers} 
