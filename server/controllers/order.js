@@ -31,6 +31,12 @@ const acceptOrder=async(req,res,next)=>{
  const riderNumber = req.user.riderNumber
  
  try {
+  const busyRider = await Orders.findAll({where:{status:"in-progress",rider:riderName}})
+  if (busyRider.length!==0) {
+    const err = new Error("rider already occupied")
+    err.status = 200
+    return next(err)
+  }
   const findOrder = await Orders.findByPk(id)
 
     if (!findOrder) {
