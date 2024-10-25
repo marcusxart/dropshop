@@ -18,7 +18,7 @@ api.get("/isAuthenticated",checkToken, isAuthenticated)
 //customers
 api.post("/signup", signup)
 api.post("/login", login)
-api.post("/getAllUsers", getAllUsers)
+api.get("/getAllUsers", getAllUsers)
 //admin
 api.post("/signUpAdmin", signupAdmin)
 api.post("/loginAdmin", loginAdmin)

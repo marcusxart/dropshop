@@ -7,7 +7,7 @@ const checkToken=(req,res,next)=>{
 
         jwt.verify(token, process.env.JWT_KEY, (err,user)=>{
             if(err){
-                res.status(400).json("invalid token")
+                res.status(400).json({error:"invalid token"})
             }
             req.user=user
           next()
@@ -16,7 +16,7 @@ const checkToken=(req,res,next)=>{
     }else if (req.Authenticated) {
         next()
     }else {
-        res.status(400).json("you are not authorized")
+        res.status(400).json({error: "you are not authorized"})
     }
 }   
 
@@ -26,7 +26,7 @@ const adminAuth=(req, res, next)=>{
           next()
       }
       else{
-          res.status(403).json("you are not authorized for this")
+          res.status(403).json({error:"you are not authorized for this"})
       }
     })
   }
@@ -37,7 +37,7 @@ const adminAuth=(req, res, next)=>{
           next()
       }
       else{
-          res.status(403).json("you are not authorized for this")
+          res.status(403).json({error:"you are not authorized for this"})
       }
     })
   }
@@ -48,7 +48,7 @@ const adminAuth=(req, res, next)=>{
           next()
       }
       else{
-          res.status(403).json("you are not authorized for this")
+          res.status(403).json({error:"you are not authorized for this"})
       }
     })
   }
