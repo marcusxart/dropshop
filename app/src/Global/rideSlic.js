@@ -5,6 +5,7 @@ const RiderSlice = createSlice({
   initialState: {
     rider: [],
     riderOrders: [],
+    riderOngoingOrdering: [],
   },
   reducers: {
     setRider: (state, action) => {
@@ -13,11 +14,15 @@ const RiderSlice = createSlice({
     setRiderOrders: (state, action) => {
       state.riderOrders = action.payload;
     },
+    setRiderOngoingOrdering: (state, action) => {
+      state.riderOngoingOrdering = action.payload;
+    },
     clearRider: (state) => {
       state.rider = [];
     },
   },
 });
 
-export const { setRider, clearRider, setRiderOrders } = RiderSlice.actions;
+export const { setRider, clearRider, setRiderOrders, setRiderOngoingOrdering } =
+  RiderSlice.actions;
 export default RiderSlice.reducer;
