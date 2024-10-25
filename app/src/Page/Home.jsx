@@ -36,6 +36,7 @@ const Home = () => {
   const handleConfirm = () => {
     if (selectedOption) {
       setOpenModal(true); // Open the modal when confirm is clicked
+      localStorage.setItem("selectedOption", selectedOption); // Store selection in local storage
     }
   };
 
@@ -78,8 +79,8 @@ const Home = () => {
                 transition-all duration-700 ease-in-out transform border 
                 ${
                   selectedOption === cards.id
-                    ? "border-[#f8c534] translate-x-[-40%] bg-black max-md:w-[90%]  scale-110" // Selected card slides and enlarges
-                    : "border-transparent bg-[#111214BF]  z-0 translate-x-[70%] scale-90 opacity-60" // Non-selected cards shrink and fade
+                    ? "border-[#f8c534] translate-x-[-40%] bg-black max-md:w-[90%] scale-110" // Selected card slides and enlarges
+                    : "border-transparent bg-[#111214BF] z-0 translate-x-[70%] scale-90 opacity-60" // Non-selected cards shrink and fade
                 }`} // Conditionally apply border and background
                   onClick={() => handleCardClick(cards.id)} // Handle click event
                 >

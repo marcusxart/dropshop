@@ -4,6 +4,7 @@ import { FaMap } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
 import DeliveryModal from "../components/Modals/DeliveryModal";
 import { useSelector } from "react-redux";
+// import axios from "axios";
 
 const Orders = () => {
   const [openModal, setOpenModal] = useState(false); // Modal state
@@ -16,6 +17,14 @@ const Orders = () => {
     setSelectedOrder(order);
     setOpenModal(!openModal);
   };
+
+  // useEffect(() => {
+  //   const getOrders = async () => {
+  //     try {
+  //       const response = await axios.get("")
+  //     }
+  //   }
+  // },[])
 
   const columns = React.useMemo(
     () => [
