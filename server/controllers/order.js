@@ -72,7 +72,7 @@ try {
 }
 const getPendingOrders=async(req,res,next)=>{
 try {
-  const pending= await findAll({where:{status: "pending"}})
+  const pending= await Orders.findAll({where:{status: "pending"}})
   if (!pending) {
     return res.status(404).json("No pending order")
   }
