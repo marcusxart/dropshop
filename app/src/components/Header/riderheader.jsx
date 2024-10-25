@@ -2,6 +2,7 @@ import { FaUser } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { clearRider } from "../../Global/rideSlic";
 
 const RiderHeader = () => {
   const navigate = useNavigate();
@@ -9,8 +10,8 @@ const RiderHeader = () => {
   const dispatch = useDispatch();
 
   const HandleLogout = () => {
-    dispatch();
-    navigate("/admin-auth/admin-login");
+    dispatch(clearRider());
+    navigate("/rider-auth/rider-login");
   };
 
   return (
