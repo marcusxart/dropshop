@@ -1,12 +1,21 @@
 import { useState } from "react";
 import { FaRegEdit, FaRegThumbsUp } from "react-icons/fa";
 import { MdLocationOn, MdOutlineClear } from "react-icons/md";
-// import SearchModal from "./SearchModal";
+import Pickdetails from "./Pickdetails";
 import LocationModalSystem from "./LocationModal";
-// import Pickdetails from "./Pickdetails";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { setOrders } from "../../Global/customerSlice";
 
 const SendPackagesModal = () => {
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false); // State for SearchModal
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const [isPickDetailsOpen, setIsPickDetailsOpen] = useState(false); // State to open/close Pickdetails
+  const [isOpen, setIsOpen] = useState(true); // New state to control modal visibility
+
+  const selectedOption = localStorage.getItem("selectedOption");
+  const customerdata = useSelector((state) => state.customer.Customer);
+  const dispatch = useDispatch();
 
   const handleOpenSearchModal = () => {
     setIsSearchModalOpen(true);
@@ -16,24 +25,65 @@ const SendPackagesModal = () => {
     setIsSearchModalOpen(false);
   };
 
+  const orderdata = JSON.parse(localStorage.getItem("orderData") || "{}");
+
+  const headers = {
+    Authorization: `Bearer ${customerdata.token}`,
+  };
+
+  const handleClosePickDetails = () => {
+    setIsPickDetailsOpen(false); // Close Pickdetails
+  };
+
+  const HandleOrder = async () => {
+    const toastLoading = toast.loading("Please wait..."); // Start loading toast
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/createOrder",
+        orderdata,
+        { headers }
+      );
+      toast.success("Order placed Successfully");
+      dispatch(setOrders(response.data));
+
+      // Clear local storage after successful order placement
+      localStorage.clear(); // Clears everything
+
+      // Close the modal after the successful API call
+      setIsOpen(false);
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to place order");
+    } finally {
+      toast.dismiss(toastLoading);
+    }
+  };
+
+  if (!isOpen) {
+    return null; // Don't render anything if the modal is closed
+  }
+
   return (
-    <div className="w-[40rem] h-[35rem]  bg-black max-md:w-[23rem] rounded-lg flex-col flex justify-around items-center">
-      {isSearchModalOpen ? (
+    <div className="w-[40rem] h-[35rem] bg-black max-md:w-[23rem] rounded-lg flex-col flex justify-around items-center">
+      {isSearchModalOpen && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
           <div className="relative ">
-            <LocationModalSystem />
+            <LocationModalSystem onClose={handleCloseSearchModal} />
             <button
-              className="absolute top-2 right-2 border px-2 rounded-lg py-1 text-white"
-              onClick={handleCloseSearchModal} // Close SearchModal on click
+              className="absolute top-2 right-5 border px-2 rounded-lg py-1 text-white"
+              onClick={handleCloseSearchModal}
             >
               <MdOutlineClear size={30} />
             </button>
           </div>
         </div>
+      )}
+
+      {isPickDetailsOpen ? (
+        <Pickdetails location="Abuja" onContinue={handleClosePickDetails} />
       ) : (
-        // SendPackagesModal content when SearchModal is not open
         <>
-          <div className="w-full h-[20%]  flex justify-center items-start flex-col px-8">
+          <div className="w-full h-[20%] flex justify-center items-start flex-col px-8">
             <p className="font-semibold text-2xl max-md:text-xl">
               Send Packages in Abuja
             </p>
@@ -41,34 +91,36 @@ const SendPackagesModal = () => {
           </div>
 
           <div className="w-full h-[30%] flex justify-start px-8 items-center">
-            {/* Left part for the line and location markers */}
             <div className="w-[10%] h-full flex flex-col justify-center items-center relative">
               <MdLocationOn className="text-red-500 text-3xl" />
-              {/* Line connecting pickup and drop-off */}
               <div className="w-[2px] h-[50%] bg-gray-300"></div>
               <MdLocationOn className="text-green-500 text-3xl" />
             </div>
 
-            {/* Right part for the location details */}
             <div className="w-[90%] h-[92%] flex justify-around items-center flex-col max-md:h-[100%]">
               <div className="w-[90%] h-[50%] flex flex-col px-2 justify-center gap-1 items-start">
                 <label className="font-semibold text-slate-400">
-                  Pickup Location <span className="text-red-500">*</span>
+                  {selectedOption} Location{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 <div
                   className="py-1 cursor-pointer text-slate-200 w-full outline-none bg-transparent border-b-2 border-[#f8c534]"
-                  onClick={handleOpenSearchModal} // Open SearchModal on click
+                  onClick={handleOpenSearchModal} // Open Pickdetails on click
                 >
-                  <p className="font-semibold">Search pickup location</p>
+                  <p className="font-semibold">
+                    {orderdata.from
+                      ? orderdata.from
+                      : `Search ${selectedOption} location`}
+                  </p>
                 </div>
               </div>
               <div className="w-[90%] h-[50%] flex flex-col px-2 justify-center items-start">
                 <label className="font-semibold text-slate-400">
                   Drop Point <span className="text-red-500">*</span>
                 </label>
-                <div className="text-slate-300 w-full outline-none bg-transparent">
-                  <p className="max-md:text-sm">
-                    Kempegowda, Sevashrama, Bengaluru, Karnataka, India
+                <div className="text-slate-300 border-[#f8c324]  border-b-2 w-full outline-none bg-transparent">
+                  <p className="max-md:text-sm font-bold">
+                    {orderdata.to ? orderdata.to : "Select drop-off location"}
                   </p>
                 </div>
               </div>
@@ -79,7 +131,9 @@ const SendPackagesModal = () => {
             <div className="w-full h-[20%] cursor-pointer bg-[#1b1b1b] rounded-md flex justify-start px-4 text-slate-400 gap-2 items-center">
               <FaRegEdit size={30} />
               <p className="max-md:text-sm max-md:text-center">
-                Any instructions for the delivery partner?
+                {orderdata.details
+                  ? orderdata.details
+                  : " Any instructions for the delivery partner?"}{" "}
               </p>
             </div>
             <p className="text-[11px]">
@@ -89,7 +143,10 @@ const SendPackagesModal = () => {
               authorities. <span>Terms and conditions</span>
             </p>
             <div className="w-full h-[20%] flex justify-start items-center">
-              <button className="py-3 px-10 flex justify-center gap-2 items-center text-black font-bold bg-white rounded-full">
+              <button
+                onClick={HandleOrder}
+                className="py-3 px-10 flex justify-center gap-2 items-center text-black font-bold bg-white rounded-full"
+              >
                 Confirm <FaRegThumbsUp />
               </button>
             </div>
