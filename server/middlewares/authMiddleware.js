@@ -37,7 +37,7 @@ const adminAuth=(req, res, next)=>{
           next()
       }
       else{
-          res.status(403).json({error:"you are not authorized for this"})
+          res.status(403).json({error: "you are not authorized for this"})
       }
     })
   }
