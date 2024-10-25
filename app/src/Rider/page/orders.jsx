@@ -11,17 +11,23 @@ import { setRiderOrders } from "../../Global/rideSlic";
 
 const RiderOrders = () => {
   const [isAvailable, setIsAvailable] = useState(true);
-  const [openModal, setOpenModal] = useState(false); // Track modal state
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [selectedOrderNumber, setSelectedOrderNumber] = useState(null);
+  const [selectedOrderName, setSelectedOrderName] = useState(null);
 
-  // const riderOrder = useSelector((state) => state.rider.riderOrders);
+  const riderOrder = useSelector((state) => state.rider.riderOrders);
   const riderData = useSelector((state) => state.rider.rider);
 
   const toggleAvailability = () => {
     setIsAvailable(!isAvailable);
   };
 
-  const handleAcceptClick = () => {
-    setOpenModal(true); // Open the modal when "Accept" is clicked
+  const handleAcceptClick = (orderId, orderNumber, orderName) => {
+    setSelectedOrderId(orderId);
+    setSelectedOrderNumber(orderNumber);
+    setSelectedOrderName(orderName);
+    setOpenModal(true);
   };
 
   const headers = {
@@ -41,21 +47,14 @@ const RiderOrders = () => {
         toast.success("Orders fetched successfully");
         dispatch(setRiderOrders(response.data));
       } catch (err) {
-        toast.error(err.response?.data?.message || "data fectch error");
+        toast.error(err.response?.data?.message || "Data fetch error");
       } finally {
         toast.dismiss(toastLoading);
       }
     };
     getPendingOrder();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // Example data for orders (you can replace this with real data later)
-  const orders = [
-    { id: 1, description: "Order #1", status: "pending" },
-    { id: 2, description: "Order #2", status: "pending" },
-    { id: 3, description: "Order #3", status: "pending" },
-    { id: 4, description: "Order #4", status: "pending" },
-  ];
 
   return (
     <div className="w-full h-screen">
@@ -92,16 +91,16 @@ const RiderOrders = () => {
       {/* Conditionally Render Orders or Unavailable Image */}
       <div className="w-full h-[10%] flex justify-center items-center">
         <p className="font-semibold text-xl">
-          Available Orders ({isAvailable ? orders.length : 0})
+          Available Orders ({isAvailable ? riderOrder.length : 0})
         </p>
       </div>
       {isAvailable ? (
         <div className="w-full h-[80%]">
           <div className="w-full h-screen space-y-4 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 scrollbar-hide flex flex-col items-center py-2">
-            {orders.map((order) => (
+            {riderOrder.map((order) => (
               <div
                 key={order.id}
-                className="w-[90%] h-[7rem] bg-[#1b1b1b] border border-[#f8c324] flex items-center justify-around rounded-lg"
+                className="w-[90%] h-[8.6rem] bg-[#1b1b1b] border border-[#f8c324] flex items-center justify-around rounded-lg"
               >
                 <div className="w-[50%] h-full px-1 flex justify-around items-center">
                   <div className="w-[45px] h-[45px] flex justify-center items-center rounded-full bg-purple-700">
@@ -112,28 +111,36 @@ const RiderOrders = () => {
                     />
                   </div>
                   <div className="w-[70%] h-[90%] flex-col flex justify-around items-center">
-                    <p className="text-lg font-medium">Zain Dator</p>
+                    <p className="text-lg font-medium text-center">
+                      {order.customer}
+                    </p>
                     <div className="w-full h-[10%] text-green-400 flex justify-center gap-2 items-center">
                       <FaPhoneAlt size={15} />
-                      <p className="text-xs">08159701004</p>
+                      <p className="text-xs font-semibold">{order.number}</p>
                     </div>
                     <button
                       className="px-4 py-1 cursor-pointer font-bold text-sm bg-[#292929] rounded-full"
-                      onClick={handleAcceptClick} // Open modal when clicked
+                      onClick={() =>
+                        handleAcceptClick(
+                          order.id,
+                          order.number,
+                          order.customer
+                        )
+                      }
                     >
                       Accept
                     </button>
                   </div>
                 </div>
                 <div className="w-[50%] h-full flex justify-center px-2 items-end flex-col">
-                  <p>Pickup</p>
-                  <div className="w-full h-[40%] flex justify-center items-center">
-                    <p className="text-xs font-bold text-[#f8c324]">From | </p>
-                    <p className="text-xs font-bold"> 89 Tamunoemi Street</p>
+                  <p>{order.type}</p>
+                  <div className="w-full h-[40%] flex justify-center gap-2 items-center">
+                    <p className="text-xs font-bold text-[#f8c324]">From</p>
+                    <p className="text-xs font-bold">{order.from}</p>
                   </div>
-                  <div className="w-full h-[40%] flex justify-center items-center">
-                    <p className="font-bold text-[#f8c324]">To |</p>
-                    <p className="text-xs font-bold">62 Ayobami Street</p>
+                  <div className="w-full h-[40%] flex justify-center gap-2 items-center">
+                    <p className="font-bold text-[#f8c324] text-xs">To</p>
+                    <p className="text-xs font-bold">{order.to}</p>
                   </div>
                 </div>
               </div>
@@ -149,14 +156,18 @@ const RiderOrders = () => {
       {/* Call Modal */}
       {openModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="relative rounded-md  w-[20rem] h-[30rem]">
+          <div className="relative rounded-md w-[20rem] h-[30rem]">
             <button
-              className="absolute top-2  right-2 text-gray-50 rounded-md px-2 py-1 border-red-500 border"
-              onClick={() => setOpenModal(false)} // Close modal on click
+              className="absolute top-2 right-2 text-gray-50 rounded-md px-2 py-1 border-red-500 border"
+              onClick={() => setOpenModal(false)}
             >
               <MdClear size={30} />
             </button>
-            <CallModal />
+            <CallModal
+              orderId={selectedOrderId}
+              orderNumber={selectedOrderNumber}
+              orderName={selectedOrderName}
+            />
           </div>
         </div>
       )}

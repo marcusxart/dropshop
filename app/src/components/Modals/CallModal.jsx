@@ -1,16 +1,52 @@
+import axios from "axios";
 import toast from "react-hot-toast";
 import { MdFileCopy } from "react-icons/md";
 
-const CallModal = () => {
-  const phoneNumber = "08159701004"; // The phone number to be copied
+import { useDispatch, useSelector } from "react-redux";
+import { setRiderOngoingOrdering } from "../../Global/rideSlic";
+
+const CallModal = ({ orderId, orderNumber, orderName }) => {
+  const phoneNumber = orderNumber;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(phoneNumber);
     toast.success("Number copied to clipboard!");
   };
 
+  const riderdata = useSelector((state) => state.rider.rider);
+  console.log(riderdata.token);
+
+  const dispatch = useDispatch();
+
+  const headers = {
+    authorization: `Bearer ${riderdata.token}`,
+  };
+
+  const HandleAcceptOrder = async () => {
+    const toastLoading = toast.loading("Please wait....");
+
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/acceptOrder/${orderId}`,
+        {},
+        { headers }
+      );
+      toast.success("order accepted");
+      const ordersArray = Array.isArray(response.data)
+        ? response.data
+        : [response.data];
+      dispatch(setRiderOngoingOrdering(ordersArray));
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Error while processing order"
+      );
+    } finally {
+      toast.dismiss(toastLoading);
+    }
+  };
+
   return (
-    <div className="w-full h-full rounded bg-[#0b0b0d] flex flex-col justify-center items-center">
+    <div className="w-full h-full  rounded bg-[#0b0b0d] flex flex-col justify-center items-center">
       <div className="w-full h-[20%] flex justify-around px-3 items-center flex-col">
         <p className="text-2xl font-semibold">Please call your Client</p>
         <p className="text-center text-sm text-slate-400">
@@ -18,7 +54,7 @@ const CallModal = () => {
         </p>
       </div>
       <div className="w-full h-[50%] flex flex-col justify-center items-center">
-        <p className="font-medium text-xl">Zayn Malik</p>
+        <p className="font-bold text-xl ">{orderName}</p>
         <div className="w-full h-[30%] flex justify-center gap-3 items-center">
           <p className="text-2xl font-semibold text-[#f8c324]">{phoneNumber}</p>
           <MdFileCopy
@@ -27,9 +63,17 @@ const CallModal = () => {
             className="cursor-pointer"
           />
         </div>
-        <button className="px-6 py-2 bg-gray-300 text-black font-semibold rounded-md">
-          I have called
-        </button>
+        <div className="w-full h-[30%] flex justify-around items-center">
+          <button
+            className="px-6 py-2 bg-green-400 text-gray-50  font-semibold rounded-md"
+            onClick={HandleAcceptOrder}
+          >
+            Accept Order
+          </button>
+          <button className="px-6 py-2 bg-red-400 text-gray-50 font-semibold rounded-md">
+            Decline Order
+          </button>
+        </div>
       </div>
     </div>
   );

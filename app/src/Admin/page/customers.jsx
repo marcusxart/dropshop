@@ -1,30 +1,45 @@
 import { Search } from "lucide-react";
 import Table from "../components/Table";
-
-// Sample data
-const data = [
-  {
-    customer: "Jane Smith",
-    dateRegistered: "2024-01-15",
-    email: "jane.smith@example.com",
-    mobileNumber: "+1 234 567 890",
-    totalOrders: 5,
-  },
-  {
-    customer: "John Doe",
-    dateRegistered: "2024-02-10",
-    email: "john.doe@example.com",
-    mobileNumber: "+1 098 765 4321",
-    totalOrders: 3,
-  },
-  // Add more customer data here...
-];
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setAllCustomers } from "../../Global/adminSlic";
 
 const Customers = () => {
+  const allCustomers = useSelector((state) => state.admin.customers);
+  const admindata = useSelector((state) => state.admin.admin);
+
+  const headers = {
+    Authorization: `Bearer ${admindata.token}`,
+  };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getAllCustomers = async () => {
+      const toastLoading = toast.loading("Please wait...");
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/getAllUsers",
+          { headers }
+        );
+        dispatch(setAllCustomers(response.data));
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        toast.dismiss(toastLoading);
+      }
+    };
+
+    getAllCustomers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const columns = [
     {
       Header: "Customer",
-      accessor: "customer",
+      accessor: "name",
       Cell: ({ value }) => (
         <div className="flex justify-center">
           <span className="text-[#f8c324] text-sm cursor-pointer">{value}</span>
@@ -33,7 +48,8 @@ const Customers = () => {
     },
     {
       Header: "Date Registered",
-      accessor: "dateRegistered",
+      accessor: "createdAt",
+      Cell: ({ value }) => new Date(value).toLocaleDateString(),
     },
     {
       Header: "Email",
@@ -61,7 +77,7 @@ const Customers = () => {
           className="p-2 w-[100%] max-md:w-[98%] px-3 outline-none border-gray-900 rounded bg-transparent"
         />
       </div>
-      <Table columns={columns} data={data} />
+      <Table columns={columns} data={allCustomers} />
     </div>
   );
 };
