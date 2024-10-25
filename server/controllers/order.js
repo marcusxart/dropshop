@@ -50,7 +50,7 @@ const acceptOrder=async(req,res,next)=>{
     findOrder.stage=1
     await findOrder.save()
     //emit io
-   res.status(200).json("Order accepted") 
+   res.status(200).json(findOrder) 
 
  } catch (error) {
    const err = new Error(error.message)
