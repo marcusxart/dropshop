@@ -2,6 +2,7 @@ import { FaUser } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { clearAll } from "../../Global/adminSlic";
 
 const AdminHeader = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const AdminHeader = () => {
   const dispatch = useDispatch();
 
   const HandleLogout = () => {
-    dispatch();
+    dispatch(clearAll());
     navigate("/admin-auth/admin-login");
   };
 

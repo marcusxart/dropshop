@@ -6,6 +6,7 @@ import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
+import { setRider } from "../../Global/rideSlic";
 
 const RiderLogin = () => {
   const navigate = useNavigate();
@@ -23,25 +24,21 @@ const RiderLogin = () => {
     const toastLoading = toast.loading("Please wait...");
 
     const data = { riderName, riderpassword };
+
     try {
       const response = await axios.post(
         "http://localhost:5000/api/loginRider",
         data
       );
-
-      if (response.status === 201 || response.status === 200) {
-        toast.success("Registration successful! Redirecting to Home...");
-
-        setTimeout(() => {
-          navigate("/rider/orders");
-        }, 2000);
-      }
-      dispatch();
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Login Failed!");
+      toast.success("Login Successful");
+      dispatch(setRider(response.data));
+      console.log(response.data);
+      navigate("/rider/order");
+    } catch (err) {
+      console.log(err.message);
     } finally {
-      toast.dismiss(toastLoading);
       setloading(false);
+      toast.dismiss(toastLoading);
     }
   };
 

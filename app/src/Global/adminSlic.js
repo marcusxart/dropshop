@@ -17,8 +17,14 @@ const AdminSlice = createSlice({
     setAllOrders: (state, action) => {
       state.orders = action.payload;
     },
+    clearAll: (state) => {
+      state.admin = [];
+      state.riders = [];
+      state.orders = [];
+    },
   },
 });
 
-export const { setAdmin, setAllRiders, setAllOrders } = AdminSlice.actions;
+export const { setAdmin, setAllRiders, setAllOrders, clearAll } =
+  AdminSlice.actions;
 export default AdminSlice.reducer;
