@@ -21,13 +21,13 @@ const RiderSidebar = () => {
   };
 
   const RiderMenuItems = [
-    { label: "Orders", icon: <MdDeliveryDining />, path: "rider-orders" },
+    { label: "Orders", icon: <MdDeliveryDining />, path: "orders" },
     {
       label: "Ongoing Orders",
       icon: <MdLocalShipping />,
-      path: "rider-ongoing-orders",
+      path: "ongoing-orders",
     },
-    { label: "History", icon: <LuPackageOpen />, path: "rider-history" },
+    { label: "History", icon: <LuPackageOpen />, path: "order-history" },
     { label: "Logout", icon: <MdExitToApp />, path: "logout" },
   ];
 

@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import faccard from "../../assets/Customer.jpeg";
 import CallModal from "../../components/Modals/CallModal";
 import { MdClear } from "react-icons/md";
 import unavailable from "../../assets/unavailable.svg";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { setRiderOrders } from "../../Global/rideSlic";
 
 const RiderOrders = () => {
   const [isAvailable, setIsAvailable] = useState(true);
   const [openModal, setOpenModal] = useState(false); // Track modal state
+
+  // const riderOrder = useSelector((state) => state.rider.riderOrders);
+  const riderData = useSelector((state) => state.rider.rider);
 
   const toggleAvailability = () => {
     setIsAvailable(!isAvailable);
@@ -16,6 +23,31 @@ const RiderOrders = () => {
   const handleAcceptClick = () => {
     setOpenModal(true); // Open the modal when "Accept" is clicked
   };
+
+  const headers = {
+    Authorization: `Bearer ${riderData.token}`,
+  };
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getPendingOrder = async () => {
+      const toastLoading = toast.loading("Please wait...");
+
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/getPendingOrders",
+          { headers }
+        );
+        toast.success("Orders fetched successfully");
+        dispatch(setRiderOrders(response.data));
+      } catch (err) {
+        toast.error(err.response?.data?.message || "data fectch error");
+      } finally {
+        toast.dismiss(toastLoading);
+      }
+    };
+    getPendingOrder();
+  }, []);
 
   // Example data for orders (you can replace this with real data later)
   const orders = [
