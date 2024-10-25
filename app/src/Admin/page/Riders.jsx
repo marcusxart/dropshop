@@ -1,46 +1,50 @@
 /* eslint-disable react/jsx-key */
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
   useTable,
   useSortBy,
   useGlobalFilter,
   usePagination,
 } from "react-table";
-import { format } from "date-fns";
-import { ChevronDown, ChevronUp } from "lucide-react";
 
-const data = [
-  {
-    id: 1,
-    name: "John Doe",
-    dateRegistered: new Date("2023-01-15"),
-    totalOrders: 150,
-    amountMade: 3000,
-    ongoingOrders: 2,
-    status: true,
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    dateRegistered: new Date("2023-02-20"),
-    totalOrders: 120,
-    amountMade: 2500,
-    ongoingOrders: 1,
-    status: false,
-  },
-  {
-    id: 3,
-    name: "Bob Johnson",
-    dateRegistered: new Date("2023-03-10"),
-    totalOrders: 200,
-    amountMade: 4000,
-    ongoingOrders: 3,
-    status: true,
-  },
-  // Add more sample data as needed
-];
+import { ChevronDown, ChevronUp } from "lucide-react";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setAllRiders } from "../../Global/adminSlic";
 
 const Riders = () => {
+  const admindata = useSelector((state) => state.admin.admin);
+  const AllRiders = useSelector((state) => state.admin.riders);
+  console.log(AllRiders);
+
+  const headers = {
+    Authorization: `Bearer ${admindata.token}`,
+  };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getAllRider = async () => {
+      const toastLoading = toast.loading("Please wait...");
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/getAllRiders",
+          { headers }
+        );
+
+        toast.success("All Riders have been Updated Successfully");
+        dispatch(setAllRiders(response.data));
+      } catch (err) {
+        console.log(err.message);
+      } finally {
+        toast.dismiss(toastLoading);
+      }
+    };
+    getAllRider();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const columns = useMemo(
     () => [
       {
@@ -50,9 +54,10 @@ const Riders = () => {
       },
       {
         Header: "Date Registered",
-        accessor: "dateRegistered",
-        Cell: ({ value }) => format(value, "dd/MM/yyyy"),
+        accessor: "createdAt", // Update accessor to 'createdAt'
+        Cell: ({ value }) => new Date(value).toLocaleDateString(), // Format the date
       },
+
       {
         Header: "Total Orders",
         accessor: "totalOrders",
@@ -60,7 +65,7 @@ const Riders = () => {
       {
         Header: "Amount Made",
         accessor: "amountMade",
-        Cell: ({ value }) => `₦${value.toFixed(2)}`,
+        Cell: ({ value }) => `₦${value}`,
       },
       {
         Header: "Ongoing Orders",
@@ -102,12 +107,10 @@ const Riders = () => {
     previousPage,
     canNextPage,
     canPreviousPage,
-    // pageOptions,
-    // setPageSize,
   } = useTable(
     {
       columns,
-      data,
+      data: AllRiders,
       initialState: { pageIndex: 0, pageSize: 10 },
     },
     useGlobalFilter,
@@ -201,27 +204,6 @@ const Riders = () => {
             Next
           </button>
         </div>
-        {/* <div className="flex items-center space-x-2">
-          <span>
-            Page{" "}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{" "}
-          </span>
-          <select
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-            className="p-1 border rounded bg-transparent"
-          >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))}
-          </select>
-        </div> */}
       </div>
     </div>
   );

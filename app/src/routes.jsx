@@ -3,7 +3,6 @@ import Login from "./auth/Login";
 import AuthWrapper from "./components/authWrapper";
 import Register from "./auth/Register";
 import ForgotPassword from "./auth/ForgotPassword";
-
 import MainLayout from "./layout/MainLayout";
 import Home from "./Page/Home";
 import Orders from "./Page/Orders";

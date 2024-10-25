@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
+import { setAdmin } from "../../Global/adminSlic";
 
 const Adminlogin = () => {
   const navigate = useNavigate();
@@ -20,28 +21,28 @@ const Adminlogin = () => {
     e.preventDefault();
     setloading(true);
 
-    const toastLoading = toast.loading("Please wait...");
+    const toastLoading = toast.loading("Please wait....");
 
-    const data = { email, password };
     try {
       const response = await axios.post(
         "http://localhost:5000/api/loginAdmin",
-        data
+        {
+          email,
+          password,
+        }
       );
-
       if (response.status === 200) {
-        toast.success("Login Successful ! Redirecting to Home...");
-
-        setTimeout(() => {
-          navigate("/admin/overview");
-        }, 2000);
+        toast.success("Logged in successfully!");
+        dispatch(setAdmin(response.data));
+        navigate("/admin/overview");
+      } else {
+        toast.error("Invalid email or password!");
       }
-      dispatch(response.data);
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Login Failed!");
+    } catch (err) {
+      toast.error(err.message);
     } finally {
-      toast.dismiss(toastLoading);
       setloading(false);
+      toast.dismiss(toastLoading);
     }
   };
 

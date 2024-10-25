@@ -17,7 +17,7 @@ const Table = ({ columns, data, onRowClick }) => {
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps()}
-                    className="px-4 py-2 text-left text-gray-50 font-semibold"
+                    className=" px-3 py-2 text-center text-sm text-gray-50 font-semibold"
                   >
                     {column.render("Header")}
                   </th>
@@ -37,7 +37,7 @@ const Table = ({ columns, data, onRowClick }) => {
                   {row.cells.map((cell) => (
                     <td
                       {...cell.getCellProps()}
-                      className="px-4 py-[15px] text-gray-400"
+                      className="px-4 py-[15px] text-sm text-gray-400"
                     >
                       {cell.render("Cell")}
                     </td>
