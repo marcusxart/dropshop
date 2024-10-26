@@ -168,7 +168,10 @@ const riderOngoingOrder = async(req,res,next)=>{
       err.status= 404
       return next(err)
     }
-    res.status(200).json(ongoingOrder)
+    const ongoingRiderOrder= []
+    ongoingRiderOrder.push(ongoingOrder)
+
+    res.status(200).json(ongoingRiderOrder)
   } catch (error) {
     const err = new Error(error.message)
     return next(err) 
