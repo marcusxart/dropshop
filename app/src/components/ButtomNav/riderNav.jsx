@@ -3,6 +3,7 @@ import { LuPackageOpen } from "react-icons/lu";
 import { BsBuildingsFill } from "react-icons/bs";
 import { RiEBike2Fill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom"; // Assuming you are using Next.js
+import { useSelector } from "react-redux";
 
 const RiderNav = () => {
   const router = useNavigate();
@@ -10,6 +11,10 @@ const RiderNav = () => {
   const handleNavigation = (path) => {
     router(path);
   };
+
+  const RiderOrder = useSelector((state) => state.rider.riderOrders);
+
+  // console.log(RiderOrder.length);
 
   return (
     <div className="w-full h-[10vh] bg-[#0b0b0d] fixed bottom-0 flex justify-around items-center text-white shadow-lg z-50">
@@ -20,7 +25,7 @@ const RiderNav = () => {
       >
         <span className="text-xl max-md:text-sm mt-1 capitalize">Orders</span>
         <span className="absolute top-[15px] right-2 w-[23px] h-[23px] bg-red-600 rounded-full text-center text-white flex justify-center items-center">
-          6
+          {RiderOrder.length}
         </span>
         <BsBuildingsFill size={28} />
       </div>

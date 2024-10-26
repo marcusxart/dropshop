@@ -63,7 +63,7 @@ const RiderOrders = () => {
         <div className="w-[50%] h-full flex items-center">
           <div className="w-[55px] h-[55px] bg-purple-500 rounded-full"></div>
           <div className="px-2">
-            <p className="font-semibold text-lg">Michael Jordan</p>
+            <p className="font-semibold text-lg">{riderData.name}</p>
             <p
               className={`text-sm ${
                 isAvailable ? "text-green-500" : "text-gray-500"

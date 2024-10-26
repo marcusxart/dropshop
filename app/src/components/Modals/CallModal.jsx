@@ -32,10 +32,8 @@ const CallModal = ({ orderId, orderNumber, orderName }) => {
         { headers }
       );
       toast.success("order accepted");
-      const ordersArray = Array.isArray(response.data)
-        ? response.data
-        : [response.data];
-      dispatch(setRiderOngoingOrdering(ordersArray));
+
+      dispatch(setRiderOngoingOrdering(response.data));
     } catch (error) {
       toast.error(
         error.response?.data?.message || "Error while processing order"

@@ -44,8 +44,12 @@ const SendPackagesModal = () => {
         { headers }
       );
       toast.success("Order placed Successfully");
-      dispatch(setOrders(response.data));
+      const orderDataArray = Array.isArray(response.data)
+        ? response.data
+        : [response.data];
 
+      // Dispatch as an array of objects
+      dispatch(setOrders(orderDataArray));
       // Clear local storage after successful order placement
       localStorage.clear(); // Clears everything
 

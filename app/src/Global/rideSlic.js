@@ -19,6 +19,8 @@ const RiderSlice = createSlice({
     },
     clearRider: (state) => {
       state.rider = [];
+      state.riderOrders = [];
+      state.riderOngoingOrdering = [];
     },
   },
 });

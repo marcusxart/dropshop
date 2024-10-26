@@ -10,45 +10,36 @@ const Orders = () => {
   const [openModal, setOpenModal] = useState(false); // Modal state
   const [selectedOrder, setSelectedOrder] = useState(null);
 
-  const customerOrder = useSelector((state) => state.customer.orders);
-  console.log(customerOrder);
+  const customerOrder = useSelector((state) => state.customer.orders || []);
 
   const toggleModal = (order) => {
     setSelectedOrder(order);
     setOpenModal(!openModal);
   };
 
-  // useEffect(() => {
-  //   const getOrders = async () => {
-  //     try {
-  //       const response = await axios.get("")
-  //     }
-  //   }
-  // },[])
-
   const columns = React.useMemo(
     () => [
       {
         Header: "Rider",
-        accessor: "rider",
+        accessor: "rider", // Adjust as needed if you have a specific rider name
       },
       {
         Header: "Order Type",
-        accessor: "orderType",
+        accessor: "type",
       },
       {
         Header: "Order Status",
-        accessor: "orderStatus",
+        accessor: "status",
         Cell: ({ value }) => (
           <span
-            className={`px-7 inline-flex text-sm py-2 leading-5 font-bold rounded-md 
-              ${
-                value === "Completed"
-                  ? "bg-green-100 text-green-800"
-                  : value === "In Progress"
-                  ? "bg-yellow-100 text-yellow-800"
-                  : "bg-blue-100 text-blue-800"
-              }`}
+            className={`px-7 inline-flex text-sm py-2 leading-5 capitalize font-bold rounded-md 
+            ${
+              value === "Completed"
+                ? "bg-green-100 text-green-800"
+                : value === "In Progress"
+                ? "bg-yellow-100 text-yellow-800"
+                : "bg-blue-100 text-blue-800"
+            }`}
           >
             {value}
           </span>
@@ -56,8 +47,8 @@ const Orders = () => {
       },
       {
         Header: "Location",
-        accessor: "location",
-        Cell: ({ value }) => (
+        accessor: "from", // Use 'from' to represent the pickup location
+        Cell: ({ row }) => (
           <div className="flex items-center">
             <div className="w-[20%] h-full flex justify-around gap-3 items-center flex-col">
               <div className="w-[30px] h-[30px] bg-[#0b0c0d] rounded-full flex justify-center items-center">
@@ -68,15 +59,15 @@ const Orders = () => {
               </div>
             </div>
             <div className="w-[80%] h-full justify-around items-start gap-5 flex flex-col">
-              <span className="text-xs sm:text-sm">{value}</span>
-              <p className="text-xs sm:text-sm">{value}</p>
+              <span className="text-xs sm:text-sm">{row.original.from}</span>
+              <p className="text-xs sm:text-sm">{row.original.to}</p>
             </div>
           </div>
         ),
       },
       {
-        Header: "Activity",
-        accessor: "activity",
+        Header: "Details",
+        accessor: "details",
       },
       {
         Header: "Price",
@@ -135,7 +126,7 @@ const Orders = () => {
                     {row.cells.map((cell) => (
                       <td
                         {...cell.getCellProps()}
-                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-300"
+                        className="px-6 py-2 whitespace-nowrap text-sm text-gray-300"
                         key={cell.value}
                       >
                         {cell.render("Cell")}
