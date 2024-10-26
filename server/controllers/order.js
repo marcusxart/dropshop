@@ -1,6 +1,7 @@
 const {Orders} = require("../database")
 const {getIo,onlineCustomers}=  require("../utils/socketConnection")
 const {Op} = require("sequelize")
+const appError = require("../utils/appError")
 
 const createOrder=async(req,res,next)=>{
 
@@ -33,8 +34,7 @@ const acceptOrder=async(req,res,next)=>{
  try {
   const busyRider = await Orders.findAll({where:{status:"in-progress",rider:riderName}})
   if (busyRider.length!==0) {
-    const err = new Error("rider already occupied")
-    err.status = 200
+    const err = new appError("rider already occupied",400)
     return next(err)
   }
   const findOrder = await Orders.findByPk(id)
@@ -140,6 +140,24 @@ const riderOrderHistory = async(req,res,next)=>{
 }
 
 
+const customerOrderHistory = async(req,res,next)=>{
+  const customerName = req.user.name
+  try {
+    const getOrderHistory= await Orders.findAll({where:{status:{[Op.ne]:"in-progress"},customer:customerName}})
+
+    if (!getOrderHistory) {
+      const err = new Error("No orders yet")
+      err.status= 404
+      return next(err)
+    }
+    res.status(200).json(getOrderHistory)
+  } catch (error) {
+    const err = new Error(error.message)
+    return next(err) 
+  }
+}
+
+
 const riderOngoingOrder = async(req,res,next)=>{
   const riderName = req.user.name
   try {
@@ -160,7 +178,7 @@ const riderOngoingOrder = async(req,res,next)=>{
 const customerOngoingOrder = async(req,res,next)=>{
   const customerName = req.user.name
   try {
-    const ongoingOrder= await Orders.findOne({where:{status:"in-progress",rider:customerName}})
+    const ongoingOrder= await Orders.findOne({where:{status:"in-progress",customer:customerName}})
 
     if (!ongoingOrder) {
       const err = new Error("No orders yet")
@@ -182,5 +200,6 @@ module.exports={
   updateOrder,
   riderOrderHistory,
   riderOngoingOrder,
-  customerOngoingOrder
+  customerOngoingOrder,
+  customerOrderHistory
 }

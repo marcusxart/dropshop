@@ -6,14 +6,14 @@ let io
 
 const onlineCustomers=[]
 
-const addUser=(email,socketId)=>{
-   !onlineCustomers.some((user)=>user.email===email) && onlineCustomers.push({email,socketId})
+const addUser=(name,socketId)=>{
+   !onlineCustomers.some((user)=>user.name===name) && onlineCustomers.push({name,socketId})
 }
 const getCustomer =(name,customers)=>{
   return customers.find((customer)=>customer.name===name)
 }
 const disconnect =(id)=>{
-  onlineCustomers =  customers.filter((customer)=>customer.id !==id)
+  onlineCustomers =  customers.filter((customer)=>customer.socketId !==id)
 }
 const initSocket =(instant)=>{
 
@@ -30,10 +30,16 @@ const initSocket =(instant)=>{
    io.on("connection", (socket)=>{
     console.log("connected")
     
-    socket.on("userLogin",({email})=>{
-     addUser(email,socket.id,onlineCustomers)
+    socket.on("userLogin",({name})=>{
+     addUser(name,socket.id)
     })
-  
+    //from rider
+   socket.on("riderUpdate",({stage,customerName})=>{
+
+    //to customer
+     const findCustomer = getCustomer(customerName)
+     io.to(findCustomer.socketId).emit("customerUpdate",{stage})
+   })
        socket.on("disconnect",()=>{
         console.log(`${socket.id} disconnected`)
         disconnect(socket.id)
