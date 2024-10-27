@@ -1,9 +1,12 @@
 import { MdClear, MdFileCopy, MdLocationOn, MdMap } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import facecard from "../../assets/Customer.jpeg";
+// import { useSelector } from "react-redux";
 
 const Selectmodal = ({ isOpen, onClose }) => {
   if (!isOpen) return null; // Return null if modal is not open
+
+  // const onGoing = useSelector((state) => state.rider.riderOngoingOrdering);
 
   return (
     <div className="fixed inset-3 bg-black bg-opacity-50 flex justify-center items-center">
@@ -19,7 +22,7 @@ const Selectmodal = ({ isOpen, onClose }) => {
         <div className="w-full h-[17%] flex justify-center items-center">
           <div className="w-[50%] h-full flex flex-col justify-around items-start px-2">
             <p className=" font-extrabold text-xl text-gray-500">
-              David Mayers
+              {/* {onGoing.name} */}
             </p>
             <div className="w-[50px] h-[50px]  rounded-full flex justify-center items-center">
               <img

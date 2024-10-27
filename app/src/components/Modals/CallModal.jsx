@@ -68,9 +68,9 @@ const CallModal = ({ orderId, orderNumber, orderName }) => {
           >
             Accept Order
           </button>
-          <button className="px-6 py-2 bg-red-400 text-gray-50 font-semibold rounded-md">
+          {/* <button className="px-6 py-2 bg-red-400 text-gray-50 font-semibold rounded-md">
             Decline Order
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

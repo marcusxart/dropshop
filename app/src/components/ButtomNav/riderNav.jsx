@@ -13,6 +13,9 @@ const RiderNav = () => {
   };
 
   const RiderOrder = useSelector((state) => state.rider.riderOrders);
+  const RiderOrderongoing = useSelector(
+    (state) => state.rider.riderOngoingOrdering
+  );
 
   // console.log(RiderOrder.length);
 
@@ -39,7 +42,7 @@ const RiderNav = () => {
           Ongoing Orders
         </span>
         <span className="absolute top-[18px] right-9 w-[23px] h-[23px] text-white font-medium bg-red-600 rounded-full flex justify-center items-center">
-          20
+          {RiderOrderongoing.length}
         </span>
         <RiEBike2Fill size={28} />
       </div>
