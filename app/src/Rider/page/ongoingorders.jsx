@@ -19,6 +19,8 @@ const Ongoing = () => {
   const riderOngoing =
     useSelector((state) => state.rider.riderOngoingOrdering) || []; // Ensure fallback to an empty array
 
+  // const data = [];
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,12 +36,8 @@ const Ongoing = () => {
           }
         );
 
-        // Convert response to array if it’s not one already
-        const ordersArray = Array.isArray(response.data)
-          ? response.data
-          : Object.values(response.data);
-
-        dispatch(setRiderOngoingOrdering(ordersArray)); // Dispatch as an array
+        // Dispatch the response data directly as it already matches the desired structure
+        dispatch(setRiderOngoingOrdering(response.data));
         toast.success("Received Successfully...");
       } catch (error) {
         toast.error(error.response?.data?.message || "Data fetch error");
@@ -54,19 +52,19 @@ const Ongoing = () => {
     () => [
       {
         Header: "Customer",
-        accessor: "customer",
+        accessor: "customer", // Matches the incoming data structure
       },
       {
-        Header: "OrderType",
-        accessor: "orderType",
+        Header: "Order Type",
+        accessor: "type", // Matches the incoming data structure
       },
       {
         Header: "Order Status",
-        accessor: "orderStatus",
+        accessor: "status", // Matches the incoming data structure
         Cell: ({ value }) => (
           <span
             className={
-              value === "Ongoing"
+              value === "in-progress"
                 ? "text-orange-600 bg-orange-300 py-2 px-2 rounded-md font-semibold"
                 : value === "Completed"
                 ? "text-green-600 font-semibold bg-green-300 py-2 px-2 rounded"
@@ -79,11 +77,17 @@ const Ongoing = () => {
       },
       {
         Header: "Location",
-        accessor: "location",
+        accessor: "from", // Matches the incoming data structure
+        Cell: ({ row }) => (
+          <span>
+            {row.original.from} - {row.original.to} {/* Combine from and to */}
+          </span>
+        ),
       },
       {
         Header: "Date",
-        accessor: "date",
+        accessor: "createdAt", // Matches the incoming data structure
+        Cell: ({ value }) => new Date(value).toLocaleString(), // Format the date
       },
     ],
     []
