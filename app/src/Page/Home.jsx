@@ -74,7 +74,7 @@ const Home = () => {
               </span>
             </p>
           </div>
-          <div className="w-[90%] h-[80%]  flex flex-col items-center max-md:w-[100%]">
+          <div className="w-[90%] h-[80%]   flex flex-col items-center max-md:w-[100%]">
             {isMobile ? (
               <div className="w-full h-full flex  gap-4 flex-col items-center">
                 {card.map((cards, index) => (
