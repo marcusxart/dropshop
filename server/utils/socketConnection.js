@@ -9,11 +9,11 @@ const onlineCustomers=[]
 const addUser=(name,socketId)=>{
    !onlineCustomers.some((user)=>user.name===name) && onlineCustomers.push({name,socketId})
 }
-const getCustomer =(name,customers)=>{
-  return customers.find((customer)=>customer.name===name)
+const getCustomer =(name)=>{
+  return onlineCustomers.find((customer)=>customer.name===name)
 }
 const disconnect =(id)=>{
-  onlineCustomers =  customers.filter((customer)=>customer.socketId !==id)
+  onlineCustomers =  onlineCustomers.filter((customer)=>customer.socketId !==id)
 }
 const initSocket =(instant)=>{
 
