@@ -23,7 +23,7 @@ const CustomerSidebar = () => {
 
   const CustomerMenuItems = [
     { label: "Home", icon: <MdMapsHomeWork />, path: "home" },
-    { label: "Orders", icon: <MdDeliveryDining />, path: "orders" },
+    { label: "On-Going Order", icon: <MdDeliveryDining />, path: "orders" },
     { label: "Order History", icon: <MdLocalShipping />, path: "history" },
     { label: "Customer Service", icon: <MdChat />, path: "door2door" },
     { label: "Logout", icon: <MdExitToApp />, path: "logout" },

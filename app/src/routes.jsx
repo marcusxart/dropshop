@@ -58,7 +58,7 @@ const routes = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "orders",
+        path: "on-going",
         element: <Orders />,
       },
       {
