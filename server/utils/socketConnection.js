@@ -29,9 +29,16 @@ const initSocket =(instant)=>{
  })
    io.on("connection", (socket)=>{
     console.log("connected")
-    
+
+    //login customer
     socket.on("userLogin",({name})=>{
      addUser(name,socket.id)
+     console.log(onlineCustomers)
+    })
+    //accepted  order from rider
+    socket.on("acceptedOrder",(data)=>{
+      const findCustomer = getCustomer(data.customer)
+      io.to(findCustomer.socketId).emit("customerUpdate",{rider:data.rider.name})
     })
     //from rider
    socket.on("riderUpdate",({stage,customerName})=>{
