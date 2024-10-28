@@ -16,7 +16,7 @@ const ButtomNav = () => {
     },
     {
       icon: <MdDeliveryDining size={28} />,
-      path: "orders",
+      path: "on-going",
     },
     {
       icon: <MdLocalShipping size={28} />,
