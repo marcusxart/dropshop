@@ -1,29 +1,38 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import { MdFileCopy } from "react-icons/md";
-
 import { useDispatch, useSelector } from "react-redux";
 import { setRiderOngoingOrdering } from "../../Global/rideSlic";
+import { useEffect } from "react";
+import { io } from "socket.io-client";
 
-const CallModal = ({ orderId, orderNumber, orderName }) => {
+const CallModal = ({ orderId, orderNumber, orderName, closeModal }) => {
   const phoneNumber = orderNumber;
+  const riderdata = useSelector((state) => state.rider.rider);
+  const dispatch = useDispatch();
+
+  // Establish a socket connection
+  const socket = io("http://localhost:5000"); // Replace with your server's socket URL
+
+  useEffect(() => {
+    // Cleanup function to disconnect the socket when the component unmounts
+    return () => {
+      socket.disconnect();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(phoneNumber);
     toast.success("Number copied to clipboard!");
   };
 
-  const riderdata = useSelector((state) => state.rider.rider);
-  console.log(riderdata.token);
-
-  const dispatch = useDispatch();
-
   const headers = {
     authorization: `Bearer ${riderdata.token}`,
   };
 
   const HandleAcceptOrder = async () => {
-    const toastLoading = toast.loading("Please wait....");
+    const toastLoading = toast.loading("Please wait...");
 
     try {
       const response = await axios.put(
@@ -31,9 +40,23 @@ const CallModal = ({ orderId, orderNumber, orderName }) => {
         {},
         { headers }
       );
-      toast.success("order accepted");
+      toast.success("Order accepted");
 
       dispatch(setRiderOngoingOrdering(response.data));
+
+      socket.emit(
+        "acceptedOrder",
+        {
+          orderId,
+          customer: response.data.customer,
+          rider: {
+            id: riderdata.id,
+            name: riderdata.name,
+          },
+        },
+        console.log("Ordersent ")
+      );
+      closeModal(true);
     } catch (error) {
       toast.error(
         error.response?.data?.message || "Error while processing order"
@@ -48,7 +71,7 @@ const CallModal = ({ orderId, orderNumber, orderName }) => {
       <div className="w-full h-[20%] flex justify-around px-3 items-center flex-col">
         <p className="text-2xl font-semibold">Please call your Client</p>
         <p className="text-center text-sm text-slate-400">
-          Before you proceed you have 10 minutes to call your client
+          Before you proceed, you have 10 minutes to call your client
         </p>
       </div>
       <div className="w-full h-[50%] flex flex-col justify-center items-center">
@@ -63,14 +86,11 @@ const CallModal = ({ orderId, orderNumber, orderName }) => {
         </div>
         <div className="w-full h-[30%] flex justify-around items-center">
           <button
-            className="px-6 py-2 bg-green-400 text-gray-50  font-semibold rounded-md"
+            className="px-6 py-2 bg-green-400 text-gray-50 font-semibold rounded-md"
             onClick={HandleAcceptOrder}
           >
             Accept Order
           </button>
-          {/* <button className="px-6 py-2 bg-red-400 text-gray-50 font-semibold rounded-md">
-            Decline Order
-          </button> */}
         </div>
       </div>
     </div>

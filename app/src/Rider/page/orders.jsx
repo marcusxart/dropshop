@@ -167,6 +167,7 @@ const RiderOrders = () => {
               orderId={selectedOrderId}
               orderNumber={selectedOrderNumber}
               orderName={selectedOrderName}
+              closeModal={() => setOpenModal(false)}
             />
           </div>
         </div>

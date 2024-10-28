@@ -10,14 +10,16 @@ const Ongoing = () => {
   const [selectedOrder, setSelectedOrder] = useState(null); // State to track the selected order
   const [openModal, setOpenModal] = useState(false); // State to control modal visibility
 
+  const [data, setdata] = useState([]);
+
   const handleOrderClick = (order) => {
     setSelectedOrder(order); // Set the selected order
     setOpenModal(true); // Open the modal
   };
 
   const riderData = useSelector((state) => state.rider.rider);
-  const riderOngoing =
-    useSelector((state) => state.rider.riderOngoingOrdering) || []; // Ensure fallback to an empty array
+  // const riderOngoing =
+  //   useSelector((state) => state.rider.riderOngoingOrdering) || []; // Ensure fallback to an empty array
 
   // const data = [];
 
@@ -38,6 +40,7 @@ const Ongoing = () => {
 
         // Dispatch the response data directly as it already matches the desired structure
         dispatch(setRiderOngoingOrdering(response.data));
+        setdata(response.data);
         toast.success("Received Successfully...");
       } catch (error) {
         toast.error(error.response?.data?.message || "Data fetch error");
@@ -96,7 +99,7 @@ const Ongoing = () => {
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <Table
-        data={riderOngoing}
+        data={data}
         columns={columns}
         getTableProps={() => ({
           className: "w-full bg-white rounded-lg", // Table styling

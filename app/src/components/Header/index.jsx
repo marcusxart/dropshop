@@ -1,47 +1,47 @@
-import { useEffect, useState } from "react";
 import { MdLogout } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearCustomers } from "../../Global/customerSlice";
-import { io } from "socket.io-client";
-
-const socket = io("http://localhost:5000"); // Connect to your Socket.IO server
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isOnline, setIsOnline] = useState(false);
+  // const [isOnline, setIsOnline] = useState(false);
 
   // Get customer name from Redux store
-  const customer = useSelector((state) => state.customer);
-  const customerName = customer?.name || "Unknown User"; // Use "Unknown User" if name is missing
+  // const customer = useSelector((state) => state.customer.Customer);
+  // console.log(customer);
+
+  // const customerName = customer.name || "Unknown User";
+
+  // console.log(customerName);
 
   const HandleLogout = () => {
     dispatch(clearCustomers());
     navigate("/auth/login");
   };
 
-  useEffect(() => {
-    console.log("Attempting to connect to socket...");
+  // useEffect(() => {
+  //   console.log("Attempting to connect to socket...");
 
-    socket.on("connect", () => {
-      setIsOnline(true);
-      console.log("Socket connected:", socket.connected); // Check connection status here
-      console.log("Emitting userLogin with name:", customerName);
-      socket.emit("userLogin", { name: customerName });
-    });
+  //   socket.on("connect", () => {
+  //     setIsOnline(true);
+  //     console.log("Socket connected:", socket.connected); // Check connection status here
+  //     console.log("Emitting userLogin with name:", customerName);
+  //     socket.emit("userLogin", { name: customerName });
+  //   });
 
-    socket.on("disconnect", () => {
-      setIsOnline(false);
-      console.log("Socket disconnected."); // Log when disconnected
-    });
+  //   socket.on("disconnect", () => {
+  //     setIsOnline(false);
+  //     console.log("Socket disconnected."); // Log when disconnected
+  //   });
 
-    return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-    };
-  }, [customerName]);
+  //   return () => {
+  //     socket.off("connect");
+  //     socket.off("disconnect");
+  //   };
+  // }, [customerName]);
 
   return (
     <div className="w-full h-[14vh] flex justify-end px-9 items-center">
@@ -53,11 +53,11 @@ const Header = () => {
         >
           <FaUser />
           {/* Green online indicator */}
-          <span
+          {/* <span
             className={`absolute top-0 right-0 w-[10px] h-[10px] rounded-full ${
               isOnline ? "bg-green-500" : "bg-gray-400"
             }`}
-          />
+          /> */}
         </div>
       </div>
     </div>
