@@ -1,6 +1,6 @@
 import { FaUser } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearRider } from "../../Global/rideSlic";
 
@@ -14,10 +14,11 @@ const RiderHeader = () => {
     navigate("/rider-auth/rider-login");
   };
 
+  const riderData = useSelector((state) => state.rider.rider);
   return (
     <div className="w-full h-[14vh] flex px-5 items-center">
       <div className=" bg-[#111214BF] cursor-pointer w-full rounded h-[80%] px-4 max-md:w-[100%] max-md:h-[60%] flex justify-end gap-4 items-center">
-        <p>Michael Jordan</p>
+        <p>{riderData.name}</p>
 
         <div
           className="w-[40px] h-[40px] rounded-full relative border flex justify-center items-center cursor-pointer"

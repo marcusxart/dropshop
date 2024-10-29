@@ -17,9 +17,10 @@ const CallModal = ({ orderId, orderNumber, orderName, closeModal }) => {
   useEffect(() => {
     socket.connect();
 
-    return () => {
-      socket.disconnect();
-    };
+    // return () => {
+    //   socket.disconnect();
+    // };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCopy = () => {
