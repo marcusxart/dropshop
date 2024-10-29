@@ -6,7 +6,7 @@ import { FaRegThumbsUp } from "react-icons/fa";
 import SendPackagesModal from "../components/Modals/SendPackagesModal";
 
 const Home = () => {
-  const [selectedOption, setSelectedOption] = useState("Delivery");
+  const [selectedOption, setSelectedOption] = useState("Pick Up");
   const [openModal, setOpenModal] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
