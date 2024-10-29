@@ -3,20 +3,7 @@ const { orderUpdate } = require("../controllers/order");
 
 let io;
 
-let onlineCustomers = [];
-
-const addUser = (name, socketId) => {
-  !onlineCustomers.some((user) => user.name === name) &&
-    onlineCustomers.push({ name, socketId });
-};
-const getCustomer = (name) => {
-  return onlineCustomers.find((customer) => customer.name === name);
-};
-const disconnect = (id) => {
-  onlineCustomers = onlineCustomers.filter(
-    (customer) => customer.socketId !== id
-  );
-};
+const id = []
 const initSocket = (instant) => {
   if (!io) {
     io = new Server(instant, {
@@ -33,9 +20,11 @@ const initSocket = (instant) => {
       //join room
       socket.on("join_room", (data) => {
         socket.join(data.room);
+        id.push(data.role)
         console.log(`customer joined room ${data.room}`);
         if (data.role === "rider") {
           socket.to(data.room).emit("to_customer", data);
+          console.log(id)
           console.log(data);
         }
       });
@@ -47,7 +36,6 @@ const initSocket = (instant) => {
 
       socket.on("disconnect", () => {
         console.log(`${socket.id} disconnected`);
-        disconnect(socket.id);
       });
     });
   }
