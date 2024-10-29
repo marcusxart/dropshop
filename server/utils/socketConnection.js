@@ -30,23 +30,21 @@ const initSocket =(instant)=>{
    io.on("connection", (socket)=>{
     console.log("connected")
 
-    //login customer
-    socket.on("userLogin",({name})=>{
-     addUser(name,socket.id)
-     console.log(onlineCustomers)
+    //join room
+    socket.on("join_room",(data)=>{
+      socket.join(data.room)
+      console.log(`customer joined room ${data.room}`)
+      if (data.role==="rider") {
+        socket.to(data.room).emit("to_customer",data)
+        console.log("rider has accepted")
+      }
     })
-    //accepted  order from rider
-    socket.on("acceptedOrder",(data)=>{
-      const findCustomer = getCustomer(data.customer)
-      io.to(findCustomer.socketId).emit("customerUpdate",{rider:data.rider.name})
-    })
-    //from rider
-   socket.on("riderUpdate",({stage,customerName})=>{
 
-    //to customer
-     const findCustomer = getCustomer(customerName)
-     io.to(findCustomer.socketId).emit("customerUpdate",{stage})
-   })
+    socket.on("from_rider",(data)=>{
+     socket.to(data.room).emit("to_customer",data)
+     console.log("rider sent to customer")
+    })
+   
        socket.on("disconnect",()=>{
         console.log(`${socket.id} disconnected`)
         disconnect(socket.id)
