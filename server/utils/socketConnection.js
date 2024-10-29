@@ -47,7 +47,6 @@ const initSocket =(instant)=>{
    
        socket.on("disconnect",()=>{
         console.log(`${socket.id} disconnected`)
-        disconnect(socket.id)
      })
  })
 
