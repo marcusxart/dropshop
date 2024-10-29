@@ -15,11 +15,11 @@ const CallModal = ({ orderId, orderNumber, orderName, closeModal }) => {
   const socket = io("http://localhost:5000"); // Replace with your server's socket URL
 
   useEffect(() => {
-    // Cleanup function to disconnect the socket when the component unmounts
+    socket.connect();
+
     return () => {
       socket.disconnect();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCopy = () => {
@@ -44,18 +44,12 @@ const CallModal = ({ orderId, orderNumber, orderName, closeModal }) => {
 
       dispatch(setRiderOngoingOrdering(response.data));
 
-      socket.emit(
-        "acceptedOrder",
-        {
-          orderId,
-          customer: response.data.customer,
-          rider: {
-            id: riderdata.id,
-            name: riderdata.name,
-          },
-        },
-        console.log("Ordersent ")
-      );
+      socket.emit("join_room", {
+        room: response.data.id,
+        role: "rider",
+      });
+      console.log("Order accepted", socket);
+
       closeModal(true);
     } catch (error) {
       toast.error(

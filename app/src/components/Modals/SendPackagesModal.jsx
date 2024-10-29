@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegEdit, FaRegThumbsUp } from "react-icons/fa";
 import { MdLocationOn, MdOutlineClear } from "react-icons/md";
 import Pickdetails from "./Pickdetails";
@@ -7,7 +7,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../Global/customerSlice";
-import LoadingModal from "./LoadingModal"; // Import LoadingModal component
+import CustomerOrderStatus from "./CustomerOrderStaus";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:5000");
 
 const SendPackagesModal = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
@@ -37,6 +40,20 @@ const SendPackagesModal = () => {
     setIsPickDetailsOpen(false);
   };
 
+  useEffect(() => {
+    if (!socket.connected) {
+      socket.connect();
+    }
+
+    socket.on("connect", () => {
+      console.log("Socket connected:", socket.id);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   const HandleOrder = async () => {
     const toastLoading = toast.loading("Please wait...");
     try {
@@ -45,21 +62,27 @@ const SendPackagesModal = () => {
         orderdata,
         { headers }
       );
+
       toast.success("Order placed Successfully");
       const orderDataArray = Array.isArray(response.data)
         ? response.data
         : [response.data];
-
-      // Dispatch as an array of objects
       dispatch(setOrders(orderDataArray));
-      // Clear local storage after successful order placement
       localStorage.clear();
 
-      // Show loading modal after placing the order
+      // Emit join room event only after confirming order placement
+      if (socket.connected) {
+        socket.emit("join_room", {
+          room: response.data.id,
+          role: "customer",
+        });
+        console.log(`Joined room: ${response.data.id}`);
+      }
+
       setIsLoading(true);
-      setIsOpen(false); // Close SendPackagesModal
+      setIsOpen(false);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error("Failed to place order");
     } finally {
       toast.dismiss(toastLoading);
@@ -73,7 +96,7 @@ const SendPackagesModal = () => {
 
   return (
     <>
-      {isLoading && <LoadingModal />}
+      {isLoading && <CustomerOrderStatus />}
       {!isLoading && isOpen && (
         <div className="w-[40rem] h-[35rem] bg-black max-md:w-[23rem] rounded-lg flex-col flex justify-around items-center">
           {isSearchModalOpen && (

@@ -14,10 +14,8 @@ const RiderNav = () => {
 
   const RiderOrder = useSelector((state) => state.rider.riderOrders);
   const RiderOrderongoing = useSelector(
-    (state) => state.rider.riderOngoingOrdering
+    (state) => state.rider.riderOngoingOrdering || []
   );
-
-  // console.log(RiderOrder.length);
 
   return (
     <div className="w-full h-[10vh] bg-[#0b0b0d] fixed bottom-0 flex justify-around items-center text-white shadow-lg z-50">
