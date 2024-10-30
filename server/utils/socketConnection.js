@@ -1,5 +1,4 @@
 const { Server } = require("socket.io");
-const { orderUpdate } = require("../controllers/order");
 
 let io;
 
@@ -21,7 +20,7 @@ const initSocket = (instant) => {
       socket.on("join_room", (data) => {
         socket.join(data.room);
         id.push(data.role)
-        console.log(`customer joined room ${data.room}`);
+        console.log(`${data.role} joined room ${data.room}`);
         if (data.role === "rider") {
           socket.to(data.room).emit("to_customer", data);
           console.log(id)
@@ -43,31 +42,11 @@ const initSocket = (instant) => {
   return io;
 };
 
-const getIo = () => {
-    //join room
-    socket.on("join_room",(data)=>{
-      socket.join(data.room)
-      console.log(`customer joined room ${data.room}`)
-      if (data.role==="rider") {
-        socket.to(data.room).emit("to_customer",data)
-        console.log("rider has accepted")
-      }
-    })
 
-    socket.on("from_rider",(data)=>{
-     socket.to(data.room).emit("to_customer",data)
-     console.log("rider sent to customer")
-    })
-   
-       socket.on("disconnect",()=>{
-        console.log(`${socket.id} disconnected`)
-     })
- })
 
-}
 
- return io
-}
+ 
+
 
 
 const getIo=()=>{
