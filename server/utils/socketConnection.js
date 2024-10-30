@@ -29,19 +29,19 @@
 //     });
 //     io.on("connection", (socket) => {
 //       console.log("connected");
-const id = []
-const initSocket = (instant) => {
-  if (!io) {
-    io = new Server(instant, {
-      cors: {
-        origin: "http://localhost:5173",
-        methods: [" GET", "POST"],
-        allowedHeaders: ["content-type"],
-        credentials: true,
-      },
-    });
-    io.on("connection", (socket) => {
-      console.log("connected");
+// const id = []
+// const initSocket = (instant) => {
+//   if (!io) {
+//     io = new Server(instant, {
+//       cors: {
+//         origin: "http://localhost:5173",
+//         methods: [" GET", "POST"],
+//         allowedHeaders: ["content-type"],
+//         credentials: true,
+//       },
+//     });
+//     io.on("connection", (socket) => {
+//       console.log("connected");
 
 //       //join room
 //       socket.on("join_room", (data) => {

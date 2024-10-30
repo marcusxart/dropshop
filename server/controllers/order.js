@@ -374,8 +374,13 @@ const updateOrder = async (req, res, next) => {
   const { id } = req.params;
   try {
     const order = await Orders.update(req.body, { where: { id } });
-    if (order.stage === 2) {
-      //emit io
+    if (order) {
+      io.to(order.customer).emit("updateStage",{
+        customerName: order.customer,
+        role: "customer",
+        orderStatus: order.status,
+        data: order,
+      })
     }
     res.status(201).json("stage updated");
   } catch (error) {
