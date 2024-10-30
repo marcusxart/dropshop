@@ -1,35 +1,30 @@
 import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 import LoadingModal from "./LoadingModal";
-// import { MdRotateLeft } from "react-icons/md";
 
-const socket = io.connect("http://localhost:5000");
-
-// Adjust the URL if needed
-
-const CustomerOrderStatus = ({ customerName }) => {
+const CustomerOrderStatus = ({ orderStatus }) => {
   const [loading, setLoading] = useState(true);
-  const [riderMessage, setRiderMessage] = useState(null); // Store message from rider
+  const navigate = useNavigate();
 
-  console.log(socket);
+  console.log(orderStatus);
+
   useEffect(() => {
-    // Listen for 'to_customer' event from the server
+    // Only hide loading and navigate if the order status changes to "in-progress"
+    if (orderStatus === "in-progress") {
+      // Hide the loading modal first
+      setLoading(false);
 
-    console.log(socket);
+      // Navigate to the on-going page after a brief timeout (optional)
+      const timeout = setTimeout(() => {
+        navigate("/user/on-going");
+      }, 500); // This allows the loading modal to be visible for a brief moment
 
-    socket.on("to_customer", (data) => {
-      console.log(data);
-    });
-
-    // Clean up the socket connection when the component unmounts
-    // return () => {
-    //   socket.off("to_customer");
-    // };
-  }, []);
-
-  socket.on("to_customer", (data) => {
-    console.log(data);
-  });
+      // Cleanup function to clear the timeout if the component unmounts
+      return () => clearTimeout(timeout);
+    } else {
+      setLoading(true); // Reset loading state if not in-progress
+    }
+  }, [orderStatus, navigate]);
 
   return (
     <div>
@@ -37,7 +32,7 @@ const CustomerOrderStatus = ({ customerName }) => {
         <LoadingModal /> // Show LoadingModal until rider accepts
       ) : (
         <div className="text-center p-4">
-          <p className="text-green-600 text-lg font-semibold">{riderMessage}</p>
+          <p className="text-green-600 text-lg font-semibold">{orderStatus}</p>
           <p className="text-gray-600 mt-2">
             The rider is on the way to complete your order.
           </p>

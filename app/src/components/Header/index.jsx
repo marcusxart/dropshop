@@ -3,6 +3,7 @@ import { FaUser } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearCustomers } from "../../Global/customerSlice";
+import { clearStatus } from "../../Global/Orderstatus";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Header = () => {
 
   const HandleLogout = () => {
     dispatch(clearCustomers());
+    dispatch(clearStatus());
     navigate("/auth/login");
   };
 

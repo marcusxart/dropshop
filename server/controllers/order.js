@@ -235,37 +235,83 @@ const createOrder = async (req, res, next) => {
   }
 };
 
+// const acceptOrder = async (req, res, next) => {
+//   const { id } = req.params;
+//   const riderName = req.user.name;
+//   const riderNumber = req.user.riderNumber;
+//   const io = req.app.get("socketIo");
+//   try {
+//     const busyRider = await Orders.findAll({
+//       where: { status: "in-progress", rider: riderName },
+//     });
+//     if (busyRider.length !== 0) {
+//       const err = new appError("rider already occupied", 400);
+//       return next(err);
+//     }
+//     const findOrder = await Orders.findByPk(id);
+
+//     if (!findOrder) {
+//       const err = new Error("order not found");
+//       err.status = 404;
+//       return next(err);
+//     }
+//     // findOrder.rider = riderName;
+//     // // findOrder.status = "in-progress";
+//     // findOrder.riderNumber = riderNumber;
+//     // findOrder.stage = 1;
+//     // // await findOrder.save();
+
+//     console.log("Customer Name:", findOrder.customer);
+//     console.log(io, "sockect io");
+
+//     emitOrderStatusUpdate({
+//       io,
+//       customerName: findOrder.customer,
+//       role: "customer",
+//       orderStatus: findOrder.status,
+//       data: findOrder,
+//     });
+
+//     res.status(200).json(findOrder);
+//   } catch (error) {
+//     const err = new Error(error.message);
+//     return next(err);
+//   }
+// };
+
 const acceptOrder = async (req, res, next) => {
   const { id } = req.params;
   const riderName = req.user.name;
   const riderNumber = req.user.riderNumber;
-  const io = req.app.get("socketio");
+  const io = req.app.get("socketIo"); // Make sure io is set in app.js
+
   try {
     const busyRider = await Orders.findAll({
       where: { status: "in-progress", rider: riderName },
     });
     if (busyRider.length !== 0) {
-      const err = new appError("rider already occupied", 400);
+      const err = new Error("Rider already occupied");
+      err.status = 400;
       return next(err);
     }
-    const findOrder = await Orders.findByPk(id);
 
+    const findOrder = await Orders.findByPk(id);
     if (!findOrder) {
-      const err = new Error("order not found");
+      const err = new Error("Order not found");
       err.status = 404;
       return next(err);
     }
-    // findOrder.rider = riderName;
-    // // findOrder.status = "in-progress";
-    // findOrder.riderNumber = riderNumber;
-    // findOrder.stage = 1;
-    // // await findOrder.save();
+    findOrder.rider = riderName;
+    findOrder.status = "in-progress";
+    findOrder.riderNumber = riderNumber;
+    findOrder.stage = 1;
+    await findOrder.save();
 
     console.log("Customer Name:", findOrder.customer);
-    console.log(io, "sockect io");
+    // console.log(io, "sockect io");
 
-    emitOrderStatusUpdate({
-      io,
+    // Send order status update to customer’s room directly
+    io.to(findOrder.customer).emit("orderStatusUpdate", {
       customerName: findOrder.customer,
       role: "customer",
       orderStatus: findOrder.status,
@@ -274,8 +320,7 @@ const acceptOrder = async (req, res, next) => {
 
     res.status(200).json(findOrder);
   } catch (error) {
-    const err = new Error(error.message);
-    return next(err);
+    return next(new Error(error.message));
   }
 };
 

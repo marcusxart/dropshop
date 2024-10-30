@@ -6,6 +6,7 @@ import { combineReducers } from "redux";
 import CustomerReducer from "./customerSlice";
 import AdminReducer from "./adminSlic";
 import RiderReducer from "./rideSlic";
+import OrderStatusReducer from "./Orderstatus";
 // Configure the persist object
 const persistConfig = {
   key: "root",
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   customer: CustomerReducer,
   admin: AdminReducer,
   rider: RiderReducer,
+  OrderStatus: OrderStatusReducer,
 });
 
 // Create a persisted reducer
