@@ -20,6 +20,9 @@ const SendPackagesModal = () => {
 
   const selectedOption = localStorage.getItem("selectedOption");
   const customerdata = useSelector((state) => state.customer.Customer);
+
+  console.log(customerdata.name);
+
   const dispatch = useDispatch();
 
   const handleOpenSearchModal = () => {
@@ -47,6 +50,9 @@ const SendPackagesModal = () => {
 
     socket.on("connect", () => {
       console.log("Socket connected:", socket.id);
+      socket.on("orderStatusUpdate", (data) => {
+        console.log(data);
+      });
     });
 
     return () => {
@@ -72,11 +78,11 @@ const SendPackagesModal = () => {
 
       // Emit join room event only after confirming order placement
       if (socket.connected) {
-        socket.emit("join_room", {
-          room: response.data.id,
+        socket.emit("joinRoom", {
+          customerName: customerdata.name,
           role: "customer",
         });
-        console.log(`Joined room: ${response.data.id}`);
+        console.log(`Joined room: ${response.data.customer}`);
       }
 
       setIsLoading(true);
