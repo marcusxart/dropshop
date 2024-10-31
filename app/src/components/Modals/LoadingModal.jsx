@@ -6,6 +6,9 @@ const LoadingModal = () => {
         <p className="text-gray-600 mt-2">
           Your order is being processed. Please wait...
         </p>
+        {/* Optionally add a spinner here */}
+        <div className="loader mt-4"></div>{" "}
+        {/* Simple loader, add your styles */}
       </div>
     </div>
   );

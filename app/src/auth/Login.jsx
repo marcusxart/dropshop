@@ -2,14 +2,14 @@ import InputField from "../components/InputField/index";
 import Button from "../components/Button";
 import { MdArrowRightAlt } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setCustomer } from "../Global/customerSlice";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+// const socket = io("http://localhost:5000");
 
 const Login = () => {
   const navigate = useNavigate();
@@ -40,14 +40,14 @@ const Login = () => {
         dispatch(setCustomer(customerData));
 
         // Emit the `userLogin` event with customer details
-        socket.emit("userLogin", {
-          name: customerData.name, // or other unique identifier
-          id: customerData.id, // Assuming there's an `id` in customerData
-        });
+        // socket.emit("userLogin", {
+        //   name: customerData.name, // or other unique identifier
+        //   id: customerData.id, // Assuming there's an `id` in customerData
+        // });
 
-        console.log(
-          `User logged in: Name - ${customerData.name}, ID - ${customerData.id}`
-        );
+        // console.log(
+        //   `User logged in: Name - ${customerData.name}, ID - ${customerData.id}`
+        // );
 
         // Navigate after login
         setTimeout(() => {
@@ -62,17 +62,17 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    // Confirm connection to backend on initial load
-    socket.on("connect", () => {
-      console.log("Connected to Socket.IO server:", socket.id);
-    });
+  // useEffect(() => {
+  //   // Confirm connection to backend on initial load
+  //   socket.on("connect", () => {
+  //     console.log("Connected to Socket.IO server:", socket.id);
+  //   });
 
-    return () => {
-      // Cleanup socket connection on component unmount
-      socket.off("connect");
-    };
-  }, []);
+  //   return () => {
+  //     // Cleanup socket connection on component unmount
+  //     socket.off("connect");
+  //   };
+  // }, []);
 
   return (
     <form onSubmit={HandleLogin}>

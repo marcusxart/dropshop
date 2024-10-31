@@ -1,7 +1,10 @@
+import { useEffect } from "react";
 import { BiMap } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 
 const DeliveryModal = ({ closeModal }) => {
+  useEffect(() => {}, []);
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="bg-black  p-8 rounded-lg shadow-lg w-[40rem] h-[30rem] relative max-md:w-[20rem]">

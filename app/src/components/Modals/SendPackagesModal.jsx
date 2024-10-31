@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { FaRegEdit, FaRegThumbsUp } from "react-icons/fa";
 import { MdLocationOn, MdOutlineClear } from "react-icons/md";
@@ -7,8 +8,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../Global/customerSlice";
-import CustomerOrderStatus from "./CustomerOrderStaus";
 import { io } from "socket.io-client";
+import { setOrderStatus } from "../../Global/Orderstatus";
+import { useNavigate } from "react-router-dom";
+import LoadingModal from "./LoadingModal";
 
 const socket = io("http://localhost:5000");
 
@@ -16,8 +19,9 @@ const SendPackagesModal = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isPickDetailsOpen, setIsPickDetailsOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
-  const [isLoading, setIsLoading] = useState(false); // New loading state
-
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const orderStatus = useSelector((state) => state.OrderStatus.status);
+  const nav = useNavigate();
   const selectedOption = localStorage.getItem("selectedOption");
   const customerdata = useSelector((state) => state.customer.Customer);
   const dispatch = useDispatch();
@@ -47,15 +51,27 @@ const SendPackagesModal = () => {
 
     socket.on("connect", () => {
       console.log("Socket connected:", socket.id);
+      socket.on("orderStatusUpdate", (data) => {
+        // Handle order status update
+        console.log("Order status update received:", data);
+        dispatch(setOrderStatus(data.orderStatus)); // Update the order status state
+        toast.success(`Order status updated: ${data.status}`); // Display a toast notification
+        setIsLoading(false);
+        setTimeout(() => {
+          nav("/user/on-going");
+        }, 2000);
+      });
     });
 
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [customerdata.name, dispatch, nav]);
 
   const HandleOrder = async () => {
-    const toastLoading = toast.loading("Please wait...");
+    const toastLoading = toast.loading("Placing your order...");
+    setIsLoading(true); // Set loading state to true
+
     try {
       const response = await axios.post(
         "http://localhost:5000/api/createOrder",
@@ -63,7 +79,7 @@ const SendPackagesModal = () => {
         { headers }
       );
 
-      toast.success("Order placed Successfully");
+      toast.success("Order placed successfully!");
       const orderDataArray = Array.isArray(response.data)
         ? response.data
         : [response.data];
@@ -72,19 +88,19 @@ const SendPackagesModal = () => {
 
       // Emit join room event only after confirming order placement
       if (socket.connected) {
-        socket.emit("join_room", {
-          room: response.data.id,
+        socket.emit("joinRoom", {
+          customerName: customerdata.name,
           role: "customer",
         });
-        console.log(`Joined room: ${response.data.id}`);
+        console.log(`Joined room: ${response.data.customer}`);
       }
 
-      setIsLoading(true);
-      setIsOpen(false);
+      setIsOpen(false); // Close modal after order is placed
     } catch (err) {
       console.error(err);
       toast.error("Failed to place order");
     } finally {
+      setIsLoading(false); // Reset loading state
       toast.dismiss(toastLoading);
     }
   };
@@ -96,7 +112,11 @@ const SendPackagesModal = () => {
 
   return (
     <>
-      {isLoading && <CustomerOrderStatus />}
+      {isLoading && (
+        <div className="loader">
+          <LoadingModal />
+        </div> // Simple loading indicator
+      )}
       {!isLoading && isOpen && (
         <div className="w-[40rem] h-[35rem] bg-black max-md:w-[23rem] rounded-lg flex-col flex justify-around items-center">
           {isSearchModalOpen && (
@@ -185,6 +205,11 @@ const SendPackagesModal = () => {
                   </button>
                 </div>
               </div>
+              {orderStatus && (
+                <div className="w-full text-center text-green-500">
+                  Current Order Status: {orderStatus}
+                </div>
+              )}
             </>
           )}
         </div>

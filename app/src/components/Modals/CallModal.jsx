@@ -3,8 +3,8 @@ import toast from "react-hot-toast";
 import { MdFileCopy } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { setRiderOngoingOrdering } from "../../Global/rideSlic";
-import { useEffect } from "react";
-import { io } from "socket.io-client";
+// import { useEffect } from "react";
+// import { io } from "socket.io-client";
 
 const CallModal = ({ orderId, orderNumber, orderName, closeModal }) => {
   const phoneNumber = orderNumber;
@@ -12,16 +12,16 @@ const CallModal = ({ orderId, orderNumber, orderName, closeModal }) => {
   const dispatch = useDispatch();
 
   // Establish a socket connection
-  const socket = io("http://localhost:5000"); // Replace with your server's socket URL
+  // const socket = io("http://localhost:5000"); // Replace with your server's socket URL
 
-  useEffect(() => {
-    socket.connect();
+  // useEffect(() => {
+  //   socket.connect();
 
-    // return () => {
-    //   socket.disconnect();
-    // };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   // return () => {
+  //   //   socket.disconnect();
+  //   // };
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(phoneNumber);
@@ -45,11 +45,11 @@ const CallModal = ({ orderId, orderNumber, orderName, closeModal }) => {
 
       dispatch(setRiderOngoingOrdering(response.data));
 
-      socket.emit("join_room", {
-        room: response.data.id,
-        role: "rider",
-      });
-      console.log("Order accepted", socket);
+      // socket.emit("join_room", {
+      //   room: response.data.id,
+      //   role: "rider",
+      // });
+      // console.log("Order accepted", socket);
 
       closeModal(true);
     } catch (error) {
