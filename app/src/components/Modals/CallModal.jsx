@@ -45,12 +45,6 @@ const CallModal = ({ orderId, orderNumber, orderName, closeModal }) => {
 
       dispatch(setRiderOngoingOrdering(response.data));
 
-      // socket.emit("join_room", {
-      //   room: response.data.id,
-      //   role: "rider",
-      // });
-      // console.log("Order accepted", socket);
-
       closeModal(true);
     } catch (error) {
       toast.error(
