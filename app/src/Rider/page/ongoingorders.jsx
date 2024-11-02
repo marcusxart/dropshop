@@ -9,20 +9,9 @@ import { setRiderOngoingOrdering } from "../../Global/rideSlic";
 const Ongoing = () => {
   const [selectedOrder, setSelectedOrder] = useState(null); // State to track the selected order
   const [openModal, setOpenModal] = useState(false); // State to control modal visibility
-
-  const [data, setdata] = useState([]);
-
-  const handleOrderClick = (order) => {
-    setSelectedOrder(order); // Set the selected order
-    setOpenModal(true); // Open the modal
-  };
+  const [data, setData] = useState([]); // State for ongoing order data
 
   const riderData = useSelector((state) => state.rider.rider);
-  // const riderOngoing =
-  //   useSelector((state) => state.rider.riderOngoingOrdering) || []; // Ensure fallback to an empty array
-
-  // const data = [];
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,10 +26,8 @@ const Ongoing = () => {
             },
           }
         );
-
-        // Dispatch the response data directly as it already matches the desired structure
         dispatch(setRiderOngoingOrdering(response.data));
-        setdata(response.data);
+        setData(response.data);
         toast.success("Received Successfully...");
       } catch (error) {
         toast.error(error.response?.data?.message || "Data fetch error");
@@ -50,6 +37,11 @@ const Ongoing = () => {
     };
     getOngoingOrders();
   }, [dispatch, riderData.token]);
+
+  const handleOrderClick = (order) => {
+    setSelectedOrder(order); // Set the selected order data
+    setOpenModal(true); // Open the modal
+  };
 
   const columns = useMemo(
     () => [
@@ -114,11 +106,13 @@ const Ongoing = () => {
       />
 
       {/* Modal for showing selected order details */}
-      <Selectmodal
-        isOpen={openModal}
-        onClose={() => setOpenModal(false)}
-        order={selectedOrder} // Pass the selected order to modal
-      />
+      {openModal && (
+        <Selectmodal
+          isOpen={openModal}
+          onClose={() => setOpenModal(false)}
+          order={selectedOrder} // Pass the selected order to modal
+        />
+      )}
     </div>
   );
 };

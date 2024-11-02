@@ -1,9 +1,14 @@
 import { useEffect } from "react";
 import { BiMap } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:5000");
 
 const DeliveryModal = ({ closeModal }) => {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    socket.on("orderStatus", () => {});
+  }, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
