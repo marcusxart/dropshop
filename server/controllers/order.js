@@ -373,8 +373,12 @@ let orderUpdate;
 const updateOrder = async (req, res, next) => {
   const io = req.app.get("socketIo")
   const { id } = req.params;
+  const {stage,status} = req.body
   try {
-    const order = await Orders.update(req.body, { where: { id } });
+    const order = await Orders.findByPk(id);
+    order.stage = stage
+    order.status = status
+    order.save()
     if (order) {
       io.to(order.customer).emit("updateStage",{
         customerName: order.customer,
@@ -383,7 +387,7 @@ const updateOrder = async (req, res, next) => {
         data: order,
       })
     }
-    res.status(201).json("stage updated");
+    res.status(201).json(order);
   } catch (error) {
     const err = new Error(error.message);
     return next(err);
