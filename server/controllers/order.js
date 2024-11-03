@@ -371,6 +371,7 @@ const getOrderById = async (req, res, next) => {
 let orderUpdate;
 
 const updateOrder = async (req, res, next) => {
+  const io = req.app.get("socketIo")
   const { id } = req.params;
   try {
     const order = await Orders.update(req.body, { where: { id } });
