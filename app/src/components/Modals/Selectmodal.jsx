@@ -40,19 +40,21 @@ const Selectmodal = ({ isOpen, onClose, order }) => {
     try {
       const response = await axios.put(
         `http://localhost:5000/api/updateOrder/${order.id}`,
-        {},
+        { stage: 2, status: "in progress" }, // Pass `stage` and `status` in the request body
         {
           headers: {
             Authorization: `Bearer ${rider.token}`,
           },
         }
       );
-      toast.success("Status updated successfully");
-      dispatch(setRiderStatus(response.data));
 
+      toast.success("Status updated successfully");
+      dispatch(setRiderStatus(response.data.status));
+
+      // Emit updateStage event to server to notify the update
       if (socket.connected) {
-        socket.on("updateStage", { stage: 2, status: "in progress" });
-        console.log(`Status Update: ${response.data.customer}`);
+        socket.emit("updateStage", { stage: 2, status: "in progress" });
+        console.log(`Status Update: ${response.data}`);
       }
 
       onClose();
