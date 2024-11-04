@@ -23,7 +23,7 @@ const Button = ({ text, sm, type, full, border, icon, link, ...restProps }) => {
   const handleClick = (e) => {
     if (link) {
       e.preventDefault(); // Prevents the default behavior if `link` is provided
-      navigate(link); // Navigate to the specified route
+      navigate(link); // Navigate to the specified rout
     }
 
     // If you want to add more click handling logic, you can do it here.
