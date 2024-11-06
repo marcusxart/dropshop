@@ -378,7 +378,7 @@ const updateOrder = async (req, res, next) => {
     const order = await Orders.findByPk(id);
     order.stage = stage
     order.status = status
-    order.save()
+    await order.save()
     if (order) {
       io.to(order.customer).emit("updateStage",{
         customerName: order.customer,
@@ -389,6 +389,7 @@ const updateOrder = async (req, res, next) => {
     }
     res.status(201).json(order);
   } catch (error) {
+    console.log(error)
     const err = new Error(error.message);
     return next(err);
   }
