@@ -1,12 +1,11 @@
 /* eslint-disable react/jsx-key */
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   useTable,
   useSortBy,
   useGlobalFilter,
   usePagination,
 } from "react-table";
-
 import { ChevronDown, ChevronUp } from "lucide-react";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -17,36 +16,47 @@ import { useNavigate } from "react-router-dom";
 const Riders = () => {
   const admindata = useSelector((state) => state.admin.admin);
   const AllRiders = useSelector((state) => state.admin.riders);
-  console.log(AllRiders);
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const headers = { Authorization: `Bearer ${admindata.token}` };
 
-  const headers = {
-    Authorization: `Bearer ${admindata.token}`,
+  const getAllRider = async () => {
+    const toastLoading = toast.loading("Please wait...");
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/getAllRiders",
+        { headers }
+      );
+      toast.success("All Riders have been Updated Successfully");
+      dispatch(setAllRiders(response.data));
+    } catch (err) {
+      toast.error("Failed to load riders");
+      console.error(err.message);
+    } finally {
+      toast.dismiss(toastLoading);
+    }
   };
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    const getAllRider = async () => {
-      const toastLoading = toast.loading("Please wait...");
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/api/getAllRiders",
-          { headers }
-        );
-
-        toast.success("All Riders have been Updated Successfully");
-        dispatch(setAllRiders(response.data));
-      } catch (err) {
-        console.log(err.message);
-      } finally {
-        toast.dismiss(toastLoading);
-      }
-    };
     getAllRider();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleDeleteRider = async (id) => {
+    const toastLoading = toast.loading("Please wait...");
+    try {
+      await axios.delete(`http://localhost:5000/api/deleteRider/${id}`, {
+        headers,
+      });
+      toast.success("Rider has been deleted successfully");
+      getAllRider(); // Refresh riders list after deletion
+    } catch (err) {
+      toast.error("Error deleting rider");
+      console.error(err.message);
+    } finally {
+      toast.dismiss(toastLoading);
+    }
+  };
 
   const columns = useMemo(
     () => [
@@ -57,10 +67,9 @@ const Riders = () => {
       },
       {
         Header: "Date Registered",
-        accessor: "createdAt", // Update accessor to 'createdAt'
-        Cell: ({ value }) => new Date(value).toLocaleDateString(), // Format the date
+        accessor: "createdAt",
+        Cell: ({ value }) => new Date(value).toLocaleDateString(),
       },
-
       {
         Header: "Amount Made",
         accessor: "amountMade",
@@ -71,26 +80,67 @@ const Riders = () => {
         accessor: "ongoingOrders",
       },
       {
-        Header: "Status",
-        accessor: "status",
-        Cell: ({ value }) => (
-          <div className="flex items-center justify-center">
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={value}
-                readOnly
-              />
-              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-              <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-                {value ? "On" : "Off"}
-              </span>
-            </label>
-          </div>
-        ),
+        Header: "Action",
+        accessor: "action",
+        Cell: ({ row }) => {
+          const [dropdownOpen, setDropdownOpen] = useState(false);
+          const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+
+          const handleAction = (action) => {
+            switch (action) {
+              case "delete":
+                handleDeleteRider(row.original.id);
+                break;
+              case "suspend":
+                toast("Suspension feature not implemented yet");
+                break;
+              case "confirm":
+                toast("Confirmation feature not implemented yet");
+                break;
+              default:
+                break;
+            }
+            setDropdownOpen(false);
+          };
+
+          return (
+            <div className="relative flex items-center justify-center">
+              <button
+                onClick={toggleDropdown}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                Action
+              </button>
+              {dropdownOpen && (
+                <div className="absolute mt-1 w-48 bg-white right-2 top-2 rounded-md shadow-lg z-10">
+                  <ul className="py-1 text-gray-700">
+                    <li
+                      onClick={() => handleAction("delete")}
+                      className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      Delete Rider
+                    </li>
+                    <li
+                      onClick={() => handleAction("suspend")}
+                      className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      Suspend/Unsuspend Rider
+                    </li>
+                    <li
+                      onClick={() => handleAction("confirm")}
+                      className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      Confirm Rider
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          );
+        },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -121,14 +171,14 @@ const Riders = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="mb-4 flex items-center justify-around ">
+      <div className="mb-4 flex items-center justify-around max-md:flex-col ">
         <input
           value={globalFilter || ""}
           onChange={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search riders... this is it"
+          placeholder="Search riders..."
           className="p-2 border-2 w-[40%] max-md:w-[98%] px-3 outline-none border-gray-900 rounded bg-transparent"
         />
-        <div className="w-[40rem] h-[3rem]  flex justify-end px-5 items-center">
+        <div className="w-[40rem] h-[3rem] flex justify-end px-3 items-center max-md:w-[20rem]">
           <button
             className="py-2 px-3 bg-[#f8c314] font-bold text-sm rounded-md"
             onClick={() => navigate("/rider-auth/rider-reg")}
@@ -141,7 +191,7 @@ const Riders = () => {
       <div className="overflow-x-auto shadow-md sm:rounded-lg bg-black max-md:w-[22rem]">
         <table
           {...getTableProps()}
-          className="w-full text-sm text-left text-gray-500  dark:text-gray-400 "
+          className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
         >
           <thead className="text-xs text-gray-700 font-extrabold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             {headerGroups.map((headerGroup) => (
