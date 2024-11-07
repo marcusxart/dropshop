@@ -378,17 +378,20 @@ const updateOrder = async (req, res, next) => {
     const order = await Orders.findByPk(id);
     order.stage = stage
     order.status = status
-    order.save()
-    if (order) {
+    await order.save()
+    if (io.sockets.adapter.rooms.has(order.customer)) {
       io.to(order.customer).emit("updateStage",{
         customerName: order.customer,
         role: "customer",
         orderStatus: order.status,
         data: order,
       })
+    } else{
+      console.log(`Room ${order.customer} does not exist or is empty`)
     }
     res.status(201).json(order);
   } catch (error) {
+    console.log(error)
     const err = new Error(error.message);
     return next(err);
   }
