@@ -1,29 +1,56 @@
+import { useEffect } from "react";
 import { MdDeliveryDining, MdLocalOffer, MdPeople } from "react-icons/md";
 import { TbCurrencyNaira } from "react-icons/tb";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { setAdminData } from "../../Global/adminSlic";
 
 const OverView = () => {
+  const AdminData = useSelector((state) => state.admin.adminData);
+  console.log(AdminData);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getAdminData = async () => {
+      const toastLoading = toast.loading("Please wait....");
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/salesDashboard"
+        );
+        dispatch(setAdminData(response.data));
+      } catch (erro) {
+        console.log(erro);
+      } finally {
+        toast.dismiss(toastLoading);
+      }
+    };
+    getAdminData();
+  }, []);
+
   const cards = [
     {
       header: "Total Orders",
-      value: 123456,
+      value: AdminData.totalOrder, // fallback to 0 if undefined
       icon: <MdLocalOffer size={24} />,
       color: "bg-blue-500",
     },
     {
       header: "Amount Made",
-      value: "₦12,345,678",
+      value: `₦  ${AdminData.amountMade ?? 0}`, // use amount_made from AdminData
       icon: <TbCurrencyNaira size={24} />,
       color: "bg-green-500",
     },
     {
       header: "Total Riders",
-      value: 987654,
+      value: AdminData.totalRiders ?? 0, // use total_riders from AdminData
       icon: <MdDeliveryDining size={24} />,
       color: "bg-yellow-500",
     },
     {
       header: "Total Customers",
-      value: 654321,
+      value: AdminData.totalCustomers ?? 0, // use total_customers from AdminData
       icon: <MdPeople size={24} />,
       color: "bg-purple-500",
     },

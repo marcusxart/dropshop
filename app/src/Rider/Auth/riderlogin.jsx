@@ -1,6 +1,6 @@
 import InputField from "../../components/InputField/index";
 import Button from "../../components/Button";
-import { MdArrowRightAlt } from "react-icons/md";
+// import { MdArrowRightAlt } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
@@ -78,7 +78,7 @@ const RiderLogin = () => {
         >
           Forgot password?
         </span>
-        <div className="w-full h-[20%] mt-[20px] px-5 py-3 rounded border gap-2 border-[#FFC7274D] flex justify-center items-center max-md:px-6 ">
+        {/* <div className="w-full h-[20%] mt-[20px] px-5 py-3 rounded border gap-2 border-[#FFC7274D] flex justify-center items-center max-md:px-6 ">
           <p className=" font-semibold text-slate-700">
             Don’t have an account?{" "}
           </p>
@@ -88,7 +88,7 @@ const RiderLogin = () => {
           >
             Sign up <MdArrowRightAlt />
           </p>
-        </div>
+        </div> */}
       </div>
     </form>
   );
