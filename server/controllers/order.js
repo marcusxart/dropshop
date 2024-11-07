@@ -203,6 +203,8 @@
 // }
 
 const { Orders } = require("../database");
+const { Riders } = require("../database");
+const { Users } = require("../database");
 const { getIo, onlineCustomers } = require("../utils/socketConnection");
 const { Op } = require("sequelize");
 const appError = require("../utils/appError");
@@ -470,11 +472,52 @@ const customerOngoingOrder = async (req, res, next) => {
       return next(err);
     }
     res.status(200).json(ongoingOrder);
+
   } catch (error) {
     const err = new Error(error.message);
     return next(err);
   }
 };
+
+const salesDashboard=async(req,res,next)=>{
+  
+  try {
+    let amountMade = await Orders.sum("price",{where:{status: "completed"}})
+
+    if (!amountMade) {
+        amountMade = 0
+    }
+
+    const noOfCustomers= await Users.count()
+    if (!noOfCustomers) {
+      const err = new Error("No users yet")
+      err.status = 404
+      return next(err)
+    }
+
+    const totalRiders = await Riders.count()
+    if (!totalRiders) {
+      const err = new Error("Something went wrong")
+      err.status = 404
+      return next(err)
+    }
+
+
+    const totalOrders = await Orders.count()
+    if (!totalOrders) {
+      const err = new Error("Something went wrong")
+      err.status = 404
+      return next(err)
+    }
+
+    res.status(200).json({"total-order":totalOrders,"amount-made":amountMade,"total-riders":totalRiders,"total-customers":noOfCustomers})
+  } catch (error) {
+    const err = new Error(error.message);
+    return next(err);
+  }
+    
+  }
+
 module.exports = {
   getAllOrders,
   getOrderById,
@@ -486,4 +529,5 @@ module.exports = {
   riderOngoingOrder,
   customerOngoingOrder,
   customerOrderHistory,
+  salesDashboard
 };

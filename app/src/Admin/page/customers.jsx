@@ -55,10 +55,7 @@ const Customers = () => {
       Header: "Email",
       accessor: "email",
     },
-    {
-      Header: "Mobile Number",
-      accessor: "mobileNumber",
-    },
+
     {
       Header: "Total Orders",
       accessor: "totalOrders",

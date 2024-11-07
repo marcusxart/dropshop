@@ -5,7 +5,7 @@ const {signup,login,getAllUsers} = require("../controllers/auth")
 const {signupAdmin,loginAdmin} = require("../controllers/admin")
 const {newPassword,forgetPassword} = require("../controllers/forgetPassword")
 const {registerRider,getAllRiders,getRiderById,loginRider,riderStatus,deleteRider} = require("../controllers/rider")
-const {getOrderById,getAllOrders,customerOrderHistory,updateOrder,getPendingOrders,createOrder,acceptOrder, riderOrderHistory, riderOngoingOrder, customerOngoingOrder,} = require("../controllers/order")
+const {getOrderById,getAllOrders,customerOrderHistory,updateOrder,getPendingOrders,createOrder,acceptOrder, riderOrderHistory, riderOngoingOrder, customerOngoingOrder, salesDashboard,} = require("../controllers/order")
 
 api.get("/", (req, res) => {
   res.send("Server running");
@@ -36,6 +36,7 @@ api.get("/riderOrderHistory",riderAuth, riderOrderHistory)
 api.get("/ongoingOrder",riderAuth, riderOngoingOrder)//test on postman
 api.get("/customerOngoingOrder",customerAuth,customerOngoingOrder)  
 api.get("/customerOrderHistory",customerAuth,customerOrderHistory)  
+api.get("/salesDashboard", salesDashboard)
 
 //riders  
 api.post("/registerRider",adminAuth, registerRider)

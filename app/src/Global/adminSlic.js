@@ -7,6 +7,7 @@ const AdminSlice = createSlice({
     riders: [],
     orders: [],
     customers: [],
+    adminData: [],
   },
   reducers: {
     setAdmin: (state, action) => {
@@ -21,11 +22,15 @@ const AdminSlice = createSlice({
     setAllCustomers: (state, action) => {
       state.customers = action.payload;
     },
+    setAdminData: (state, action) => {
+      state.adminData = action.payload;
+    },
     clearAll: (state) => {
       state.admin = [];
       state.riders = [];
       state.orders = [];
       state.customers = [];
+      state.adminData = [];
     },
   },
 });
@@ -36,5 +41,6 @@ export const {
   setAllOrders,
   clearAll,
   setAllCustomers,
+  setAdminData,
 } = AdminSlice.actions;
 export default AdminSlice.reducer;
