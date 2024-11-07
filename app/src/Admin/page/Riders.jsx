@@ -59,10 +59,6 @@ const Riders = () => {
       },
 
       {
-        Header: "Total Orders",
-        accessor: "totalOrders",
-      },
-      {
         Header: "Amount Made",
         accessor: "amountMade",
         Cell: ({ value }) => `₦${value}`,
