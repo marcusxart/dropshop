@@ -510,7 +510,7 @@ const salesDashboard=async(req,res,next)=>{
       return next(err)
     }
 
-    res.status(200).json({"total-order":totalOrders,"amount-made":amountMade,"total-riders":totalRiders,"total-customers":noOfCustomers})
+    res.status(200).json({"totalOrder":totalOrders,"amountMade":amountMade,"totalRiders":totalRiders,"totalCustomers":noOfCustomers})
   } catch (error) {
     const err = new Error(error.message);
     return next(err);

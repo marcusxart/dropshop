@@ -32,25 +32,25 @@ const OverView = () => {
   const cards = [
     {
       header: "Total Orders",
-      value: AdminData?.totalOrder, // fallback to 0 if undefined
+      value: AdminData.totalOrder, // fallback to 0 if undefined
       icon: <MdLocalOffer size={24} />,
       color: "bg-blue-500",
     },
     {
       header: "Amount Made",
-      value: `₦${AdminData?.amount_made ?? 0}`, // use amount_made from AdminData
+      value: `₦  ${AdminData.amountMade ?? 0}`, // use amount_made from AdminData
       icon: <TbCurrencyNaira size={24} />,
       color: "bg-green-500",
     },
     {
       header: "Total Riders",
-      value: AdminData?.total_riders ?? 0, // use total_riders from AdminData
+      value: AdminData.totalRiders ?? 0, // use total_riders from AdminData
       icon: <MdDeliveryDining size={24} />,
       color: "bg-yellow-500",
     },
     {
       header: "Total Customers",
-      value: AdminData?.total_customers ?? 0, // use total_customers from AdminData
+      value: AdminData.totalCustomers ?? 0, // use total_customers from AdminData
       icon: <MdPeople size={24} />,
       color: "bg-purple-500",
     },

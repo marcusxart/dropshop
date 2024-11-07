@@ -1,4 +1,4 @@
-import { LuPackageOpen } from "react-icons/lu";
+// import { LuPackageOpen } from "react-icons/lu";
 import {
   MdDeliveryDining,
   MdLocalShipping,
@@ -19,10 +19,10 @@ const AdminNav = () => {
       icon: <MdDeliveryDining size={28} />,
       path: "all-riders",
     },
-    {
-      icon: <LuPackageOpen size={28} />,
-      path: "all-orders",
-    },
+    // {
+    //   icon: <LuPackageOpen size={28} />,
+    //   path: "all-orders",
+    // },
     {
       icon: <MdLocalShipping size={28} />,
       path: "all-history",

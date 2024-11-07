@@ -85,11 +85,11 @@ const Allorders = () => {
           // let bgColor;
           let color;
           switch (value) {
-            case "pending":
+            case "in progress":
               // bgColor = "bg-yellow-800";
               color = "text-yellow-300";
               break;
-            case "delivered":
+            case "completed":
               // bgColor = "bg-green-800";
               color = "text-green-300";
               break;

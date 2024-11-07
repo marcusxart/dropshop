@@ -1,7 +1,7 @@
 import {
   MdDashboard,
   MdDeliveryDining,
-  MdLocalShipping,
+  // MdLocalShipping,
   MdPeople,
   MdExitToApp,
   MdArrowRight,
@@ -26,7 +26,7 @@ const AdminSidebar = () => {
     { label: "Dashboard", icon: <MdDashboard />, path: "overview" },
     { label: "Riders", icon: <MdDeliveryDining />, path: "all-riders" },
     { label: "Orders", icon: <LuPackageOpen />, path: "all-orders" },
-    { label: "Order History", icon: <MdLocalShipping />, path: "all-history" },
+    // { label: "Order History", icon: <MdLocalShipping />, path: "all-history" },
     { label: "Customers", icon: <MdPeople />, path: "all-customers" },
     { label: "Logout", icon: <MdExitToApp />, path: "logout" },
   ];

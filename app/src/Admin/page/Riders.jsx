@@ -12,11 +12,14 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllRiders } from "../../Global/adminSlic";
+import { useNavigate } from "react-router-dom";
 
 const Riders = () => {
   const admindata = useSelector((state) => state.admin.admin);
   const AllRiders = useSelector((state) => state.admin.riders);
   console.log(AllRiders);
+
+  const navigate = useNavigate();
 
   const headers = {
     Authorization: `Bearer ${admindata.token}`,
@@ -118,14 +121,23 @@ const Riders = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="mb-4 flex items-center ">
+      <div className="mb-4 flex items-center justify-around ">
         <input
           value={globalFilter || ""}
           onChange={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search riders..."
+          placeholder="Search riders... this is it"
           className="p-2 border-2 w-[40%] max-md:w-[98%] px-3 outline-none border-gray-900 rounded bg-transparent"
         />
+        <div className="w-[40rem] h-[3rem]  flex justify-end px-5 items-center">
+          <button
+            className="py-2 px-3 bg-[#f8c314] font-bold text-sm rounded-md"
+            onClick={() => navigate("/rider-auth/rider-reg")}
+          >
+            Register New Rider
+          </button>
+        </div>
       </div>
+
       <div className="overflow-x-auto shadow-md sm:rounded-lg bg-black max-md:w-[22rem]">
         <table
           {...getTableProps()}

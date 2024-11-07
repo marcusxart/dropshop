@@ -15,7 +15,7 @@ import Adminlayout from "./Admin/layout/Adminlayout";
 import OverView from "./Admin/page/overview";
 import Riders from "./Admin/page/Riders";
 import Allorders from "./Admin/page/allOrders";
-import AdminHistory from "./Admin/page/adminhistory";
+
 import Customers from "./Admin/page/customers";
 import RiderAuthWrapper from "./Rider/layouts/RiderAuthWrpper";
 import RiderLogin from "./Rider/Auth/riderlogin";
@@ -105,10 +105,7 @@ const routes = createBrowserRouter([
         path: "all-orders",
         element: <Allorders />,
       },
-      {
-        path: "all-history",
-        element: <AdminHistory />,
-      },
+
       {
         path: "all-customers",
         element: <Customers />,
