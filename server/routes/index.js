@@ -18,7 +18,7 @@ api.get("/isAuthenticated",checkToken, isAuthenticated)
 //customers
 api.post("/signup", signup)
 api.post("/login", login)
-api.get("/getAllUsers", getAllUsers)
+api.get("/getAllUsers", adminAuth, getAllUsers)
 //admin
 api.post("/signUpAdmin", signupAdmin)
 api.post("/loginAdmin", loginAdmin)
@@ -28,8 +28,8 @@ api.post("/newPassword/:token", newPassword)
 //orders
 api.get("/getAllOrders",adminAuth, getAllOrders)
 api.get("/getPendingOrders",riderAuth, getPendingOrders)
-api.get("/getOrderById/:id", getOrderById)
-api.put("/updateOrder/:id", updateOrder) 
+api.get("/getOrderById/:id",checkToken, getOrderById)
+api.put("/updateOrder/:id",riderAuth, updateOrder) 
 api.post("/createOrder",customerAuth, createOrder)
 api.put("/acceptOrder/:id",riderAuth, acceptOrder) 
 api.get("/riderOrderHistory",riderAuth, riderOrderHistory)
@@ -38,10 +38,10 @@ api.get("/customerOngoingOrder",customerAuth,customerOngoingOrder)
 api.get("/customerOrderHistory",customerAuth,customerOrderHistory)  
 
 //riders  
-api.post("/registerRider", registerRider)
+api.post("/registerRider",adminAuth, registerRider)
 api.post("/loginRider", loginRider)
-api.get("/getAllRiders", getAllRiders)
-api.get("/getRiderById/:id", getRiderById)
+api.get("/getAllRiders",adminAuth, getAllRiders)
+api.get("/getRiderById/:id",adminAuth, getRiderById)
 api.get("/riderStatus", riderAuth, riderStatus) //test on postman
 api.delete("/deleteRider/:id", deleteRider)
 

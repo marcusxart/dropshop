@@ -55,7 +55,7 @@ const SendPackagesModal = () => {
         // Handle order status update
         console.log("Order status update received:", data);
         dispatch(setOrderStatus(data.orderStatus)); // Update the order status state
-        toast.success(`Order status updated: ${data.status}`); // Display a toast notification
+        toast.success(`Order status updated: ${data.orderStatus}`); // Display a toast notification
         setIsLoading(false);
         setTimeout(() => {
           nav("/user/on-going");
