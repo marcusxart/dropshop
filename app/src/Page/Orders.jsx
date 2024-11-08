@@ -20,15 +20,15 @@ const Orders = () => {
 
     socket.on("updateStage", (data) => {
       dispatch(setStage(data));
-      console.log("Order status updated:", data);
+      console.log("Order status updated: customer ", data);
     });
 
     // Clean up socket listeners when component unmounts
     return () => {
-      socket.off("updateStage");
-      // socket.disconnect();
+      // socket.off("updateStage");
+      socket.disconnect();
     };
-  }, [dispatch]);
+  }, [socket.id]);
 
   return (
     <div className="w-full h-screen flex items-center justify-center">

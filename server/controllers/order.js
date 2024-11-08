@@ -373,27 +373,34 @@ const getOrderById = async (req, res, next) => {
 let orderUpdate;
 
 const updateOrder = async (req, res, next) => {
-  const io = req.app.get("socketIo")
+  const io = req.app.get("socketIo");
   const { id } = req.params;
-  const {stage,status} = req.body
+  const { stage, status } = req.body;
   try {
     const order = await Orders.findByPk(id);
-    order.stage = stage
-    order.status = status
-    await order.save()
-    if (io.sockets.adapter.rooms.has(order.customer)) {
-      io.to(order.customer).emit("updateStage",{
-        customerName: order.customer,
-        role: "customer",
-        orderStatus: order.status,
-        data: order,
-      })
-    } else{
-      console.log(`Room ${order.customer} does not exist or is empty`)
-    }
+    order.stage = stage;
+    order.status = status;
+    await order.save();
+    // if (io.sockets.adapter.rooms.has(order.customer)) {
+    //   io.to(order.customer).emit("updateStage",{
+    //     customerName: order.customer,
+    //     role: "customer",
+    //     orderStatus: order.status,
+    //     data: order,
+    //   })
+    // } else{
+    //   console.log(`Room ${order.customer} does not exist or is empty`)
+    // }
+    console.log(order.customer, "this is the customer order status");
+    io.to(order.customer).emit("updateOrderStatus", {
+      customerName: order.customer,
+      role: "customer",
+      orderStatus: order.status,
+      data: order,
+    });
     res.status(201).json(order);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     const err = new Error(error.message);
     return next(err);
   }
@@ -472,51 +479,54 @@ const customerOngoingOrder = async (req, res, next) => {
       return next(err);
     }
     res.status(200).json(ongoingOrder);
-
   } catch (error) {
     const err = new Error(error.message);
     return next(err);
   }
 };
 
-const salesDashboard=async(req,res,next)=>{
-  
+const salesDashboard = async (req, res, next) => {
   try {
-    let amountMade = await Orders.sum("price",{where:{status: "completed"}})
+    let amountMade = await Orders.sum("price", {
+      where: { status: "completed" },
+    });
 
     if (!amountMade) {
-        amountMade = 0
+      amountMade = 0;
     }
 
-    const noOfCustomers= await Users.count()
+    const noOfCustomers = await Users.count();
     if (!noOfCustomers) {
-      const err = new Error("No users yet")
-      err.status = 404
-      return next(err)
+      const err = new Error("No users yet");
+      err.status = 404;
+      return next(err);
     }
 
-    const totalRiders = await Riders.count()
+    const totalRiders = await Riders.count();
     if (!totalRiders) {
-      const err = new Error("Something went wrong")
-      err.status = 404
-      return next(err)
+      const err = new Error("Something went wrong");
+      err.status = 404;
+      return next(err);
     }
 
-
-    const totalOrders = await Orders.count()
+    const totalOrders = await Orders.count();
     if (!totalOrders) {
-      const err = new Error("Something went wrong")
-      err.status = 404
-      return next(err)
+      const err = new Error("Something went wrong");
+      err.status = 404;
+      return next(err);
     }
 
-    res.status(200).json({"totalOrder":totalOrders,"amountMade":amountMade,"totalRiders":totalRiders,"totalCustomers":noOfCustomers})
+    res.status(200).json({
+      totalOrder: totalOrders,
+      amountMade: amountMade,
+      totalRiders: totalRiders,
+      totalCustomers: noOfCustomers,
+    });
   } catch (error) {
     const err = new Error(error.message);
     return next(err);
   }
-    
-  }
+};
 
 module.exports = {
   getAllOrders,
@@ -529,5 +539,5 @@ module.exports = {
   riderOngoingOrder,
   customerOngoingOrder,
   customerOrderHistory,
-  salesDashboard
+  salesDashboard,
 };
