@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { MdClear, MdFileCopy, MdLocationOn, MdMap } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import facecard from "../../assets/Customer.jpeg";
@@ -6,33 +6,34 @@ import { toast } from "react-hot-toast";
 import { setRiderStatus } from "../../Global/rideSlic";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+// const socket = io("http://localhost:5000");
 
 const Selectmodal = ({ isOpen, onClose, order }) => {
   const dispatch = useDispatch();
   const rider = useSelector((state) => state.rider.rider); // Specify state part for useSelector
 
-  useEffect(() => {
-    if (!socket.connected) {
-      socket.connect();
-    }
+  // useEffect(() => {
+  //   if (!socket.connected) {
+  //     socket.connect();
+  //   }
 
-    socket.on("connect", () => {
-      console.log("Socket connected:", socket.id);
-    });
+  //   socket.on("connect", () => {
+  //     console.log("Socket connected:", socket.id);
+  //   });
 
-    socket.on("updateStage", (data) => {
-      dispatch(setRiderStatus(data.orderStatus));
-      toast.success(`Order status updated: ${data.status}`);
-    });
+  //   socket.on("updateStage", (data) => {
+  //     dispatch(setRiderStatus(data.orderStatus));
+  //     toast.success(`Order status updated: ${data.status}`);
+  //     console.log(data);
+  //   });
 
-    return () => {
-      socket.off("updateStage");
-      socket.disconnect();
-    };
-  }, [dispatch]);
+  //   return () => {
+  //     socket.off("updateStage");
+  //     // socket.disconnect();
+  //   };
+  // }, [dispatch]);
 
   const handleUpdateStatus = async () => {
     const toastLoading = toast.loading("Please wait...");
@@ -51,11 +52,11 @@ const Selectmodal = ({ isOpen, onClose, order }) => {
       toast.success("Status updated successfully");
       dispatch(setRiderStatus(response.data.status));
 
-      // Emit updateStage event to server to notify the update
-      if (socket.connected) {
-        socket.emit("updateStage", { stage: 2, status: "in progress" });
-        console.log(`Status Update: ${response.data}`);
-      }
+      // // Emit updateStage event to server to notify the update
+      // if (socket.connected) {
+      //   socket.emit("updateStage", { stage: 2, status: "in progress" });
+      //   console.log(`Status Update: ${response}`);
+      // }
 
       onClose();
     } catch (error) {

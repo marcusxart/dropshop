@@ -35,6 +35,10 @@ export default function App() {
         console.log("Order status update received:", data);
         dispatch(setOrderStatus(data));
       });
+      socket.on("updateOrderStatus", (data) => {
+        console.log("Order status change:", data);
+        // dispatch(setOrderStatus(data));
+      });
     });
 
     return () => {
