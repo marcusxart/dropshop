@@ -108,9 +108,9 @@ const socketConnection = (io) => {
 
       conn.join(orderId);
       console.log(
-        `${role} with Name ${customerName} joined room: ${customerName}`
+        `${role} with Name ${orderId} joined room: ${orderId}`
       );
-      conn.emit("joinRoom", `Joined ${role} room with Name: ${customerName}`);
+      conn.emit("joinRoom", `Joined ${role} room with Name: ${orderId}`);
     });
 
     conn.on("disconnect", () => {
