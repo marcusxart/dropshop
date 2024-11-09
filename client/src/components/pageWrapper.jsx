@@ -3,7 +3,7 @@ import AppleIcon from "../assets/svgs/apple";
 import MenuIcon from "../assets/svgs/menu";
 import MaxContainer from "./maxContainer";
 import classnames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OutsideClick from "./outsideClick";
 
 const PageWrapper = () => {
@@ -15,6 +15,11 @@ const PageWrapper = () => {
     { text: "About us", route: "/about", active: path.includes("about") },
     { text: "Support", route: "/support", active: path.includes("support") },
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [path]);
+
   return (
     <>
       <OutsideClick handleClick={() => setToggle(false)}>
@@ -55,7 +60,7 @@ const PageWrapper = () => {
               )}
               <div className="flex items-center gap-[20px] lg:gap-[32px] text-[14px]">
                 <a
-                  href="/"
+                  href="https://dropshop-app.onrender.com/auth"
                   target="_blank"
                   className="text-[#9C9C9D] hover:text-white duration-150"
                 >
