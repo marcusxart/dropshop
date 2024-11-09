@@ -313,7 +313,7 @@ const acceptOrder = async (req, res, next) => {
     // console.log(io, "sockect io");
 
     // Send order status update to customer’s room directly
-    io.to(findOrder.customer).emit("orderStatusUpdate", {
+    io.to(findOrder.id).emit("orderStatusUpdate", {
       customerName: findOrder.customer,
       role: "customer",
       orderStatus: findOrder.status,
@@ -392,7 +392,7 @@ const updateOrder = async (req, res, next) => {
     //   console.log(`Room ${order.customer} does not exist or is empty`)
     // }
     console.log(order.customer, "this is the customer order status");
-    io.to(order.customer).emit("updateOrderStatus", {
+    io.to(order.id).emit("updateOrderStatus", {
       customerName: order.customer,
       role: "customer",
       orderStatus: order.status,
