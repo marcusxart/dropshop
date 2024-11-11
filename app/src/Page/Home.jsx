@@ -4,6 +4,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { MdOutlineClear } from "react-icons/md";
 import { FaRegThumbsUp } from "react-icons/fa";
 import SendPackagesModal from "../components/Modals/SendPackagesModal";
+// import LoadingModal from "../components/Modals/LoadingModal";
 
 const Home = () => {
   const [selectedOption, setSelectedOption] = useState("Pick Up");
@@ -61,6 +62,7 @@ const Home = () => {
               onClick={closeModal}
             >
               <MdOutlineClear size={30} />
+              {/* <LoadingModal /> */}
             </button>
           </div>
         </div>
