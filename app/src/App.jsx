@@ -9,7 +9,7 @@ import { setOrderStatus } from "./Global/Orderstatus";
 const socket = io("http://localhost:5000");
 
 export default function App() {
-  const customerdata = useSelector((state) => state.customer.Customer);
+  const customerdata = useSelector((state) => state.customer.orders);
 
   const orderStatus = useSelector((state) => state.OrderStatus.status);
   console.log(orderStatus);
@@ -24,9 +24,9 @@ export default function App() {
     socket.on("connect", () => {
       console.log("Socket connected:", socket.id);
 
-      if (socket.connected && customerdata.name) {
+      if (socket.connected && customerdata.id) {
         socket.emit("joinRoom", {
-          customerName: customerdata.name,
+          orderId: customerdata.id,
           role: "customer",
         });
       }
@@ -44,7 +44,7 @@ export default function App() {
     return () => {
       socket.disconnect();
     };
-  }, [customerdata.name, dispatch]);
+  }, [customerdata.id, dispatch]);
 
   return (
     <>

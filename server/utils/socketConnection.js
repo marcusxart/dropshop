@@ -89,10 +89,10 @@ const socketConnection = (io) => {
         return;
       }
 
-      const { customerName, role } = payload;
+      const { orderId, role } = payload;
       const missingFields = [];
 
-      if (!customerName) missingFields.push("customerName");
+      if (!orderId) missingFields.push("orderId");
       if (!role) missingFields.push("role");
 
       if (missingFields.length > 0) {
@@ -106,11 +106,11 @@ const socketConnection = (io) => {
         return;
       }
 
-      conn.join(customerName);
+      conn.join(orderId);
       console.log(
-        `${role} with Name ${customerName} joined room: ${customerName}`
+        `${role} with Name ${orderId} joined room: ${orderId}`
       );
-      conn.emit("joinRoom", `Joined ${role} room with Name: ${customerName}`);
+      conn.emit("joinRoom", `Joined ${role} room with Name: ${orderId}`);
     });
 
     conn.on("disconnect", () => {
