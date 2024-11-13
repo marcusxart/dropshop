@@ -1,3 +1,8 @@
+
+const AlLOWED_ORIGINS = ["http://localhost:5500", "http://localhost:5173","https://dropshop-landing.onrender.com/"];
+
+module.exports = { AlLOWED_ORIGINS };
+
 const AlLOWED_ORIGINS = [
   "http://localhost:5500",
   "http://localhost:5173",
@@ -5,3 +10,4 @@ const AlLOWED_ORIGINS = [
 ];
 
 module.exports = { AlLOWED_ORIGINS };
+

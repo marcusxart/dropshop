@@ -24,7 +24,7 @@ const ButtomNav = () => {
     },
     {
       icon: <MdChat size={28} />,
-      path: "door2door",
+      path: "customer service",
     },
   ];
 

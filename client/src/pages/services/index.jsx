@@ -14,13 +14,19 @@ const Services = () => {
     {
       title: "Pickup",
       desc: "Stress-Free Pickup & Fulfillment: Dropshop, your one-stop logistics partner.",
+      theInfo: "What we Offer for PickeUps",
       img: driverPhone,
+      content:
+        "At Dropshop, we make pickup requests easy and efficient for our customers. When you place a pickup order on our website, simply provide the details of the item(s) you need collected, the pickup location, and the preferred time. Our system will then assign the closest available dispatcher to the pickup location, ensuring that your items are picked up promptly and safely. Our dispatchers are trained to handle items of all kinds with care, verifying the package details with you to ensure accuracy before it leaves your hands. You’ll receive real-time updates about the status of your pickup, so you can track when our dispatcher is on the way, when the pickup is complete, and the package’s current location. This way, you have peace of mind knowing that your items are in good hands right from the start of the journey. ",
     },
     {
       title: "Delivery",
       desc: "Stress-Free Pickup & Fulfillment: Dropshop, your one-stop logistics partner.",
+      theInfo: "What we Offer for Delivery",
       img: delivery,
       switch: true,
+      content:
+        "After your package has been picked up, our delivery process begins seamlessly. Our dispatchers prioritize the safety and speed of delivery, handling each package with the utmost care. Through our website, you can easily track your delivery in real-time, seeing exactly where your package is and receiving estimated delivery times Whether it’s a same-day delivery or a scheduled drop-off, Dropshop is committed to ensuring each delivery is completed on time. Upon arrival at the delivery location, our dispatcher verifies the delivery details, checks in with the recipient to confirm their identity, and hands over the package with a friendly and professional touch. You’ll receive a notification as soon as the delivery is complete, giving you a smooth, worry-free experience from pickup to drop-off.",
     },
   ];
   return (
@@ -67,24 +73,10 @@ const Services = () => {
                     )}
                   >
                     <h2 className="text-[24px] lg:text-[28px] font-bold text-[#EBEBEB] gradient-grey">
-                      Lorem ipsum dolor sit amet
+                      {i.theInfo}
                     </h2>
                     <p className="text-[14px] leading-[24px] mt-[12px]">
-                      Lorem ipsum dolor sit amet consectetur. Mauris enim amet
-                      sed adipiscing nibh. Feugiat nascetur integer pellentesque
-                      tincidunt nibh nulla suscipit eu. Condimentum dolor
-                      dictumst augue auctor. Pellentesque faucibus ullamcorper
-                      orci eu nunc cum vel non nisl. Sed lacus erat cursus
-                      malesuada dolor ligula faucibus mi varius. Interdum in cum
-                      turpis risus pulvinar nunc. Habitasse in volutpat
-                      adipiscing facilisis euismod tincidunt neque tincidunt.
-                      Sed magna scelerisque mauris parturient at sit a nullam
-                      urna. Ut eu eget bibendum nec blandit metus.Lorem ipsum
-                      dolor sit amet consectetur. Mauris enim amet sed
-                      adipiscing nibh. Feugiat nascetur integer pellentesque
-                      tincidunt nibh nulla suscipit eu. Condimentum dolor
-                      dictumst augue auctor. Pellentesque faucibus ullamcorper
-                      orci eu nunc cum vel non nisl. Sed lacus erat cursus
+                      {i.content}
                     </p>
                   </div>
                 </div>
