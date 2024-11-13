@@ -4,12 +4,14 @@ import routes from "./routes";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
-import { setOrderStatus } from "./Global/Orderstatus";
+import { setOrderStatus, setStage } from "./Global/Orderstatus";
 
 const socket = io("http://localhost:5000");
 
 export default function App() {
   const customerdata = useSelector((state) => state.customer.orders);
+
+  console.log(customerdata.customer);
 
   const orderStatus = useSelector((state) => state.OrderStatus.status);
   console.log(orderStatus);
@@ -24,9 +26,9 @@ export default function App() {
     socket.on("connect", () => {
       console.log("Socket connected:", socket.id);
 
-      if (socket.connected && customerdata.id) {
+      if (socket.connected && customerdata.name) {
         socket.emit("joinRoom", {
-          orderId: customerdata.id,
+          customerName: customerdata.name,
           role: "customer",
         });
       }
@@ -36,15 +38,15 @@ export default function App() {
         dispatch(setOrderStatus(data));
       });
       socket.on("updateOrderStatus", (data) => {
-        console.log("Order status change:", data);
-        // dispatch(setOrderStatus(data));
+        console.log("Order status change to this :", data);
+        dispatch(setStage(data));
       });
     });
 
     return () => {
       socket.disconnect();
     };
-  }, [customerdata.id, dispatch]);
+  }, [customerdata.name, dispatch]);
 
   return (
     <>
