@@ -35,7 +35,7 @@ const RiderRegister = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/registerRider",
+        "https://dropshop-server.onrender.com/api/registerRider",
         data
       );
 

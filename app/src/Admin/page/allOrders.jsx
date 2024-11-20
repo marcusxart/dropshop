@@ -21,7 +21,7 @@ const Allorders = () => {
       const toastLoading = toast.loading("Please wait....");
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/getAllOrders?status`,
+          `https://dropshop-server.onrender.com/api/getAllOrders?status`,
           {
             headers,
           }

@@ -27,7 +27,7 @@ const RiderLogin = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/loginRider",
+        "https://dropshop-server.onrender.com/api/loginRider",
         data
       );
       toast.success("Login Successful");

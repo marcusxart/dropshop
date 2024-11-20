@@ -31,7 +31,9 @@ const ForgotPassword = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/forgetPassword", { email });
+      await axios.post("https://dropshop-server.onrender.com/forgetPassword", {
+        email,
+      });
       setIsSend(true);
       setEmail("");
       toast.success("Password reset link sent!", { duration: 3000 });
