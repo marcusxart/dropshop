@@ -19,7 +19,7 @@ const Ongoing = () => {
       const toastLoading = toast.loading("Please wait...");
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/ongoingOrder",
+          "https://dropshop-server.onrender.com/api/ongoingOrder",
           {
             headers: {
               Authorization: `Bearer ${riderData.token}`,

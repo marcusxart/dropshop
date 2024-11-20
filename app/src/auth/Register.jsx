@@ -23,7 +23,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/signup",
+        "https://dropshop-server.onrender.com/api/signup",
         data
       );
 
