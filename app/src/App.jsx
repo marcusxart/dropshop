@@ -1,50 +1,52 @@
 // App.js
 import { RouterProvider } from "react-router-dom";
 import routes from "./routes";
-import { useEffect } from "react";
-import { io } from "socket.io-client";
-import { useDispatch, useSelector } from "react-redux";
-import { setOrderStatus } from "./Global/Orderstatus";
+// import { useEffect } from "react";
+// import { io } from "socket.io-client";
+// import { useDispatch, useSelector } from "react-redux";
+// import { setOrderStatus, setStage } from "./Global/Orderstatus";
 
-const socket = io("http://localhost:5000");
+// const socket = io("https://dropshop-server.onrender.com");
 
 export default function App() {
-  const customerdata = useSelector((state) => state.customer.Customer);
+  // const customerdata = useSelector((state) => state.customer.orders);
 
-  const orderStatus = useSelector((state) => state.OrderStatus.status);
-  console.log(orderStatus);
+  // console.log(customerdata.customer);
 
-  const dispatch = useDispatch();
+  // const orderStatus = useSelector((state) => state.OrderStatus.status);
+  // console.log(orderStatus);
 
-  useEffect(() => {
-    if (!socket.connected) {
-      socket.connect();
-    }
+  // const dispatch = useDispatch();
 
-    socket.on("connect", () => {
-      console.log("Socket connected:", socket.id);
+  // useEffect(() => {
+  //   if (!socket.connected) {
+  //     socket.connect();
+  //   }
 
-      if (socket.connected && customerdata.name) {
-        socket.emit("joinRoom", {
-          customerName: customerdata.name,
-          role: "customer",
-        });
-      }
+  //   socket.on("connect", () => {
+  //     console.log("Socket connected:", socket.id);
 
-      socket.on("orderStatusUpdate", (data) => {
-        console.log("Order status update received:", data);
-        dispatch(setOrderStatus(data));
-      });
-      socket.on("updateOrderStatus", (data) => {
-        console.log("Order status change:", data);
-        // dispatch(setOrderStatus(data));
-      });
-    });
+  //     if (socket.connected && customerdata.name) {
+  //       socket.emit("joinRoom", {
+  //         customerName: customerdata.name,
+  //         role: "customer",
+  //       });
+  //     }
 
-    return () => {
-      socket.disconnect();
-    };
-  }, [customerdata.name, dispatch]);
+  //     socket.on("orderStatusUpdate", (data) => {
+  //       console.log("Order status update received:", data);
+  //       dispatch(setOrderStatus(data));
+  //     });
+  //     socket.on("updateOrderStatus", (data) => {
+  //       console.log("Order status change to this :", data);
+  //       dispatch(setStage(data));
+  //     });
+  //   });
+
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, [customerdata.name, dispatch]);
 
   return (
     <>

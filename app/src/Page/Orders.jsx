@@ -4,7 +4,9 @@ import { io } from "socket.io-client";
 import { useEffect } from "react";
 import { setStage } from "../Global/Orderstatus";
 
-const socket = io("http://localhost:5000", { autoConnect: false }); // Set autoConnect to false to manage connection manually
+const socket = io("https://dropshop-server.onrender.com", {
+  autoConnect: false,
+}); // Set autoConnect to false to manage connection manually
 
 const Orders = () => {
   const dispatch = useDispatch();

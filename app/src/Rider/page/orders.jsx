@@ -41,7 +41,7 @@ const RiderOrders = () => {
 
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/getPendingOrders",
+          "https://dropshop-server.onrender.com/api/getPendingOrders",
           { headers }
         );
         toast.success("Orders fetched successfully");

@@ -3,25 +3,11 @@ import toast from "react-hot-toast";
 import { MdFileCopy } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { setRiderOngoingOrdering } from "../../Global/rideSlic";
-// import { useEffect } from "react";
-// import { io } from "socket.io-client";
 
 const CallModal = ({ orderId, orderNumber, orderName, closeModal }) => {
   const phoneNumber = orderNumber;
   const riderdata = useSelector((state) => state.rider.rider);
   const dispatch = useDispatch();
-
-  // Establish a socket connection
-  // const socket = io("http://localhost:5000"); // Replace with your server's socket URL
-
-  // useEffect(() => {
-  //   socket.connect();
-
-  //   // return () => {
-  //   //   socket.disconnect();
-  //   // };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(phoneNumber);
