@@ -4,37 +4,6 @@ import { FaMap } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
 import { useSelector } from "react-redux";
 
-// Sample data
-// const orders = [
-//   {
-//     id: 1,
-//     rider: "John Doe",
-//     orderType: "Delivery",
-//     orderStatus: "In Progress",
-//     location: "123 Main St, City",
-//     activity: "En route",
-//     price: "$150.00",
-//   },
-//   {
-//     id: 2,
-//     rider: "Jane Smith",
-//     orderType: "Pickup",
-//     orderStatus: "Completed",
-//     location: "456 Elm St, Town",
-//     activity: "Delivered",
-//     price: "$75.50",
-//   },
-//   {
-//     id: 3,
-//     rider: "Bob Johnson",
-//     orderType: "Delivery",
-//     orderStatus: "Pending",
-//     location: "789 Oak St, Village",
-//     activity: "Waiting",
-//     price: "$200.25",
-//   },
-// ];
-
 // Main Orderhistory component
 const Orderhistory = () => {
   const allHistory = useSelector((state) => state.customer.orderHistory || []);
