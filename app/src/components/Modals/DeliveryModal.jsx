@@ -1,11 +1,6 @@
 // import { useEffect } from "react";
 import { BiMap } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
-// import { useDispatch, useSelector } from "react-redux";
-// import { io } from "socket.io-client";
-// import { setStage } from "../../Global/Orderstatus";
-
-// const socket = io("http://localhost:5000");
 
 const DeliveryModal = ({ closeModal }) => {
   // const dispatch = useDispatch();
