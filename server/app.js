@@ -36,16 +36,10 @@ const http = require("http");
 const app = express();
 
 // const server = http.createServer(app);
-app.use(
-  cors({
-    origin: AlLOWED_ORIGINS,
-    optionsSuccessStatus: 200,
-  })
-);
+app.use(cors(AlLOWED_ORIGINS));
 app.set("view engine", "ejs");
 
 // Enable CORS
-
 
 // use json
 app.use(express.json());
