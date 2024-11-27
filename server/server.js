@@ -6,7 +6,7 @@ const socketConnection = require("./utils/socketConnection");
 const app = require("./app");
 const db = require("./database");
 const Logger = require("./utils/logger");
-const { AlLOWED_ORIGINS } = require("./configs/constants");
+const AlLOWED_ORIGINS  = require("./configs/constants");
 
 const PORT = process.env.PORT;
 const server = http.createServer(app);

@@ -7,4 +7,4 @@ const AlLOWED_ORIGINS = [
   "https://dropshop-app.onrender.com",
 ];
 
-module.exports = { AlLOWED_ORIGINS };
+module.exports = AlLOWED_ORIGINS 
