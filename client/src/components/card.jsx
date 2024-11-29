@@ -11,6 +11,7 @@ const Card = ({ header = "header", content = "content", img, hover }) => {
       <div className="px-[16px] py-[32px] h-[72px] ">
         <h3 className="text-[20px] font-bold mb-[8px] leading-[24px]">
           {header}
+          {/* <p className="text-red-500 text-6xl">hello world</p> */}
         </h3>
         <p className="line_2_ellipsis text-[12px]">{content}</p>
       </div>
