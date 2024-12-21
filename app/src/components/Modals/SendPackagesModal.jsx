@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegEdit, FaRegThumbsUp } from "react-icons/fa";
 import { MdLocationOn, MdOutlineClear } from "react-icons/md";
 import Pickdetails from "./Pickdetails";
@@ -8,12 +8,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../Global/customerSlice";
-// import { io } from "socket.io-client";
-// import { setOrderStatus } from "../../Global/Orderstatus";
-// import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
+import { setOrderStatus } from "../../Global/Orderstatus";
+import { useNavigate } from "react-router-dom";
 import LoadingModal from "./LoadingModal";
 
-// const socket = io("http://localhost:5000");
+const socket = io("https://dropshop-server.onrender.com/api");
 
 const SendPackagesModal = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
@@ -23,7 +23,7 @@ const SendPackagesModal = () => {
   const orderStatus = useSelector((state) => state.OrderStatus.status);
   console.log(orderStatus);
 
-  // const nav = useNavigate();
+  const nav = useNavigate();
   const selectedOption = localStorage.getItem("selectedOption");
   const customerdata = useSelector((state) => state.customer.Customer);
 
@@ -48,29 +48,29 @@ const SendPackagesModal = () => {
     setIsPickDetailsOpen(false);
   };
 
-  // useEffect(() => {
-  //   if (!socket.connected) {
-  //     socket.connect();
-  //   }
+  useEffect(() => {
+    if (!socket.connected) {
+      socket.connect();
+    }
 
-  //   socket.on("connect", () => {
-  //     console.log("Socket connected:", socket.id);
-  //     socket.on("orderStatusUpdate", (data) => {
-  //       // Handle order status update
-  //       console.log("Order status update received:", data);
-  //       dispatch(setOrderStatus(data.orderStatus)); // Update the order status state
-  //       toast.success(`Order status updated: ${data.orderStatus}`); // Display a toast notification
-  //       setIsLoading(false);
-  //       setTimeout(() => {
-  //         nav("/user/on-going");
-  //       }, 2000);
-  //     });
-  //   });
+    socket.on("connect", () => {
+      console.log("Socket connected:", socket.id);
+      socket.on("orderStatusUpdate", (data) => {
+        // Handle order status update
+        console.log("Order status update received:", data);
+        dispatch(setOrderStatus(data.orderStatus)); // Update the order status state
+        toast.success(`Order status updated: ${data.orderStatus}`); // Display a toast notification
+        setIsLoading(false);
+        setTimeout(() => {
+          nav("/user/on-going");
+        }, 2000);
+      });
+    });
 
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, [customerdata.name, dispatch, nav]);
+    return () => {
+      socket.disconnect();
+    };
+  }, [customerdata.name, dispatch, nav]);
 
   const HandleOrder = async () => {
     const toastLoading = toast.loading("Placing your order...");

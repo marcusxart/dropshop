@@ -23,7 +23,7 @@ const CallModal = ({ orderId, orderNumber, orderName, closeModal }) => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/acceptOrder/${orderId}`,
+        `https://dropshop-server.onrender.com/api/acceptOrder/${orderId}`,
         {},
         { headers }
       );
