@@ -49,7 +49,7 @@ const Register = () => {
       </div>
       <div className="flex flex-col gap-[20px]">
         <InputField
-          placeholder="Enter your FullName"
+          placeholder="Enter your Full Name"
           type="text"
           value={name}
           onChange={setName}
