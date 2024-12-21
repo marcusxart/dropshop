@@ -45,9 +45,12 @@ const Riders = () => {
   const handleDeleteRider = async (id) => {
     const toastLoading = toast.loading("Please wait...");
     try {
-      await axios.delete(`http://localhost:5000/api/deleteRider/${id}`, {
-        headers,
-      });
+      await axios.delete(
+        `https://dropshop-server.onrender.com/api/deleteRider/${id}`,
+        {
+          headers,
+        }
+      );
       toast.success("Rider has been deleted successfully");
       getAllRider(); // Refresh riders list after deletion
     } catch (err) {
