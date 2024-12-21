@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import axios from "axios";
 import { toast } from "react-hot-toast"; // React hot toast for notifications
+import { useSelector } from "react-redux";
 
 const RiderRegister = () => {
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ const RiderRegister = () => {
   const [address, setAddress] = useState("");
   const [riderNumber, setRiderNumber] = useState("");
   const [loading, setLoading] = useState(false);
+  const admindata = useSelector((state) => state.admin.admin);
+  const headers = {
+    Authorization: `Bearer ${admindata.token}`,
+  };
 
   const data = {
     name,
@@ -36,7 +41,8 @@ const RiderRegister = () => {
     try {
       const response = await axios.post(
         "https://dropshop-server.onrender.com/api/registerRider",
-        data
+        data,
+        { headers }
       );
 
       if (response.status === 201 || response.status === 200) {
