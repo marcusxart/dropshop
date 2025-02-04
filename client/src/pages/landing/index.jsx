@@ -15,8 +15,10 @@ import AppleIcon from "../../assets/svgs/apple";
 import GooglePlayIcon from "../../assets/svgs/googlePlay";
 import TextField from "../../components/textField";
 import Footer from "../../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
+  const navigate = useNavigate();
   const services = [
     {
       header: "Pickup",
@@ -55,10 +57,20 @@ const Landing = () => {
             </p>
             <div className="pt-[12px] lg:pt-0">
               <div className="flex gap-[16px] justify-center lg:justify-start">
-                <div className="w-fit lg:w-[215px]">
+                <a
+                  className="w-fit lg:w-[215px] inline-block"
+                  href="https://dropshop-app.onrender.com/auth"
+                  target="_blank"
+                >
                   <Button icon={<ArrowLeft />} full text="Get started " />
-                </div>
-                <Button styleType="secondary" text="Learn more" />
+                </a>
+                <Button
+                  styleType="secondary"
+                  text="Learn more"
+                  onClick={() => {
+                    navigate("/about");
+                  }}
+                />
               </div>
               <div className="flex items-center gap-[12px] text-[14px] opacity-[80%] mt-[20px] justify-center lg:justify-start">
                 <Stars /> <p>150+ reviews · 100k+ users</p>

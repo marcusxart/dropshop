@@ -16,24 +16,10 @@ const InputField = ({
   placeholder = "Enter text.",
   type = "text",
   required = false,
-  check = true,
   onChange,
   value,
 }) => {
   // Validation rules based on input type
-  const validate =
-    type === "password"
-      ? {
-          reg: /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-          regMsg:
-            "Password must be 8+ characters with 1 uppercase, 1 number, and 1 special character.",
-        }
-      : type === "email"
-      ? {
-          reg: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-          regMsg: "Please enter a valid email address.",
-        }
-      : {};
 
   return (
     <Textbox
@@ -48,9 +34,9 @@ const InputField = ({
       }}
       onBlur={() => {}}
       validationOption={{
-        ...validate,
+        // ...validate,
         required: required ? "This field is required." : false,
-        check,
+        // check,
         customFunc: (value) => {
           if (required && !value) {
             return "This field is required.";

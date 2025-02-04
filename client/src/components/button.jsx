@@ -7,9 +7,11 @@ const Button = ({
   style,
   icon,
   full = false,
+  onClick,
 }) => {
   return (
     <button
+      onClick={onClick}
       style={style}
       type={type}
       className={classnames(
